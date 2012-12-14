@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Find pizza hut</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/ajaxCombo.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="js/util.js"></script>
+	<script src="js/gmap.js"></script>
+ 
+</head>
+
+
+<body onload="init();" style="margin:0; padding:0;">
+
+<center>
+<table cellspacing="0" cellpadding="0" border="0" style="background:url(images/bg_main.jpg) no-repeat; width:790px; height:1073px;">
+	<tr>
+		<td valign="top" align="left" height="210">
+			<table cellpadding="0" cellspacing="0" border="0" align="left">
+				<tr>
+					<td id="addressAjax"  style="height:210px; margin:0; padding:0 0 0 364px; vertical-align:bottom" align="left" valign="bottom">
+						<table>
+								<tr>
+								<td class="txt1">Address :</td>
+									<td style="padding-left:3px;">
+										<select id="address" name="address" style="width:115px;">
+											<option value="Please Select">Please Select</option>
+										</select>
+									</td>
+								</tr>
+								</table>
+					</td>
+				</tr>
+			</table>			
+		</td>		
+	</tr>
+	<tr>
+		<td valign="top" align="left" height="36">
+			<table cellpadding="0" cellspacing="0" border="0" align="left">
+				<tr>
+					<td id="areaAjax" style="height:36px; margin:0; padding:0 0 0 142px; vertical-align:bottom" align="left" valign="bottom">
+					
+								<table>
+								<tr>
+								<td class="txt1">Area :</td>
+								<td style="padding-left:3px;">
+								<select id="area" name="area" style="width: 100px;">
+								<option value="Please Select">Please Select</option>
+								</select></td>
+								</tr>
+								</table>
+								</td>
+				</tr>
+			</table>			
+		</td>		
+	</tr>
+	<tr>
+		<td valign="top" align="left" height="112">
+			<table cellpadding="0" cellspacing="0" border="0" align="left">
+				<tr>
+					<td  style="height:112px; margin:0; padding:0 0 0 197px; vertical-align:bottom" align="left" valign="bottom">	
+								
+								
+								<select id="city" name="city" style="width:80px;">
+								<option value="Please Select">Please Select</option>	
+								<option value=1>Islamabad</option><option value=2>Rawalpindi</option><option value=3>Karachi</option><option value=5>Lahore</option><option value=6>Faisalabad</option><option value=7>Gujranwala </option><option value=8>Hyderabad</option><option value=9>Multan</option><option value=10>Peshawar </option><option value=11>Sialkot</option>								
+								</select>
+								
+								</td>
+				</tr>
+			</table>			
+		</td>		
+	</tr>
+	<tr>
+		<td valign="top" align="center" style="padding-top:205px">
+			<table cellpadding="0" cellspacing="0" border="0" align="center">
+			 
+				<tr>
+					<td style="border:12px solid #FFFFFF">
+						<div id="map_wrapper" class="map_wrapper" style="height:437px; width:666px;">
+							<div id="control" class="control" style="text-align:left;z-index:99999;background:#fff;width:666px; height:40px;color:red;position:absolute;">Click a marker to set this as your start location, then click the map around this location, you can see the routes, duration and distance.<a href="javascript:$('#control').slideUp();">close</a></div>
+							<div id="map_canvas" class="map_canvas" style="height:437px; width:666px;"></div>
+							<div id="map_wait" class="map_wait" style="height:437px; width:666px;" ></div>
+							<div id="map_wait_dialog" class="map_wait_dialog" ></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="center" valign="top">
+			<font style="color:#FFFFFF; font-size:12px">All Right Reserved | <a target="_blank" href="http://www.pizzahut.com.pk" style="color:#FFFFFF">www.pizzahut.com.pk</a></font>
+		</td>
+	</tr>
+</table>
+
+</center>
+
+</body>
+</html>

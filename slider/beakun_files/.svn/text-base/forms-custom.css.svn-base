@@ -1,0 +1,224 @@
+
+
+#edit-profile-user-last-name-wrapper input.form-text {
+	width: 190px;
+	background: url("../../images/text_field3.png") no-repeat scroll 0 0 transparent !important;
+}
+
+#edit-profile-user-first-name-wrapper input.form-text {
+	width: 190px;
+	background: url("../../images/text_field3.png") no-repeat scroll 0 0 transparent !important;
+}
+
+#edit-profile-user-last-name-wrapper {
+	margin: -87px 0 30px 210px;
+}
+
+#edit-profile-state-wrapper input.form-text {
+	width: 190px;
+	background: url("../../images/text_field3.png") no-repeat scroll 0 0 transparent !important;
+}
+
+#edit-profile-zip-wrapper input.form-text {
+	width: 190px;
+	background: url("../../images/text_field3.png") no-repeat scroll 0 0 transparent !important;
+}
+
+#edit-profile-zip-wrapper {
+	margin: -63px 0 15px 210px;
+}
+
+.location .form-item input {
+
+	width: 385px !important;
+}
+
+.form-item .description, fieldset .description, .fieldset-layout-settings dd {
+    font-size: 0.9em;
+    line-height: 1.667em;
+    margin: 5px 0 0 6px;
+    width: 450px;
+}
+
+.location .form-item label {
+	float: none !important;
+}
+
+.form-checkboxes, .form-radios {
+	background: none !important;
+}
+
+#edit-locations-0-province-wrapper input.form-autocomplete {
+	width: 190px !important;
+	background: url("../../images/text_field3.png") no-repeat scroll 0 0 transparent !important;
+}
+
+#edit-locations-0-postal-code-wrapper input.form-text {
+	width: 190px;
+	background: url("../../images/text_field3.png") no-repeat scroll 0 0 transparent !important;
+}
+
+#edit-locations-0-postal-code-wrapper {
+	margin: -63px 0 15px 210px;
+}
+
+.node-form p {
+	display: none;
+}
+
+tr.odd, tr.info {
+    background: none repeat scroll 0 0 #1A1A1A !important;
+}
+
+tr.even, tr.odd, tbody th {
+    background: none repeat scroll 0 0 #1A1A1A !important;
+}
+
+#edit-locations-0-country-wrapper {
+	display: none;
+}
+
+#edit-locations-0-fax-wrapper {
+	display: none;
+}
+
+#edit-field-business-logo-0-upload-wrapper input.form-submit {
+	display: none;
+}
+
+#edit-field-business-logo-0-upload-wrapper .description {
+	display: none;
+}
+#edit-field-business-logo-0-upload-wrapper input {
+	
+}
+
+a.tabledrag-handle .handle {
+	background: none;
+	height: auto;
+	width: auto;
+	margin-top: 0;
+}
+
+.node-form .content-multiple-table td.content-multiple-drag {
+	display: none;
+}
+
+#field-business-live-video-items input.form-text, textarea {
+margin: 0 0 0 -8px;
+    width: 400px !important;
+}
+
+#field-business-live-video-items .form-item label {
+	display: none;
+}
+
+#field-business-live-video-items .button input {
+	background: url(../../images/morevids.png) no-repeat;
+	color: transparent;
+	height: 30px;
+	margin: -10px 0px 0px 280px;
+}
+
+html.js .resizable-textarea textarea {
+	margin: 0 0 0 1px !important;
+}
+
+#beakun_fancy_times .time-selects {
+	margin: -12px 0 10px 90px;
+    width: 199px;
+}
+
+#times-apply-all {
+	display: none;
+}
+
+#beakun_fancy_times input {
+	margin: -30px 0 0 385px;
+    position: absolute;
+}
+
+#mon label {
+	color: transparent;
+}
+
+#tue label {
+	color: transparent;
+}
+
+#wed label {
+	color: transparent;
+}
+
+#thu label {
+	color: transparent;
+}
+
+#fri label {
+	color: transparent;
+}
+
+#sat label {
+	color: transparent;
+}
+
+#sun label {
+	color: transparent;
+}
+
+
+#mon  {
+	background: url(../../images/mon.png) no-repeat 0px 0px;
+	border-bottom: 1px dotted #2d2d2d;
+	height: 35px;
+	margin: 10px 0px 10px 0px;
+	width: 450px;
+}
+
+#tue  {
+	background: url(../../images/tue.png) no-repeat 0px 0px;
+	border-bottom: 1px dotted #2d2d2d;
+	height: 35px;
+	margin: 10px 0px 10px 0px;
+	width: 450px;
+}
+
+#wed  {
+	background: url(../../images/wed.png) no-repeat 0px 0px;
+	border-bottom: 1px dotted #2d2d2d;
+	height: 35px;
+	margin: 10px 0px 10px 0px;
+	width: 450px;
+}
+
+#thu  {
+	background: url(../../images/thu.png) no-repeat 0px 0px;
+	border-bottom: 1px dotted #2d2d2d;
+	height: 35px;
+	margin: 10px 0px 10px 0px;
+	width: 450px;
+}
+
+#fri  {
+	background: url(../../images/fri.png) no-repeat 0px 0px;
+	border-bottom: 1px dotted #2d2d2d;
+	height: 35px;
+	margin: 10px 0px 10px 0px;
+	width: 450px;
+}
+
+#sat  {
+	background: url(../../images/sat.png) no-repeat 0px 0px;
+	border-bottom: 1px dotted #2d2d2d;
+	height: 35px;
+	margin: 10px 0px 10px 0px;
+	width: 450px;
+}
+
+#sun  {
+	background: url(../../images/sun.png) no-repeat 0px 0px;
+	border-bottom: 1px dotted #2d2d2d;
+	height: 35px;
+	margin: 10px 0px 10px 0px;
+	width: 450px;
+}

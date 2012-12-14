@@ -1,0 +1,76 @@
+
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+<title>Google Maps JavaScript API v3 Example: Polyline Complex</title> 
+ 
+   <script src="http://api.map.baidu.com/api?v=1.1&services=true" type="text/javascript"></script>
+<script type="text/javascript"> 
+ 
+  var poly;
+  var map;
+  var marker;
+  function initialize() {
+      var myLatlng = new BMap.Point(116.395645, 39.929986);
+
+      map = new BMap.Map(map_property);
+      map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
+      map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
+      map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件
+
+      map.centerAndZoom(myLatlng, 15);
+
+
+    // Add a listener for the click event
+      map.addEventListener('click', function(e) {
+          marker = new BMap.Marker(e.point);
+
+          map.addOverlay(marker);
+          var opts = {
+              width: 250,     // 信息窗口宽度
+              height: 100,     // 信息窗口高度
+              title: "Hello"  // 信息窗口标题
+          }
+          var infoWindow = new BMap.InfoWindow("dotview dotviewdotview", opts);  // 创建信息窗口对象
+
+          marker.addEventListener("click", function() {
+              this.openInfoWindow(infoWindow);
+          });
+          document.getElementById("sLat").innerHTML += '{ "lng":' + e.point.lng + ', "lat":' + e.point.lat + '},';
+      });
+      
+      
+  }
+ 
+  /**
+   * Handles click events on a map, and adds a new point to the Polyline.
+   * @param {MouseEvent} mouseEvent
+   */
+  function addLatLng(event) {
+ 
+    var path = poly.getPath();
+ 
+    // Because path is an MVCArray, we can simply append a new coordinate
+    // and it will automatically appear
+    path.push(event.latLng);
+    
+    document.getElementById("sLat").innerHTML = event.latLng;
+    // Add a new marker at the new plotted point on the polyline.
+    var marker = new google.maps.Marker({
+      position: event.latLng,
+      title: '#' + path.getLength(),
+      map: map
+    });
+ 
+  }
+ 
+</script> 
+</head> 
+<body onload="initialize()"> 
+Lat:<span id="sLat"></span>
+Lng:<span id="sLng"></span>
+  <div id="map_property" style="width:900px;height:500px;"></div> 
+</body> 
+</html> 

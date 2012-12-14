@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xmlns:mappoint="http://virtualearth.msn.com/apis/annotate#">
+    <channel>
+        <title>BfoB Venue Locations</title>
+        <link></link>
+        <description>No Description</description>
+        <mappointIntlCode>cht</mappointIntlCode>
+          <item>
+            <AddressID>147</AddressID>
+            <title>Pera Conference Centre </title>
+            <description> </description>
+            <geo:lat>52.7703132629395</geo:lat>
+            <geo:long>-0.892199993133545</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>148</AddressID>
+            <title>Best Western Stage Hotel </title>
+            <description> </description>
+            <geo:lat>52.5959129333496</geo:lat>
+            <geo:long>-1.11091601848602</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>149</AddressID>
+            <title>The Whipper </title>
+            <description> </description>
+            <geo:lat>52.6699638366699</geo:lat>
+            <geo:long>-0.727446973323822</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>150</AddressID>
+            <title>Hall Garth Hotel </title>
+            <description> </description>
+            <geo:lat>54.579833984375</geo:lat>
+            <geo:long>-1.55610799789429</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>153</AddressID>
+            <title>The White Hart Hotel </title>
+            <description> </description>
+            <geo:lat>51.8004989624023</geo:lat>
+            <geo:long>0.641431987285614</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>154</AddressID>
+            <title>The Balkerne Gate </title>
+            <description> </description>
+            <geo:lat>51.926775</geo:lat>
+            <geo:long>0.913014</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>155</AddressID>
+            <title>La Cascada </title>
+            <description> </description>
+            <geo:lat>51.8893699645996</geo:lat>
+            <geo:long>0.894414007663727</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>157</AddressID>
+            <title>Oak Hotel </title>
+            <description> </description>
+            <geo:lat>53.5483627319336</geo:lat>
+            <geo:long>-2.62640404701233</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>159</AddressID>
+            <title>Oak Hotel </title>
+            <description> </description>
+            <geo:lat>53.5483627319336</geo:lat>
+            <geo:long>-2.62640404701233</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>161</AddressID>
+            <title>Greyhound Hotel </title>
+            <description> </description>
+            <geo:lat>53.4807929992676</geo:lat>
+            <geo:long>-2.5011510848999</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>162</AddressID>
+            <title>Worsley Marriott Hotel </title>
+            <description> </description>
+            <geo:lat>53.5053749084473</geo:lat>
+            <geo:long>-2.39090800285339</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+            <link>http://www.google.com</link>
+          </item>
+          <item>
+            <AddressID>163</AddressID>
+            <title>Premier Inn Trafford Centre West </title>
+            <description> </description>
+            <geo:lat>53.4661331176758</geo:lat>
+            <geo:long>-2.35831093788147</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>164</AddressID>
+            <title>Park Inn Hotel </title>
+            <description> </description>
+            <geo:lat>53.4899253845215</geo:lat>
+            <geo:long>-2.24125194549561</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>165</AddressID>
+            <title>Ramada Hotel </title>
+            <description> </description>
+            <geo:lat>53.4697151184082</geo:lat>
+            <geo:long>-2.28259611129761</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>166</AddressID>
+            <title>Ramada Hotel </title>
+            <description> </description>
+            <geo:lat>53.4697151184082</geo:lat>
+            <geo:long>-2.28259611129761</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>168</AddressID>
+            <title>Peel Hey Hotel </title>
+            <description> </description>
+            <geo:lat>53.3729209899902</geo:lat>
+            <geo:long>-3.13546895980835</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>169</AddressID>
+            <title>The Park Inn </title>
+            <description> </description>
+            <geo:lat>53.4499359130859</geo:lat>
+            <geo:long>-2.73680591583252</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>170</AddressID>
+            <title>The Liner Hotel </title>
+            <description> </description>
+            <geo:lat>53.4084739685059</geo:lat>
+            <geo:long>-2.97571802139282</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>171</AddressID>
+            <title>Royal Cambridge Hotel </title>
+            <description> </description>
+            <geo:lat>52.1978187561035</geo:lat>
+            <geo:long>0.121716998517513</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>172</AddressID>
+            <title>Marriott Hotel </title>
+            <description> </description>
+            <geo:lat>52.3386192321777</geo:lat>
+            <geo:long>-0.210895001888275</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>173</AddressID>
+            <title>The Cutter Inn </title>
+            <description> </description>
+            <geo:lat>52.393871307373</geo:lat>
+            <geo:long>0.26723301410675</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>174</AddressID>
+            <title>The Maids Head Hotel </title>
+            <description> </description>
+            <geo:lat>52.632137298584</geo:lat>
+            <geo:long>1.2985030412674</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>176</AddressID>
+            <title>Didsbury House Hotel </title>
+            <description> </description>
+            <geo:lat>53.4116516113281</geo:lat>
+            <geo:long>-2.22787094116211</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>177</AddressID>
+            <title>Premier Inn, Manchester Airport </title>
+            <description> </description>
+            <geo:lat>53.3625907897949</geo:lat>
+            <geo:long>-2.29396796226501</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>179</AddressID>
+            <title>The Rafters Tea Room </title>
+            <description> </description>
+            <geo:lat>53.960489</geo:lat>
+            <geo:long>-2.022345</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>180</AddressID>
+            <title>Marriott Hollins Hall Hotel &amp; Country Club </title>
+            <description> </description>
+            <geo:lat>53.8600234985352</geo:lat>
+            <geo:long>-1.7353310585022</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>181</AddressID>
+            <title>Crowne Plaza </title>
+            <description> </description>
+            <geo:lat>53.7964096069336</geo:lat>
+            <geo:long>-1.55397796630859</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>201</AddressID>
+            <title>The Bar Convent </title>
+            <description> </description>
+            <geo:lat>53.9548683166504</geo:lat>
+            <geo:long>-1.09178495407104</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>205</AddressID>
+            <title>The Abbey Hill Hotel </title>
+            <description> </description>
+            <geo:lat>52.04443359375</geo:lat>
+            <geo:long>-0.807569026947021</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>206</AddressID>
+            <title>The Black Lion Inn, Savanna Restaurant </title>
+            <description> </description>
+            <geo:lat>51.7541580200195</geo:lat>
+            <geo:long>-0.350607991218567</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>207</AddressID>
+            <title>Holiday Inn Hotel </title>
+            <description> </description>
+            <geo:lat>52.2296333312988</geo:lat>
+            <geo:long>-0.863978981971741</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>208</AddressID>
+            <title>The Brache </title>
+            <description> </description>
+            <geo:lat>51.8728561401367</geo:lat>
+            <geo:long>-0.404374003410339</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>209</AddressID>
+            <title>The Swan Hotel </title>
+            <description> </description>
+            <geo:lat>52.1349487304688</geo:lat>
+            <geo:long>-0.465292990207672</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>211</AddressID>
+            <title>The Radcliffe Arms Hotel </title>
+            <description> </description>
+            <geo:lat>51.9513244628906</geo:lat>
+            <geo:long>-0.269210010766983</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>212</AddressID>
+            <title>Wrexham Golf Club </title>
+            <description> </description>
+            <geo:lat>53.0611801147461</geo:lat>
+            <geo:long>-2.9536759853363</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>213</AddressID>
+            <title>Thornton Hall </title>
+            <description> </description>
+            <geo:lat>53.318473815918</geo:lat>
+            <geo:long>-3.04981994628906</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>214</AddressID>
+            <title>Marina Bar &amp; Grill </title>
+            <description> </description>
+            <geo:lat>53.388744354248</geo:lat>
+            <geo:long>-2.98549199104309</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>215</AddressID>
+            <title>Holiday Inn </title>
+            <description> </description>
+            <geo:lat>53.2892417907715</geo:lat>
+            <geo:long>-2.89653491973877</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>216</AddressID>
+            <title>Ramada Hotel </title>
+            <description> </description>
+            <geo:lat>53.1851043701172</geo:lat>
+            <geo:long>-2.84822392463684</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>217</AddressID>
+            <title>Birchwood Ramada Encore </title>
+            <description> </description>
+            <geo:lat>53.4228248596191</geo:lat>
+            <geo:long>-2.52043795585632</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>218</AddressID>
+            <title>Ramada Hotel </title>
+            <description> </description>
+            <geo:lat>53.1851043701172</geo:lat>
+            <geo:long>-2.84822392463684</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>219</AddressID>
+            <title>The Pines Hotel </title>
+            <description> </description>
+            <geo:lat>53.7064628601074</geo:lat>
+            <geo:long>-2.6389000415802</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>220</AddressID>
+            <title>The Pines Hotel </title>
+            <description> </description>
+            <geo:lat>53.7064628601074</geo:lat>
+            <geo:long>-2.6389000415802</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>221</AddressID>
+            <title>Marriott Hotel </title>
+            <description> </description>
+            <geo:lat>53.8076477050781</geo:lat>
+            <geo:long>-2.7220470905304</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>222</AddressID>
+            <title>Stoke Moat House Hotel </title>
+            <description> </description>
+            <geo:lat>53.026481628418</geo:lat>
+            <geo:long>-2.19594192504883</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>223</AddressID>
+            <title>Stoke Moat House Hotel </title>
+            <description> </description>
+            <geo:lat>53.026481628418</geo:lat>
+            <geo:long>-2.19594192504883</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>224</AddressID>
+            <title>Stoke Moat House Hotel </title>
+            <description> </description>
+            <geo:lat>53.026481628418</geo:lat>
+            <geo:long>-2.19594192504883</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>225</AddressID>
+            <title>Stoke Moat House Hotel </title>
+            <description> </description>
+            <geo:lat>53.026481628418</geo:lat>
+            <geo:long>-2.19594192504883</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>226</AddressID>
+            <title>Tillington Hall Hotel </title>
+            <description> </description>
+            <geo:lat>52.8222541809082</geo:lat>
+            <geo:long>-2.13438606262207</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>227</AddressID>
+            <title>Hatherton Country House Hotel </title>
+            <description> </description>
+            <geo:lat>52.7229919433594</geo:lat>
+            <geo:long>-2.12500500679016</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>228</AddressID>
+            <title>The Retreat Health  Beauty Spa &amp; Jester Bistro </title>
+            <description> </description>
+            <geo:lat>53.1086654663086</geo:lat>
+            <geo:long>-2.03320407867432</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>229</AddressID>
+            <title>Holiday Inn Hotel </title>
+            <description> </description>
+            <geo:lat>53.312402</geo:lat>
+            <geo:long>-2.692679</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>230</AddressID>
+            <title>Ramada Encore Hotel </title>
+            <description> </description>
+            <geo:lat>53.0903816223145</geo:lat>
+            <geo:long>-2.42033100128174</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>231</AddressID>
+            <title>Village St David's Hotel </title>
+            <description> </description>
+            <geo:lat>53.1903495788574</geo:lat>
+            <geo:long>-3.05279397964478</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>232</AddressID>
+            <title>Rookery Hall </title>
+            <description> </description>
+            <geo:lat>53.0991363525391</geo:lat>
+            <geo:long>-2.50963807106018</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>233</AddressID>
+            <title>The Royal Wells Hotel </title>
+            <description> </description>
+            <geo:lat>51.1345367431641</geo:lat>
+            <geo:long>0.258859992027283</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>234</AddressID>
+            <title>Savannah Cafe Bar </title>
+            <description> </description>
+            <geo:lat>51.0002746582031</geo:lat>
+            <geo:long>-0.105705998837948</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>235</AddressID>
+            <title>Reigate Hill Golf Club </title>
+            <description> </description>
+            <geo:lat>51.2619819641113</geo:lat>
+            <geo:long>-0.17951899766922</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>236</AddressID>
+            <title>Ramada Plaza </title>
+            <description> </description>
+            <geo:lat>51.2617378234863</geo:lat>
+            <geo:long>-0.430373996496201</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>237</AddressID>
+            <title>Best Western Landsdowne Hotel </title>
+            <description> </description>
+            <geo:lat>50.7609405517578</geo:lat>
+            <geo:long>0.284451007843018</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>240</AddressID>
+            <title>Hilton Hotel </title>
+            <description> </description>
+            <geo:lat>50.8362503051758</geo:lat>
+            <geo:long>-1.04129803180695</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>241</AddressID>
+            <title>Holiday Inn Hotel </title>
+            <description> </description>
+            <geo:lat>50.8553161621094</geo:lat>
+            <geo:long>-1.24218094348907</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>242</AddressID>
+            <title>Alveston House Hotel </title>
+            <description> </description>
+            <geo:lat>51.5901489257813</geo:lat>
+            <geo:long>-2.52769708633423</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>243</AddressID>
+            <title>Winford Manor Hotel </title>
+            <description> </description>
+            <geo:lat>51.3745765686035</geo:lat>
+            <geo:long>-2.67523789405823</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>244</AddressID>
+            <title>Filton Holiday Inn </title>
+            <description> </description>
+            <geo:lat>51.5047416687012</geo:lat>
+            <geo:long>-2.5366370677948</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>245</AddressID>
+            <title>Mercure Queen's Hotel </title>
+            <description> </description>
+            <geo:lat>51.8963813781738</geo:lat>
+            <geo:long>-2.08026194572449</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>247</AddressID>
+            <title>Grand Hotel </title>
+            <description> </description>
+            <geo:lat>51.455451965332</geo:lat>
+            <geo:long>-2.59329795837402</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>248</AddressID>
+            <title>Cadbury House Hotel </title>
+            <description> </description>
+            <geo:lat>51.3802680969238</geo:lat>
+            <geo:long>-2.81013202667236</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>249</AddressID>
+            <title>Holiday Inn Royal Victoria </title>
+            <description> </description>
+            <geo:lat>53.387336730957</geo:lat>
+            <geo:long>-1.45987105369568</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>251</AddressID>
+            <title>Astley Bank Hotel &amp; Conference Centre </title>
+            <description> </description>
+            <geo:lat>53.6861038208008</geo:lat>
+            <geo:long>-2.46703195571899</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>252</AddressID>
+            <title>Britannia Hotel </title>
+            <description> </description>
+            <geo:lat>53.5647506713867</geo:lat>
+            <geo:long>-2.47816610336304</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>253</AddressID>
+            <title>Zest </title>
+            <description> </description>
+            <geo:lat>53.5913429260254</geo:lat>
+            <geo:long>-2.47759008407593</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>254</AddressID>
+            <title>The Last Drop Hotel </title>
+            <description> </description>
+            <geo:lat>53.6220359802246</geo:lat>
+            <geo:long>-2.42102789878845</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>255</AddressID>
+            <title>Ramada Jarvis </title>
+            <description> </description>
+            <geo:lat>53.5774917602539</geo:lat>
+            <geo:long>-2.56190609931946</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>256</AddressID>
+            <title>De Vere Hotel </title>
+            <description> </description>
+            <geo:lat>51.3015289306641</geo:lat>
+            <geo:long>-0.597516000270844</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>257</AddressID>
+            <title>Oatlands Park Hotel </title>
+            <description> </description>
+            <geo:lat>51.375072479248</geo:lat>
+            <geo:long>-0.442391008138657</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>258</AddressID>
+            <title>Warren House </title>
+            <description> </description>
+            <geo:lat>51.4241256713867</geo:lat>
+            <geo:long>-0.274129986763</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>260</AddressID>
+            <title>The Davenport Hotel  </title>
+            <description> </description>
+            <geo:lat>53.395613</geo:lat>
+            <geo:long>-2.123305</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>261</AddressID>
+            <title>The Davenport Hotel  </title>
+            <description> </description>
+            <geo:lat>53.395613</geo:lat>
+            <geo:long>-2.123305</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>262</AddressID>
+            <title>Copley Centre </title>
+            <description> </description>
+            <geo:lat>53.4893989562988</geo:lat>
+            <geo:long>-2.03396797180176</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>263</AddressID>
+            <title>Springhill Hospice </title>
+            <description> </description>
+            <geo:lat>53.597526550293</geo:lat>
+            <geo:long>-2.13923692703247</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>264</AddressID>
+            <title>Britannia Hotel </title>
+            <description> </description>
+            <geo:lat>53.8383178710938</geo:lat>
+            <geo:long>-1.5991530418396</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>265</AddressID>
+            <title>Village Hotel </title>
+            <description> </description>
+            <geo:lat>53.4645690917969</geo:lat>
+            <geo:long>-2.09195590019226</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>266</AddressID>
+            <title>Premier Inn Hotel </title>
+            <description> </description>
+            <geo:lat>53.3782615661621</geo:lat>
+            <geo:long>-2.22004103660584</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>267</AddressID>
+            <title>The Falcon Business Centre </title>
+            <description> </description>
+            <geo:lat>53.5484352111816</geo:lat>
+            <geo:long>-2.13653993606567</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>268</AddressID>
+            <title>Hoiday Inn </title>
+            <description> </description>
+            <geo:lat>53.7000617980957</geo:lat>
+            <geo:long>-1.75699603557587</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>269</AddressID>
+            <title>Bolholt Hotel &amp; Country Club </title>
+            <description> </description>
+            <geo:lat>53.6019897460938</geo:lat>
+            <geo:long>-2.32625889778137</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>271</AddressID>
+            <title>Holiday Inn </title>
+            <description> </description>
+            <geo:lat>53.7709503173828</geo:lat>
+            <geo:long>-1.66588604450226</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>272</AddressID>
+            <title>Pearson Park Hotel </title>
+            <description> </description>
+            <geo:lat>53.760627746582</geo:lat>
+            <geo:long>-0.35223799943924</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>273</AddressID>
+            <title>Humber Royal Hotel </title>
+            <description> </description>
+            <geo:lat>53.5600433349609</geo:lat>
+            <geo:long>-0.120833002030849</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>275</AddressID>
+            <title>Holiday Inn Express </title>
+            <description> </description>
+            <geo:lat>50.9257774353027</geo:lat>
+            <geo:long>-1.32431697845459</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>276</AddressID>
+            <title>Bartley Lodge Hotel </title>
+            <description> </description>
+            <geo:lat>50.9167404174805</geo:lat>
+            <geo:long>-1.57736694812775</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>277</AddressID>
+            <title>The Dolphin Hotel </title>
+            <description> </description>
+            <geo:lat>50.9001007080078</geo:lat>
+            <geo:long>-1.40342903137207</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>278</AddressID>
+            <title>Botleigh Grange Hotel </title>
+            <description> </description>
+            <geo:lat>50.9202346801758</geo:lat>
+            <geo:long>-1.29356694221497</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>280</AddressID>
+            <title>Holiday Inn </title>
+            <description> </description>
+            <geo:lat>52.5644569396973</geo:lat>
+            <geo:long>-0.287174999713898</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>281</AddressID>
+            <title>Grantham Fellows </title>
+            <description> </description>
+            <geo:lat>52.9118385314941</geo:lat>
+            <geo:long>-0.643630981445313</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>282</AddressID>
+            <title>The Copthorne Hotel (Millenium) </title>
+            <description> </description>
+            <geo:lat>51.4639015197754</geo:lat>
+            <geo:long>-3.27188301086426</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>283</AddressID>
+            <title>Holiday Inn Express </title>
+            <description> </description>
+            <geo:lat>51.5595245361328</geo:lat>
+            <geo:long>-3.03621888160706</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>284</AddressID>
+            <title>Premier Inn Crossways </title>
+            <description> </description>
+            <geo:lat>51.5881767272949</geo:lat>
+            <geo:long>-3.21052289009094</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>285</AddressID>
+            <title>The Park Inn </title>
+            <description> </description>
+            <geo:lat>51.5084075927734</geo:lat>
+            <geo:long>-3.14705109596252</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>286</AddressID>
+            <title>Holiday Inn Hotel </title>
+            <description> </description>
+            <geo:lat>53.3432769775391</geo:lat>
+            <geo:long>-2.27677202224731</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>287</AddressID>
+            <title>The Tytherington Club </title>
+            <description> </description>
+            <geo:lat>53.2793846130371</geo:lat>
+            <geo:long>-2.12788200378418</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>288</AddressID>
+            <title>Stanneylands Hotel </title>
+            <description> </description>
+            <geo:lat>53.3426513671875</geo:lat>
+            <geo:long>-2.22736811637878</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>289</AddressID>
+            <title>Mere Golf &amp; Country Club </title>
+            <description> </description>
+            <geo:lat>53.3324890136719</geo:lat>
+            <geo:long>-2.40572309494019</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>290</AddressID>
+            <title>Bredbury Hall Hotel </title>
+            <description> </description>
+            <geo:lat>53.4145812988281</geo:lat>
+            <geo:long>-2.12423992156982</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>293</AddressID>
+            <title>Fina Bar and Grill </title>
+            <description> </description>
+            <geo:lat>53.2610931396484</geo:lat>
+            <geo:long>-2.1258339881897</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>294</AddressID>
+            <title>Mottram Hall Hotel </title>
+            <description> </description>
+            <geo:lat>53.3089866638184</geo:lat>
+            <geo:long>-2.18243503570557</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>309</AddressID>
+            <title>The New Holmwood Hotel </title>
+            <description> </description>
+            <geo:lat>50.7991943359375</geo:lat>
+            <geo:long>-1.16692996025085</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>310</AddressID>
+            <title>The Maids Head Hotel </title>
+            <description> </description>
+            <geo:lat>52.632137298584</geo:lat>
+            <geo:long>1.2985030412674</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>311</AddressID>
+            <title>Frankie &amp; Benny's </title>
+            <description> </description>
+            <geo:lat>53.5761337280273</geo:lat>
+            <geo:long>-2.27514910697937</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>312</AddressID>
+            <title>Swan Enterprise Centre </title>
+            <description> </description>
+            <geo:lat>52.1110801696777</geo:lat>
+            <geo:long>-0.929612994194031</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>347</AddressID>
+            <title>Fanhams Hall Hotel </title>
+            <description> </description>
+            <geo:lat>51.8224639892578</geo:lat>
+            <geo:long>-0.0113040003925562</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>354</AddressID>
+            <title>Leasowe Castle </title>
+            <description> </description>
+            <geo:lat>53.4186019897461</geo:lat>
+            <geo:long>-3.10803508758545</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>364</AddressID>
+            <title>Grants Hotel </title>
+            <description> </description>
+            <geo:lat>53.9956169128418</geo:lat>
+            <geo:long>-1.5461460351944</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>367</AddressID>
+            <title>The Cheltenham Chase Hotel </title>
+            <description> </description>
+            <geo:lat>51.8440628051758</geo:lat>
+            <geo:long>-2.14466404914856</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>435</AddressID>
+            <title>Campanile Hotel  </title>
+            <description> </description>
+            <geo:lat>53.7551345825195</geo:lat>
+            <geo:long>-1.7403290271759</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>442</AddressID>
+            <title>Holiday Inn Royal Victoria </title>
+            <description> </description>
+            <geo:lat>53.387336730957</geo:lat>
+            <geo:long>-1.45987105369568</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>464</AddressID>
+            <title>Northampton Cricket Club </title>
+            <description> </description>
+            <geo:lat>52.2493629455566</geo:lat>
+            <geo:long>-0.870051980018616</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>2048</AddressID>
+            <title>Mercure Leicester City </title>
+            <description> </description>
+            <geo:lat>52.6331176757813</geo:lat>
+            <geo:long>-1.12987399101257</geo:long>
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+          <item>
+            <AddressID>2058</AddressID>
+            <title>Grants Hotel </title>
+            <description> </description>
+            <geo:lat />
+            <geo:long />
+            <icon>http://www.bforb.com/images/bforb-pin.gif</icon>
+          </item>
+    </channel>
+</rss>

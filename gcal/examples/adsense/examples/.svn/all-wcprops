@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/gmap/!svn/ver/210/1/gcal/examples/adsense/examples
+END
+GetAllAdClients.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/gmap/!svn/ver/210/1/gcal/examples/adsense/examples/GetAllAdClients.php
+END
+GetAllCustomChannels.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/gmap/!svn/ver/210/1/gcal/examples/adsense/examples/GetAllCustomChannels.php
+END
+GetAllAdUnits.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/gmap/!svn/ver/210/1/gcal/examples/adsense/examples/GetAllAdUnits.php
+END
+GenerateReport.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/gmap/!svn/ver/210/1/gcal/examples/adsense/examples/GenerateReport.php
+END
+GetAllUrlChannels.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/gmap/!svn/ver/210/1/gcal/examples/adsense/examples/GetAllUrlChannels.php
+END
+GenerateReportWithPaging.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/gmap/!svn/ver/210/1/gcal/examples/adsense/examples/GenerateReportWithPaging.php
+END

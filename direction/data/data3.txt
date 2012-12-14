@@ -1,0 +1,10 @@
+{result:1,data:[{customerid:12,companyname:"Superlift Crane Hire (Pty) Ltd",
+	apptime:"14:00",
+	address:"4 Marconi Nook,Hennopspark Ext 15",found:true
+},{customerid:22,companyname:"Coilmech (Pty) Ltd",
+	apptime:"15:00",
+	address:"Rand Airport,Germiston",found:true
+},{customerid:54,companyname:"Inyathi Promotions & Industrial Supplies cc",
+	apptime:"16:30",
+	address:"6 Bosloerie Street,Eastlynn",found:true
+}]}

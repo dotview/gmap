@@ -1,0 +1,355 @@
+﻿<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps Demo</title>
+    <style type="text/css">
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        h3
+	{ margin: 0;
+	}
+        #map_canvas
+        {
+            width: 1315px;
+            height: 650px;
+        }
+        .infowindow *
+        {
+            font-size: 90%;
+            margin: 0;
+        }
+        #top
+        {
+            height: 25px;
+            width: 100%;
+        }
+        
+        #b_overlay.hotel, #b_overlay.hotel_mini
+        {
+            background: #003366 !important;
+        }
+        
+        #b_overlay
+        {
+            background: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            box-shadow: 0.125cm 0.125cm 0.125cm #808080;
+            width: 250px;
+            z-index: 200;
+        }
+        #b_overlay h3
+        {
+            background: #FFFFFF;
+            font-size: 8pt !important;
+            font-weight: bold;
+            margin-bottom: 0;
+            padding: 0.5em !important;
+            text-shadow: none;
+        }
+        
+        .box h3
+        {
+            font-size: 1.8em;
+            font-weight: normal;
+            margin-bottom: 0.4em;
+            text-shadow: 1px 1px 0 white;
+        }
+        #b_overlay h3 img
+        {
+            float: right;
+            padding: 0.25em 0.5em 0 0;
+        }
+        
+        #b_overlay p
+        {
+            color: #FFFFFF !important;
+            clear: right;
+            font-size: 8pt !important;
+            line-height: 1.1;
+            margin: 0;
+            padding: 0.5em !important;
+        }
+        #b_overlay p img
+        {
+            float: left;
+            height: 64px;
+            padding: 0 0.5em 0.5em 0;
+            width: 64px;
+        }
+        #b_overlay_table_prices
+        {
+            clear: both;
+            margin: 0 0 5px 5px;
+            width: auto !important;
+        }
+        
+        .box table
+        {
+            width: 100%;
+        }
+        
+        table, tr, td, th
+        {
+            border: 0 none;
+            border-spacing: 0;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            vertical-align: top;
+        }
+        .b_overlay_tr
+        {
+            font-size: 8pt !important;
+            line-height: 1.1;
+        }
+        .b_overlay_td_room_occupancy
+        {
+            color: #FFFFFF;
+            font-size: inherit;
+            font-weight: bold;
+            padding-bottom: 3px;
+        }
+        .customBox
+        {
+            background: #0866C3;
+            border: 1px solid white;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            position: absolute;
+        } 
+    </style>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+      <script type="text/javascript">
+          google.load("jquery", "1.3.2"); 
+    </script>
+	<script type="text/javascript">
+          
+var map;
+var setmarker;
+var infowindow;
+var setmarkerImage = "http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png";
+
+var geocoder = new google.maps.Geocoder();
+
+function initialize() {
+    var latlng = new google.maps.LatLng(54.622978,-2.592773);
+    var myOptions = {
+        zoom: 5,
+        center: latlng,
+        //mapTypeControl: false,
+        //mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
+        navigationControl: true,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        cursor: 'pointer'
+    };
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+    google.maps.event.addListener(map, 'rightclick', function(event) {
+        PleaceMarker(event.latLng);
+    });
+
+    var controlDiv = document.createElement('DIV');
+    var searchControl = new SearchControl(controlDiv, map);
+    controlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+function PleaceMarker(location, updateAddress) {
+    var newlatlng = new google.maps.LatLng(location);
+    if (setmarker == null) {
+        setmarker = new google.maps.Marker({
+            position: location,
+            map: map,
+            title: "place for your house!",
+            draggable: true,
+            icon: setmarkerImage,
+            cursor: 'pointer'
+        })
+		var circle = new google.maps.Circle({
+					  map: map,
+					  fillColor:'#00A0FF',
+					  fillOpacity:0.4,
+					  strokeColor:'#ccc',
+					  strokeOpacity:0.5,
+					  radius: 3000 // 3 km
+					});
+
+					// Since Circle and Marker both extend MVCObject, you can bind them
+					// together using MVCObject's bindTo() method.  Here, we're binding
+					// the Circle's center to the Marker's position.
+					// http://code.google.com/apis/maps/documentation/v3/reference.html#MVCObject
+					circle.bindTo('center', setmarker, 'position');
+    }
+    setmarker.setCursor("pointer");
+    setmarker.setPosition(location);
+    geocodePosition(location);
+    updateMarkerPosition(location);
+
+    google.maps.event.addListener(setmarker, 'click', function(event) {
+        ShowInfoWindow(setmarker, "If the marker does not pinpoint to your house,<br>Drag it to the correct locaion");
+    });
+    ShowInfoWindow(setmarker, "If the marker does not pinpoint to your house,<br>Drag it to the correct locaion");
+   
+   // Add dragging event listeners.
+    google.maps.event.addListener(setmarker, 'dragend', function() {
+        geocodePosition(setmarker.getPosition());
+		updateMarkerPosition(setmarker.getPosition());
+		
+    });
+}
+
+function geocodePosition(pos) {
+    geocoder.geocode({
+        latLng: pos
+    }, function(responses) {
+        if (responses && responses.length > 0) {
+            updateMarkerAddress(responses[0].formatted_address);
+
+        } else {
+            updateMarkerAddress('Cannot determine address at this location.');
+        }
+    });
+}
+
+function updateMarkerPosition(latLng) {
+    if (document.getElementById('hse_lat'))
+        document.getElementById('hse_lat').value = latLng.lat();
+    if (document.getElementById('hse_lng'))
+        document.getElementById('hse_lng').value = latLng.lng();
+	document.getElementById('lat').innerHTML = latLng.lat();
+	document.getElementById('lng').innerHTML = latLng.lng();
+}
+
+function updateMarkerAddress(str) {
+    document.getElementById('hse_address').value = str;
+	document.getElementById('address').innerHTML = str;
+	ShowInfoWindow(setmarker, "If the marker does not pinpoint to your house,<br>Drag it to the correct locaion<br>"+str);
+}
+function ShowInfoWindow(marker, content) {
+    if (infowindow == null) {
+        infowindow = new google.maps.InfoWindow(
+              { content: content,
+                  size: new google.maps.Size(500, 500)
+              });
+    }
+	infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
+function SearchControl(controlDiv, map) {
+
+    // Set CSS styles for the DIV containing the control
+    // Setting padding to 5 px will offset the control
+    // from the edge of the map
+    controlDiv.style.padding = '5px';
+
+    // Set CSS for the control border
+    var controlUI = document.createElement('DIV');
+    controlUI.style.cssText = 'color:red;border:0px solid green;cursor:pointer';
+    //controlUI.innerHTML = "<input type='text' id='search' /><input type='button' value='search'/>";
+
+    var TextCtl = document.createElement("input");
+    TextCtl.type = "text";
+    TextCtl.style.cssText = 'border:1px solid #346EA7;height:20px;width:180px;color:#666;';
+    TextCtl.id = "search";
+	TextCtl.value ="Entry Postcode or address";
+	TextCtl.onfocus=function(){this.value="";}
+    controlUI.appendChild(TextCtl);
+
+    var ButtonCtl = document.createElement("input");
+    ButtonCtl.type = "button";
+    ButtonCtl.id = "btnSearch";
+    ButtonCtl.style.cssText = 'border:1px solid #346EA7;cursor:pointer;height:20px;width:50px;';
+    ButtonCtl.value = "search";
+
+    controlUI.appendChild(ButtonCtl);
+
+    controlDiv.appendChild(controlUI);
+
+    google.maps.event.addDomListener(ButtonCtl, 'click', function(ev) {
+        MapSearch(TextCtl.value);
+    });
+}
+function CopyRightControl(controlDiv, map) {
+    controlDiv.style.padding = '4px';
+    var controlUI = document.createElement('DIV');
+    controlUI.style.cssText = ' border:0px solid green;cursor:pointer;font-size:13px;color:#666;';
+    controlUI.innerHTML = "copyright &copy DotView";
+    controlDiv.appendChild(controlUI);
+}
+function MapSearch(address) {
+    if (address == "")
+        return;
+    if (geocoder) {
+        geocoder.geocode({ 'address': address }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+				PleaceMarker(results[0].geometry.location);
+				map.setZoom(13);
+				return;
+                if (makemarker == null) {
+                    makemarker = new google.maps.Marker({
+                        map: map,
+						draggable:true,
+                        position: results[0].geometry.location
+                    });
+								// Add a Circle overlay to the map.
+					var circle = new google.maps.Circle({
+					  map: map,
+					  fillColor:'#00AAFF',
+					  fillOpacity:0.6,
+					  strokeColor:'#ccc',
+					  strokeOpacity:0.9,
+					  radius: 3000 // 3 km
+					});
+
+					// Since Circle and Marker both extend MVCObject, you can bind them
+					// together using MVCObject's bindTo() method.  Here, we're binding
+					// the Circle's center to the Marker's position.
+					// http://code.google.com/apis/maps/documentation/v3/reference.html#MVCObject
+					circle.bindTo('center', makemarker, 'position');
+                     
+                }
+                else {
+                    makemarker.setPosition(results[0].geometry.location);
+                }
+            } else {
+                alert("Can not find the place: " + address + " ");
+            }
+        });
+    }
+}
+ 
+ function show(){	
+	var lat = $("#hse_lat").val();
+	var lng = $("#hse_lng").val();
+	var address = $("#hse_address").val();
+	alert("xxx.html?latlng=("+lat+","+lng+")&address="+address);
+ }
+		 
+    </script>
+</head>
+<body>
+    <div   style="display:none;">
+	<input id="hse_lat" type="text" />
+	<input id="hse_lng" type="text" />
+	<input id="hse_address" type="text" />
+    </div>
+	 <div id="top"  >
+	 lat:<span id="lat" style="margin-right:12px;"></span> 
+	 lng:<span id="lng" style="margin-right:12px;"></span> 
+	 address:<span id="address"></span>
+	 </div>
+    <div id="map_canvas">
+    </div>
+	<input id="btnsubmit" onclick="show();" type="button" value="test submit value" />
+</body>
+</html>

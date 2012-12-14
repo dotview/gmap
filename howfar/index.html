@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <title> Dynamic Public Transport Travel Time Maps </title>
+        <link rel="icon" type="image/png" href="/media/img/favicon.png" />
+        <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+       
+        <link href="css/screen.min.css" rel="stylesheet" type="text/css" media="screen,projection" />        
+        
+        <link type="text/css" href="css/smoothness/jquery-ui.css" rel="stylesheet" />
+        <meta name="robots" content="index, follow" />
+         
+        
+        <script src="http://www.google.com/jsapi?sensor=false" type="text/javascript"></script>
+        <script type="text/javascript" charset="utf-8">
+            google.load("maps", "3", {other_params:"sensor=false"});
+            google.load("search", "1", {nocss:1});
+        </script>
+        
+       <script src="js/jquery-all.js" type="text/javascript" charset="utf-8"></script>
+      
+    </head>
+    <body>
+        <header id="topnav">
+            <h1 id="about-header"><a href=".">Minneapolis</a></h1>
+            <span style="position:absolute;top:4px;left:122px;font-size:6pt;color:#aaa;">Beta</span>
+            <nav class="nav">
+                <ul id="topnav-list">
+                    <li><a class="listicon" href="/" id="dotviewmap-world">More Cities</a></li>
+                    <li><a class="listicon toggle" href="#about" id="dotviewmap-about">About dotviewmap</a></li>
+                    <li><a class="listicon toggle" id="dotviewmap-settings" href="#configure">Settings</a></li>
+                    <li class="bigger-listitem">
+                                                <div class="nav-label">Drop me<br/>on the map:</div>
+                        <div id="urbanDistance-markerrepo" class="markerrepo"><img id="urbanDistance-markerrepo-marker" class="markerrepo-marker" src="http://gmaps-samples.googlecode.com/svn/trunk/markers/orange/blank.png" alt="New Starting Point"/></div>
+
+                    </li>
+                    <li class="bigger-listitem" id="searcharea"><div class="nav-label"><label for="urbanDistance-search">Search area<br/>with Google:</label></div><div class="right"><input type="search" id="urbanDistance-search" size="16" placeholder="e.g. Coffee"><button id="clear-search" style="visibility:hidden">X</button><img id="urbanDistance-search-indicator" style="visibility:hidden;margin:4px 0 0" src="/media/img/refresh.gif" alt="Refreshing"></div></li>
+                </ul>
+            </nav>
+
+        </header>
+        <div id="map"></div>
+        <section id="about" class="vcard contentoverlay">
+            <a class="close toggle" href="#about">close</a>
+            <h2 class="center">It's <img style="vertical-align:middle;margin:10px 0 0;" src="/media/img/dotviewmap_medium.png" alt="dotviewmap"/></h2>
+<p>dotviewmap shows you the area you can reach with public transport from any point in a given time. It is available for major cities in the US and world wide.</p>
+<p>You may be interested to watch a <a href="http://vimeo.com/16362921">video about what dotviewmap can do</a>, read a <a href="http://blog.stefanwehrmeyer.com/post/1448498820/a-dotviewmap-world">blog post about how dotviewmap works</a> or jump to the <a href="/docs/">dotviewmap API Documentation</a>.
+<p>dotviewmap was originally inspired by MySociety's <a href="http://mapumental.channel4.com">Mapumental</a> which is sadly still in private beta.</p>
+ 
+ 
+        </section>
+        <section id="terms-of-use" class="contentoverlay">
+            <a class="close toggle" href="#terms-of-use">close</a>
+            <iframe style="width:400px;height:350px;overflow:scroll;" src="/docs/tos.html"></iframe>
+        </section>
+        <div id="controls" class="controlsoverlay"></div>
+        <div id="message" class="shortoverlay" style="display:none"></div>
+        
+        <div id="copyright-notice">
+            <a class="close toggle" href="#copyright-notice"></a>
+            <div id="search-attribution" style="display:none"></div><div id="osm-copyright" style="display:none">(c) Map Tiles <a href="http://www.openstreetmap.org/">OpenStreetMap</a></div>No Warranties: <a class="toggle" href="#terms-of-use">Terms of Use</a><br/>For trip planning services see links below. Data Copyright Holders are:<p>(c) <a href="http://www.metrotransit.org/">Metro Transit Minneapolis</a></p></div>
+        
+        <script src="js/map.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script type="text/javascript" charset="utf-8">
+            var dvmap;
+            (function(){
+                var options = {"mapStartCenter": {"lat": 44.9799654, "lng": -93.2638361},
+                        "mapStartZoom": 12,
+                        "dataUrlPrefix": "http://dotviewmap.stefanwehrmeyer.com/data/",
+                        "layerSettings": {"urbanDistance": {"estimatedMaxCalculateCalls": 1050000
+
+,"dataSize":6499659}
+
+}
+                    };
+                options.layerSettings.urbanDistance.cityData = 'minneapolis-1';
+                options.layerSettings.urbanDistance.northwest = {"lat":45.560127, "lng":-94.157372};
+                options.layerSettings.urbanDistance.southeast = {"lat":44.707146, "lng":-92.80558};
+                options.layerSettings.urbanDistance.copyright = "\x3Cp\x3E(c) \x3Ca href\x3D\x22http://www.metrotransit.org/\x22\x3EMetro Transit Minneapolis\x3C/a\x3E\x3C/p\x3E";
+                dvmap = dotviewmap(options);
+            }());
+            var cities = [{name: "Houston", 
+                cityid: "houston", 
+                lat: 29.757,
+                lng: -95.372
+                },{name: "Colorado Springs", 
+                cityid: "coloradosprings", 
+                lat: 38.8338816,
+                lng: -104.8213634
+                },{name: "Delaware", 
+                cityid: "delaware", 
+                lat: 39.2174922589,
+                lng: -75.3631210328
+                },{name: "Canberra", 
+                cityid: "canberra", 
+                lat: -35.2819998,
+                lng: 149.1286843
+                },{name: "Boston", 
+                cityid: "boston", 
+                lat: 42.3584308,
+                lng: -71.0597732
+                }];
+            dvmap.addLayer("urbanDistance", UrbanDistanceUI);
+            var google_init = function(){
+                /*if(!dvmap.isBrowserSupported()){
+                  $("#controls").hide();
+                  $("#topnav").hide();
+                  $("#copyright-notice").hide();
+                  $('<div id="browsers">'+
+  '<h2>Your current browser does not seem to support dotviewmap!</h2>'+
+  '<p>Please choose a different one:</p>'+
+  '<table>'+
+    '<tr><td><a href="http://www.google.com/chrome/"><img src="/media/img/chrome-logo.png" alt="Google Chrome"/><br/>Chrome</a></td>'+
+    '<td><a href="http://getfirefox.com/"><img src="/media/img/firefox-logo.png" alt="Firefox"/><br/>Firefox</a></td>'+
+    '<td><a href="http://www.opera.com/"><img src="/media/img/opera-logo.png" alt="Opera"/><br/>Opera</a></td>'+
+    '<td><a href="http://www.apple.com/safari/"><img src="/media/img/safari-logo.png" alt="Apple Safari"/><br/>Safari</a></td>'+
+  '</tr></table>'+
+'</div>').appendTo("body");
+                  return;
+                }*/
+                dvmap.initMap("map");
+                jQuery(".toggle").live("click", function(e){
+                    e.preventDefault();
+                    var obj = jQuery(jQuery(this).attr("href"));
+                    if(obj.css("display") == "none"){
+                        obj.fadeIn(400);
+                    } else {
+                        obj.fadeOut(400);
+                    }
+                });
+                for (var i=0;i<cities.length; i++){
+                    (function(){
+                        var city, markerOptions;
+                        city = cities[i];
+                        markerOptions = {}
+                        markerOptions.position = new google.maps.LatLng(city.lat, city.lng);
+                        markerOptions.map = dvmap.map;
+                        markerOptions.title = city.name;
+                        city.marker = new google.maps.Marker(markerOptions);
+                        city.infowindow = new google.maps.InfoWindow();
+                        google.maps.event.addListener(city.marker, 'click', function(){
+                            dvmap.map.panTo(markerOptions.position);
+                            city.infowindow.setContent('<a href="/'+city.cityid+'/">'+
+                                '<div class="dotviewmap-city">'+ city.name +'</div>'+
+                            '</a>');
+                            city.infowindow.open(dvmap.map, city.marker);
+                        });
+                    }());
+                }
+            };
+            google.setOnLoadCallback(google_init);
+          
+        </script>
+    </body>
+</html>

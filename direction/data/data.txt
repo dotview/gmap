@@ -1,0 +1,11 @@
+{result:5,data:[
+{companyname:'Stefanutti Stocks',apptime:'10:30',customerid:'24427',address:'Protec Park,co Zuurfontein ave & Oranjerivier Drive,Kempton Park,',found:true},
+{companyname:'Stefanutti Stocks',apptime:'10:30',customerid:'24427',address:'Protec Park,co Zuurfontein ave & Oranjerivier Drive,Kempton Park,',found:true},
+{companyname:'Qube Design & Repro Studio',apptime:'12:30',customerid:'22649',address:' 43 Harrisdd Avenue,Edenglen,',found:true},
+{customerid:12,companyname:'Hiab%20%28Pty%29%20Ltd',apptime:'10:00',address:'co%20Forsdick%20%26%20Aberdein%20Road,Roodekop,Germiston',found:true},
+{customerid:15,companyname:'Wiloney%20Industrial',apptime:'11:30',address:'11%20Dieperink%20st,Delbarton Krugersdorp,',found:true},
+{customerid:17,companyname:'Collect-a-Can%20%28Pty%29%20Ltd',apptime:'17:00',address:'5/13 %20Forssman%20Close,Barbeque Downs,Kyalami',found:true},
+{customerid:44,companyname:"Superlift Crane Hire (Pty) Ltd",
+	apptime:"14:00",
+	address:"Brentwood Park,44 High Road,Benoni, South Africa",found:true
+}]}

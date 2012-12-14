@@ -1,0 +1,16 @@
+
+<table>
+<tr>
+<td class="txt1">Area :</td>
+<td style="padding-left:3px;">
+<select id="area" name="area" style="width: 100px;">
+	<option value="Please Select">Please Select</option>
+			<option value="Clifton/DHA">Clifton/DHA</option>
+				<option value="PECHS/MACHS/Tariq Rd/SMR">PECHS/MACHS/Tariq Rd/SMR</option>
+				<option value="I I Chundrigarh/City-Station/Zaibunissa street">I I Chundrigarh/City-Station/Zaibunissa street</option>
+				<option value="Gulshan-e-Iqbal/Rashid-Minhas">Gulshan-e-Iqbal/Rashid-Minhas</option>
+				<option value="North Nazimabad/F.B. Area">North Nazimabad/F.B. Area</option>
+				<option value="Korangi Industrial Area">Korangi Industrial Area</option>
+		</select></tr>
+								</table>
+								</td>

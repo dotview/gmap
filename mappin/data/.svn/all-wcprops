@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/gmap/!svn/ver/182/1/mappin/data
+END
+existingDestination.json
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/gmap/!svn/ver/166/1/mappin/data/existingDestination.json
+END
+addAPin.json
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/gmap/!svn/ver/166/1/mappin/data/addAPin.json
+END
+autoComplete.json
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/gmap/!svn/ver/166/1/mappin/data/autoComplete.json
+END
+addAPin2.json
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/gmap/!svn/ver/166/1/mappin/data/addAPin2.json
+END
+addAPin3.json
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/gmap/!svn/ver/166/1/mappin/data/addAPin3.json
+END
+removeAPin.json
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/gmap/!svn/ver/171/1/mappin/data/removeAPin.json
+END

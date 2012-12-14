@@ -1,0 +1,177 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>BaiDu地图标注簇</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style/common.css" />
+
+    <script src="http://api.map.baidu.com/api?v=1.2&services=true" type="text/javascript"></script>
+
+    <script src="./data/data.json" type="text/javascript"></script>
+
+    <script type="text/javascript" src="./js/markerclusterer.js"></script>
+
+    <script type="text/javascript">
+
+
+        var styles = [[{
+            url: 'images/people35.png',
+            height: 35,
+            width: 35,
+            opt_anchor: [16, 0],
+            opt_textColor: '#ff00ff',
+            opt_textSize: 10
+        }, {
+            url: 'images/people45.png',
+            height: 45,
+            width: 45,
+            opt_anchor: [24, 0],
+            opt_textColor: '#ff0000',
+            opt_textSize: 11
+        }, {
+            url: 'images/people55.png',
+            height: 55,
+            width: 55,
+            opt_anchor: [32, 0],
+            opt_textSize: 12
+}],
+         [{
+             url: 'images/heart30.png',
+             height: 26,
+             width: 30,
+             opt_anchor: [4, 0],
+             opt_textColor: '#ff00ff',
+             opt_textSize: 10
+         }, {
+             url: 'images/heart40.png',
+             height: 35,
+             width: 40,
+             opt_anchor: [8, 0],
+             opt_textColor: '#ff0000',
+             opt_textSize: 11
+         }, {
+             url: 'images/heart50.png',
+             width: 50,
+             height: 44,
+             opt_anchor: [12, 0],
+             opt_textSize: 12
+}]];
+
+            var markerClusterer = null;
+            var map = null;
+            var imageUrl = 'images/chart.png';
+
+            function CreateRandom(iFirstValue, iLastValue) {
+                var iChoces = Math.abs(iFirstValue - iLastValue);
+
+                return Math.round((Math.random() * iChoces + iLastValue),5);
+            }
+
+            function refreshMap() {
+                if (markerClusterer) {
+                    markerClusterer.clearMarkers();
+                }
+
+                var markers = [];
+
+                var markerImage = new BMap.Icon(imageUrl, new BMap.Size(24, 32));
+
+                var mkcount = parseInt(document.getElementById('mkcount').value, 10);
+                if (mkcount == -1) {
+                    for (var i = 0; i < data.count; ++i) {
+                        var latLng = new BMap.Point(data.latlngs[i].lng, data.latlngs[i].lat)
+                        var marker = new BMap.Marker(latLng, { icon: markerImage });
+                        markers.push(marker);
+                    }
+                }
+                else {
+                    for (var i = 0; i < mkcount; ++i) {
+                        var randomLng = CreateRandom(125.311445, 80.834911);
+                        var randomLat = CreateRandom(44.021249, 19.777138);
+ 
+                        var latLng = new BMap.Point(randomLng, randomLat)
+                        var marker = new BMap.Marker(latLng, { icon: markerImage });
+                        markers.push(marker);
+                    }
+                }
+
+                var style = parseInt(document.getElementById('style').value, 10);
+                style = style == -1 ? null : style;
+
+                markerClusterer = new MarkerClusterer(map, markers, {
+                    maxZoom: 15,
+                    gridSize: null,
+                    styles: styles[style]
+                });
+            }
+
+            function map_initialize() {
+                map = new BMap.Map("map_property");
+
+                map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
+                map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
+                map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件
+                map.enableScrollWheelZoom();
+
+                var myLatlng = new BMap.Point(120.267701, 30.244256);
+                map.centerAndZoom(myLatlng, 6);
+
+                var lb = new BMap.Label("<a href=\"http://kuaidi001.sinaapp.com\">kuaidi001</a>");
+                lb.setStyle({
+                    color: "red",
+                    fontSize: "12px",
+                    display: "none"
+                });
+                map.addOverlay(lb);
+
+                refreshMap();
+            }
+
+            function clearClusters(e) {
+                markerClusterer.clearMarkers();
+            }
+
+    </script>
+
+</head>
+<body topmargin="0" onload="map_initialize();" marginheight="0" scroll="no">
+    <div id="inline-actions" style="margin:8px;">
+        <span class="item">标记数量:
+            <select id="mkcount">
+                <option value="-1">默认</option>
+                <option value="300">300</option>
+                <option value="200">200</option>
+                <option value="100">100</option>
+                <option value="50">50</option>
+                <option value="20">20</option>
+            </select>
+          
+        </span><span class="item">图标样式:
+            <select id="style">
+                <option value="-1">默认</option>
+                <option value="0">头像</option>
+                <option value="1">心</option>
+            </select>
+            <input id="refresh" type="button" value="刷新标记" onclick="refreshMap();" class="item">
+            <input id="Button1" type="button" value="清除标记" onclick="clearClusters(event);" class="item">
+            <span style="color:Red;margin:8px;"><a style="font-size:14px;color:Red;margin:8px;" href="compare.html">这个有什么用？看看对比效果,GO！！！</a></span>
+        </span>
+    </div>
+    <div id="column_main">
+        <div>
+            <div style="height: 582px; background-color: rgb(229, 227, 223); border: 2px solid #80AB73;"
+                id="map_property" class="map_right">
+            </div>
+        </div>
+    </div>
+    <div id="bottom">
+        <div class="inner">
+            &copy; 2011 by Dotview | <a href="http://map.baidu.com/" target="_blank">百度地图</a>
+            | <a href="http://t.sina.com/dotview" target="_blank">新浪微博</a> |
+
+            <script src="http://s21.cnzz.com/stat.php?id=3061506&web_id=3061506" language="JavaScript"></script>
+
+        </div>
+    </div>
+</body>
+</html>

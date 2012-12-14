@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MAP DEMO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: #F5F5F5;
+            color: #666;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 14px;
+            height: 100%;
+        }
+
+        a, a:link, a:visited {
+            color: #90c418;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+            a:hover, a:active {
+                text-decoration: underline;
+            }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #333;
+            font-weight: 200;
+            margin-bottom: 1.1em;
+        }
+
+            h1.reverse, h2.reverse, h3.reverse, h4.reverse, h5.reverse, h6.reverse {
+                color: #EEE;
+            }
+
+        img {
+            border: none;
+        }
+
+            img.lazy {
+                display: none;
+            }
+
+        ul {
+            list-style: square;
+            margin-left: 10px;
+        }
+
+        dl {
+            margin: 5px 0 10px;
+        }
+
+            dl dt {
+                font-size: 1.1em;
+            }
+
+            dl dl {
+                margin: 15px;
+            }
+
+        span.green, div.green, p.green {
+            color: #90c418;
+            text-decoration: none;
+        }
+
+        span.red, div.red, p.red {
+            color: #C00;
+            text-decoration: none;
+        }
+
+        .mapwrapper {
+            background: url(http://dev1.static.wheretostay.com/images/global/loading-lrg-black.gif) center center no-repeat;
+            height: 700px;
+            margin: auto;
+            margin-bottom: 25px;
+            width: 1000px;
+            position: relative;
+        }
+
+        /* BEGIN: map legend styles */
+        #sidebar {
+            display: block;
+            margin-left: 0px;
+            float: right;
+            height: 100%;
+            background: #fff;
+            position: relative;
+            overflow: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin-bottom: -100%;
+            z-index: 30;
+        }
+
+            #sidebar .hide {
+                display: none;
+            }
+
+        .map-factsheet {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            width: 200px;
+        }
+
+            .map-factsheet .head {
+                background: #EBECEE;
+                height: 16px;
+                line-height: 16px;
+                padding: 4px 0 4px 4px;
+
+                border-bottom: 1px solid #fff;
+                text-indent: 0px;
+
+            }
+
+                .map-factsheet .head img {
+                    height: 16px;
+                    width: 16px;
+                }
+
+            .map-factsheet ul li.selItem {
+                background: #5C6270;
+                color: white;
+            }
+
+            .map-factsheet .head span, .map-factsheet .head img {
+                margin-right: 4px;
+            }
+
+            .map-factsheet ul li {
+                list-style: none;
+                white-space: nowrap;
+                padding: 0 0 0 4px;
+                font-size: 12px;
+                color: #949494;
+                text-align: left;
+                height: 24px;
+                line-height: 24px;
+                margin: 0;
+                cursor: pointer;
+            }
+
+            .map-factsheet .head .cb {
+                left: 7px;
+                width: 16px;
+                height: 16px;
+                display: inline-block;
+                background: url(http://dev1.static.wheretostay.com/images/maps/map_factsheet_cb.png) no-repeat left top;
+            }
+
+            .map-factsheet .head .value {
+                width: 25px;
+                height: 16px;
+                background: url(http://dev1.static.wheretostay.com/images/maps/map_factsheet_info.png) no-repeat left top;
+                text-align: center;
+                color: #fff;
+                font-size: 11px;
+                font-weight: bold;
+                float: right;
+            }
+
+            .map-factsheet .head.active {
+                color: #009FE4;
+            }
+			.map-factsheet .type-cb{
+				float:left;                cursor: pointer; width:140px;
+			}
+			.map-factsheet .direction{
+				float:right;                cursor: pointer;
+			}
+			.map-factsheet .diropen{
+				width: 16px;
+                height: 16px;
+                background: url(images/down.png) no-repeat left top;
+			}
+			.map-factsheet .dirclose{
+				width: 16px;
+                height: 16px;
+                background: url(images/right.png) no-repeat left top;
+			}
+            .map-factsheet .active .cb, .map-factsheet .active .value {
+                background-position: left center;
+            }
+
+            .map-factsheet .all.active {
+                color: #EB6601;
+                background: #fff;
+            }
+
+                .map-factsheet .all.active .cb, .map-factsheet .all.active .value {
+                    background-position: left bottom;
+                }
+        /* END: map legend styles */
+
+        .maplegend {
+            margin: 0;
+        }
+        /* Category List Hide / Show */
+        .map-factsheet .all .active {
+            color: #EB6601;
+            background: white;
+            padding-left: 8px;
+        }
+
+        #listToggle {
+            height: 16px;
+            line-height: 16px;
+            font-weight: bold;
+            padding-left: 40px;
+        }
+
+        .listShow {
+            height: 100%!important;width: 220px;
+        }
+
+        .listHidden {
+            height: auto!important;width: 116px;
+        }
+
+            .listHidden .head {
+                background: #fff;
+            }
+
+        .listShow #listToggle {
+            background: url(../poi/images/collapseIcon.png) top left no-repeat;
+            background-size: 16px;
+        }
+
+        .listHidden #listToggle {
+            background: url(../poi/images/expandIcon.png) top left no-repeat;
+            background-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="Gmap" class="mapwrapper">
+    </div>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.9&sensor=false"></script>
+    <script type="text/javascript" src="js/map_libs_packed.js"></script>
+    <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        $(function () {
+            $.ajaxSetup({
+                cache: true
+            });
+            //loadScript();
+
+            google.maps.event.addDomListener(window, 'load', mapinit);
+        });
+
+        var mapinit = function () {
+            $.ajax({
+                url: "js/t.json?t=awad",
+                dataType: 'json',
+                success: function (d) {
+                    console.info("ajax loaded" + new Date());
+					//wheretostayMap.setDefaultOptions({"start_showing_type":['favorites']});
+                    wheretostayMap.initAndLoad(d);
+                }
+            });
+        }
+
+        function map_initialize_loc_page() {
+            // Usage
+            $.cachedScript("js/map_libs_packed.js", function () {
+                window.wheretostayMap = null;
+                $.cachedScript("js/map.js", function () {
+                    mapinit();
+                });
+            }).done(function () {
+                console.info("map_libs_packed done" + new Date());
+            });
+        }
+        jQuery.cachedScript = function (url, callback, options) {
+            // allow user to set any option except for dataType, cache, and url
+            options = $.extend(options || {}, {
+                dataType: "script",
+                cache: true,
+                url: url,
+                success: callback
+            });
+
+            // Use $.ajax() since it is more flexible than $.getScript
+            // Return the jqXHR object so we can chain callbacks
+            return jQuery.ajax(options);
+        };
+
+        function getScript(src) {
+            var s = document.createElement('script');
+            s.type = "text/javascript";
+            s.src = src;
+            document.body.appendChild(s);
+        }
+        function loadScript() {
+            getScript("http://maps.googleapis.com/maps/api/js?sensor=false&callback=map_initialize_loc_page");
+        }
+        /* ]]> */
+  </script>
+</body>
+</html>

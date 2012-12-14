@@ -1,0 +1,7 @@
+﻿{result:1,mendianinfo:{
+ID:'1',quyudm:'1001',ImgUrl:'images/men1.jpg',FlashUrl:'images/f1.swf',Title:'武林店',address:'杭州武林门店568号'},
+renyuanlist:[{ID:'321',rybh:'1001',xm:'张三',qybh:'856001',ygxzdm:'11',xl:'本科',sr:'1982-05-01',bz:'备注备注备注'},
+{ID:'322',rybh:'1087',xm:'测试',qybh:'856001',ygxzdm:'11',xl:'本科',sr:'1982-05-01',bz:'备注备注备注'},
+{ID:'323',rybh:'1088',xm:'测算',qybh:'856401',ygxzdm:'11',xl:'大专',sr:'1986-10-01',bz:'备注备注备注'},
+{ID:'324',rybh:'1091',xm:'个案',qybh:'8560541',ygxzdm:'11',xl:'研究生',sr:'1978-05-16',bz:'备注备注备注'},
+{ID:'325',rybh:'1092',xm:'张各位',qybh:'856421',ygxzdm:'11',xl:'本科',sr:'1984-05-15',bz:'备注备注备注'}]}

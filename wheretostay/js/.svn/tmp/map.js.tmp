@@ -1,0 +1,836 @@
+window.wheretostay = window.wheretostay || {};
+
+(function (window) {
+    "use strict";
+
+    wheretostay.maps = function () {
+        //prop values
+        var map,
+            poi_cache = [],
+            customIcons = [],
+			markers = [],
+			mTypes = [],
+			managers = [],
+            oVillasMarkersCluster = null,
+            oHotelsMarkersCluster = null,
+            marker_stor,
+			marker_beach,
+			marker_restaurant,
+            listenerToRemove = null,
+            map_container,
+            gMapContainer = "#Gmap",
+            gInfowindow = '',
+            oMaxBounds = null,
+            bounds_changed_listener,
+			self = this,
+			curmarker = null,
+			curtype = '',
+			zoomLevel = 1,
+			maxzoom = 15, // markermanager maxzoom param
+			//default values, can be override by call public method setMapLocation
+            start_showing_marker = false,
+			start_location_lat = 18.185324,
+            start_location_lng = -63.086750,
+            start_location_zoom = 13,
+			start_location_type = google.maps.MapTypeId.HYBRID;
+
+        /*
+        * pivate method init
+        */
+        var init = {
+            initMap: function () {
+                var myLatlng = new google.maps.LatLng(start_location_lat, start_location_lng);
+                var myOptions = {
+                    zoom: start_location_zoom,
+                    center: myLatlng,
+                    mapTypeControl: true,
+                    streetViewControl: false,
+                    panControl: true,
+                    zoomControl: true,
+                    zoomControlOptions: {
+                        style: google.maps.ZoomControlStyle.LARGE
+                    },
+                    scaleControl: true,
+                    scrollwheel: false,
+                    mapTypeId: start_location_type
+                };
+
+                map_container = $(gMapContainer);
+                map = new google.maps.Map(map_container.get(0), myOptions);
+            },
+            initMapEvent: function () {
+                map.load_count = 0;
+                var infoWinOptions = {
+                    disableAutoPan: false,
+                    maxWidth: 0,
+                    closeBoxMargin: "10px 2px 2px 2px",
+                    closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+                    isHidden: false,
+                    pane: "floatPane",
+                    enableEventPropagation: false
+                };
+                gInfowindow = new google.maps.InfoWindow(infoWinOptions);
+
+                //map zoom event listener
+                google.maps.event.addListener(map, 'zoom_changed', zoomChangeHandler);
+
+                //this event only run once, idle evnet will also raise bounds change bounds_changed
+                bounds_changed_listener = google.maps.event.addListenerOnce(map, 'tilesloaded', tilesLoadedHandler);
+
+            },
+            initLoadingBox: function () {
+                map_container.append($("<div id='map_loader_box'></div>").css({
+                    position: 'absolute',
+                    top: '6px',
+                    right: '100px',
+                    backgroundColor: '#eef',
+                    display: 'none',
+                    fontSize: '14px',
+                    padding: '2px',
+                    paddingTop: '0',
+                    paddingBottom: '0',
+                    'z-index': '59999',
+                    fontFamily: 'Arial'
+                }).html("<img src='http://dev1.www.wheretostay.com/images/global/loader.white.gif' />Loading Map Data.."));
+
+                map_container.append($('<ul class="map-factsheet"><li class="all active"><span class="value"></span></li></ul>'));
+
+                mapfactSheetEventRegister();
+            },
+            initIcons: function () {
+                /*
+                Custom Icon Setup
+                */
+				var selectedIcon = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/bigred.png', new google.maps.Size(64, 64));
+                var baseIcon = new google.maps.MarkerImage('/images/maps/75/default.png', new google.maps.Size(24, 32));
+                var iconHotel = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/hotels.png', new google.maps.Size(24, 32));
+                var iconVilla = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/villas.png', new google.maps.Size(24, 32));
+                var iconInn = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/inns.png', new google.maps.Size(24, 32));
+                var iconAttr = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/attractions.png', new google.maps.Size(24, 32));
+                var iconDining = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/restaurants.png', new google.maps.Size(24, 32));
+                var iconBeach = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/beaches.png', new google.maps.Size(24, 32));
+                var iconMed = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/medical.png', new google.maps.Size(24, 32));
+                var iconServ = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/services.png', new google.maps.Size(24, 32));
+                var iconCar = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/car.png', new google.maps.Size(24, 32));
+                var iconGrocery = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/grocery.png', new google.maps.Size(24, 32));
+                var iconVideo = new google.maps.MarkerImage('http://www.wheretostay.com/images/maps/75/video.png', new google.maps.Size(24, 32));
+
+                //using dot style property
+				customIcons.selectedIcon = selectedIcon;
+                customIcons.hotel = iconHotel;
+                customIcons.villa = iconVilla;
+                customIcons.inn = iconInn;
+                customIcons.attractions = iconAttr;
+                customIcons.dining = iconDining;
+                customIcons.beach = iconBeach;
+                customIcons.medical = iconMed;
+                customIcons.service = iconServ;
+                customIcons.car = iconCar;
+                customIcons.grocery = iconGrocery;
+                customIcons.video = iconVideo;
+
+            },
+            initMarkerManager: function () {
+                //new marker manager object
+                //marker_stor = new MarkerManager(map);
+                for (var i = 0; i < 12; i++) {
+                    managers[i] = new MarkerManager(map);
+                }
+
+                //new villa cluster object
+                oVillasMarkersCluster = new MarkerClusterer(
+					map, [], {
+					    gridSize: 70,
+					    maxZoom: 15,
+					    styles: [{
+					        'url': "http://www.wheretostay.com/images/maps/cluster_villa.png",
+					        'height': 38,
+					        'width': 67,
+					        'anchor': [5, 40]
+					    }]
+					});
+
+                //new hotel cluster object
+                oHotelsMarkersCluster = new MarkerClusterer(
+                map, [], {
+                    gridSize: 70,
+                    maxZoom: 15,
+                    styles: [{
+                        'url': "http://www.wheretostay.com/images/maps/cluster_hotel.png",
+                        'height': 38,
+                        'width': 67,
+                        'anchor': [5, 40]
+                    }]
+                });
+            },
+
+        };
+
+        /**
+		* map tilesloaded event handler
+		*/
+        var tilesLoadedHandler = function () {
+            oMaxBounds = map.getBounds();
+            console.info("bounds_changed loaded" + new Date());
+            load_markers(oMaxBounds, oMaxBounds, true, function () {
+                if (start_showing_marker) {
+                    var mLatlng = new google.maps.LatLng(start_location_lat, start_location_lng);
+                    self.selectMarkerByPoint(mLatlng, start_location_zoom, null, true);
+                }
+            });
+
+            //listen idle evnet
+            listenerToRemove = google.maps.event.addListener(map, 'idle', MoveEndListener);
+        }
+
+        /**
+		* map zoom_changed event handler
+		*/
+        var zoomChangeHandler = function () {
+            var currZoom = map.getZoom();
+            if (currZoom !== zoomLevel) {
+                if (currZoom >= maxzoom) {
+                    $(".map-factsheet li[isother='1']").each(function (i, obj) {
+                        $(this).attr("diable", "false");
+                        //get the last status, active or inactive
+                        if ($(this).attr("oactive") == "active") {
+                            $(this).addClass("active");
+                        } else {
+                            $(this).removeClass("active");
+                        }
+                    })
+                } else {
+                    $(".map-factsheet li[isother='1']").each(function (i, obj) {
+                        $(this).attr("diable", "true");
+                        $(this).removeClass("active");
+                    })
+                }
+                showOrHideMarker(true);
+                zoomLevel = currZoom;
+            }
+        }
+
+        /**
+		* map legend event register
+		*/
+        var mapfactSheetEventRegister = function () {
+            $(".map-factsheet .villa").live("click", function () {
+                if ($(this).hasClass("active")) {
+                    oVillasMarkersCluster.clearMarkers();
+                    $(this).removeClass("active");
+                } else {
+                    var ms = getMarkers("villa");
+                    oVillasMarkersCluster.addMarkers(ms);
+                    $(this).addClass("active");
+                }
+            });
+            $(".map-factsheet .hotel").live("click", function () {
+                if ($(this).hasClass("active")) {
+                    oHotelsMarkersCluster.clearMarkers();
+                    $(this).removeClass("active");
+                } else {
+                    var ms = getMarkers("hotel");
+                    oHotelsMarkersCluster.addMarkers(ms);
+                    $(this).addClass("active");
+                }
+            });
+            //other types event, we use markermanger for the other type
+            $(".map-factsheet li[isother='1']").live("click", function () {
+                if ($(this).attr("diable") == "true") {
+                    return false;
+                }
+                var type = $(this).attr("otype");
+                var index = selectTypeIndex(type);
+                if ($(this).hasClass("active")) {
+                    managers[index].hide();
+                    $(this).attr("oactive", "").removeClass("active");
+                } else {
+                    managers[index].show();
+                    $(this).attr("oactive", "active").addClass("active");
+                }
+                managers[index].refresh();
+            });
+        }
+
+
+        /**
+		 * this is the ajax powered function which loads the markers through json_onscroll.
+		 *
+		 * @param {GBounds} bounds: Marker to be added to the map
+		 * @param {Boolean} reset_viewport: if reset viewport
+		 *
+		 * @private
+		 */
+        var load_markers = function (bounds, old_bounds, reset_viewport, callback) {
+            if (map.load_count == 0) {
+                $('#map_loader_box').fadeIn('slow');
+            }
+            map.load_count++;
+            var getVars = '';
+            //get the bounds ne and sw value, so we can only get pins within this bounds
+            if (bounds instanceof google.maps.LatLngBounds) {
+                var southWest = bounds.getSouthWest().toUrlValue();
+                var northEast = bounds.getNorthEast().toUrlValue();
+            } else {
+                var oBounds = bounds[bounds.length - 1];
+                var southWest = oBounds.getSouthWest().toUrlValue();
+                var northEast = oBounds.getNorthEast().toUrlValue();
+            }
+            var old_sw = southWest;
+            var old_ne = northEast;
+            if (old_bounds instanceof google.maps.LatLngBounds) {
+                old_sw = old_bounds.getSouthWest().toUrlValue();
+                old_ne = old_bounds.getNorthEast().toUrlValue();
+            }
+
+
+            //jQuery.getJSON("/maps/new_get_pins/" + old_ne + ":" + old_sw + "/" + northEast + ":" + southWest, function (data) {
+            jQuery.getJSON("js/pins.json", function (data) {
+                map.load_count--;
+                if (map.load_count == 0) {
+                    $('#map_loader_box').fadeOut('slow');
+                }
+
+                //show markers on map and update category html
+                showMarkersOnMaps(data.markers);
+                //clearMarkerFromCluster();
+                //addMarkerToCluster();
+
+                insertTypeHtml();
+                updateTypeValues();
+
+                showOrHideMarker();
+
+                if (callback) {
+                    callback(data);
+                }
+                $('#map_loader_box').fadeOut('fast');
+            });
+        };
+
+        /**
+		 *	show poi array to the markers array
+		 *
+		 * @param {Array} poi_array: poi array from server
+		 */
+        var showMarkersOnMaps = function (poi_array) {
+            for (var i = 0; i < poi_array.length; i++) {
+                var poi = poi_array[i];
+                var n = get_markers_index(poi.type, poi.id);
+
+                if (n == -1) {
+                    var certainPoint = false;
+                    var mkr = createMarker(
+						new google.maps.LatLng(poi.lat, poi.lng),
+						poi.type,
+						poi.id, ((typeof poi.property_name != "undefined") ? poi.property_name : ''),
+						certainPoint
+					);
+                    //push marker to the markers object
+                    pushMarker(poi.type, mkr);
+
+                    switch (poi.type) {
+                        case 'hotel':
+                            oHotelsMarkersCluster.addMarker(mkr);
+                            break;
+                        case 'villa':
+                            oVillasMarkersCluster.addMarker(mkr);
+                            break;
+                        default:
+                            var index = selectTypeIndex(poi.type);
+                            managers[index].addMarker(mkr, maxzoom);
+                            break;
+                    }
+                }
+            }
+        };
+
+        /**
+		 *	clear markers   cluster 
+		 */
+        var clearMarkerFromCluster = function () {
+            oHotelsMarkersCluster.clearMarkers();
+            oVillasMarkersCluster.clearMarkers();
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var index = selectTypeIndex(type);
+                if (type != "hotel" && type != "villa") {
+                    managers[index].clearMarkers();
+                }
+            }
+        }
+        /**
+		 *	show or hide cluster and manager according to the checkbox value
+		 */
+        var showOrHideMarker = function (isother) {
+            if (isother == null) {
+                oHotelsMarkersCluster.clearMarkers();
+                if ($(".map-factsheet .hotel").length > 0 && $(".map-factsheet .hotel").hasClass("active")) {
+                    oHotelsMarkersCluster.addMarkers(getMarkers("hotel"));
+                }
+                oHotelsMarkersCluster.redraw();
+
+                oVillasMarkersCluster.clearMarkers();
+                if ($(".map-factsheet .villa").length > 0 && $(".map-factsheet .villa").hasClass("active")) {
+                    oVillasMarkersCluster.addMarkers(getMarkers("villa"));
+                }
+                oVillasMarkersCluster.redraw();
+            }
+            $(".map-factsheet li[isother='1']").each(function (i, obj) {
+                var type = $(obj).attr("otype");
+                var index = selectTypeIndex(type);
+                if ($(obj).hasClass("active")) {
+                    managers[index].show();
+                } else {
+                    managers[index].hide();
+                }
+                managers[index].refresh();
+            })
+        }
+        /**
+		 *	add markers to cluster, now we call the addMarkers method, add lots of markers once a time.
+		 */
+        var addMarkerToCluster = function () {
+            oHotelsMarkersCluster.addMarkers(getMarkers("hotel"));
+            oVillasMarkersCluster.addMarkers(getMarkers("villa"));
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var index = selectTypeIndex(type);
+                if (type != "hotel" && type != "villa") {
+                    managers[index].addMarkers(getMarkers(type), maxzoom);
+                }
+            }
+        }
+
+        /**
+		*	expands a bounds by so many lat/lng in order to avoid things such as floating point error
+		*
+		* @param {GBounds} bounds: google map bounds
+		* @param {Double} degree_buffer: extend bounds value
+		* @return {GBounds}
+		*/
+        var expandBounds = function (bounds, degree_buffer) {
+            return new google.maps.LatLngBounds(
+                    new google.maps.LatLng(
+                        bounds.getSouthWest().lat() - degree_buffer,
+                        bounds.getSouthWest().lng() - degree_buffer),
+                    new google.maps.LatLng(
+                        bounds.getNorthEast().lat() + degree_buffer,
+                        bounds.getNorthEast().lng() + degree_buffer));
+        };
+
+
+        /**
+        * create the marker object
+		* @Return: marker
+        */
+        var createMarker = function (point, type, id, title, certainPoint) {
+            if (certainPoint) {
+                var marker = new google.maps.Marker({
+                    position: point,
+                    title: title
+                });
+            } else {
+                var marker = new google.maps.Marker({
+                    position: point,
+                    icon: customIcons[type],
+                    title: title
+                });
+            }
+
+            marker.type = type;
+            marker.id = id;
+
+            google.maps.event.addListener(marker, 'click', function () {
+                // load up the proper info window
+                selectMarker(this);
+            });
+
+            return marker;
+        };
+
+        /**
+        * show info window content
+		*		
+		* @param {GMarker} marker: google.maps.Marker
+        */
+        var selectMarker = function (marker) {
+            // next we want to open the ext window		
+            gInfowindow.setContent("<img src='images/global/loading-lrg.gif' />");
+            gInfowindow.open(map, marker);
+
+            var marker_type = marker.type,
+			marker_id = marker.id;
+
+            $.get("js/detail.txt", function (data) {
+                //$.get("/maps/markerbubble/" + marker_type + "/" + marker_id, function (data) {
+                var content = '<div id="mhframe">' + data + '</div>';
+                gInfowindow.setContent(content);
+            });
+        }
+
+
+        /**
+        * get marker object according to the provided map point
+		* if provide type, it will be more faster to find the marker.
+		* First it will find which array contain the type's markers, then find the marker in the type's markers array
+		*
+		* @param {GPoint} point: google.maps.LatLng
+		* @param {String} type: type(hotel,villa..etc)
+		* @Return: marker
+        */
+        var getMarkerAtPoint = function (point, type) {
+            //if type, then find markers in certain type
+            if (type != null) {
+                return getMarkerAtPointByType(point, type);
+            }
+
+            //if type is null, then find all markers in all types
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var mkr = getMarkerAtPointByType(point, type);
+				if(mkr != null){
+					return mkr;
+				}
+            }
+            // point is not in there
+            return null;
+        };
+
+        /**
+        * get marker object according to the provided map point and type
+		* 
+		* @param {GPoint} point: google.maps.LatLng
+		* @param {String} type: type(hotel,villa..etc)
+		* @Return {GMarker} marker
+        */
+        var getMarkerAtPointByType = function (point, type) {
+            var mkrs = getMarkers(type);
+            for (var n = 0; n < mkrs.length; n++) {
+                if (point.equals(mkrs[n].getPosition())) {
+					curmarker = mkrs[n];
+					curtype = type;
+                    return mkrs[n];
+                }
+            }
+            // point is not in there
+            return null;
+        }
+
+        /**
+        * get marker index according to the provided id and type
+		* 
+		* @param {String} poi_type
+		* @param {String} poi_id
+		* @Return {Number} n
+        */
+        var get_markers_index = function (poi_type, poi_id) {
+            var ms = getMarkers(poi_type);
+            for (var n = 0, len = ms.length; n < len; n++) {
+                if (poi_id == ms[n].id) {
+                    return n;
+                }
+            }
+            return -1;
+        };
+
+        /**
+		 *	push marker to markers array.
+		 */
+        var pushMarker = function (type, mkr) {
+            //select which arrry to push
+            var n = selectTypeIndex(type);
+            if (n == -1) {
+                n = add_type(type);
+            }
+            markers[n].push(mkr);
+        }
+
+        /**
+		 *	push type to mTypes array.
+		 *
+		 * @param {String} type.
+		 */
+        var add_type = function (type) {
+            mTypes[mTypes.length] = type;
+            markers[markers.length] = [];
+            return mTypes.length - 1;
+        };
+
+        /**
+		 *	get the index of mTypes by type name
+		 */
+        var selectTypeIndex = function (type) {
+            for (var i = 0; i < mTypes.length; i++) {
+                if (type == mTypes[i]) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        /**
+		 *	get markers by type
+		 *
+		 * @param {String} type.
+		 */
+        var getMarkers = function (type) {
+            //select which arrry to push
+            var n = selectTypeIndex(type);
+            if (n == -1) {
+                return [];
+            }
+            return markers[n];
+        }
+
+
+        /**
+		 *	check if currnet map zoom should show the certain markers 
+		 */
+        var getIsActive = function () {
+            return map.getZoom() >= maxzoom ? "active" : "";
+        }
+
+        var upperText = function (str) {
+            return str.slice(0, 1).toUpperCase() + str.slice(1);
+        }
+
+        /**
+		 *	append li html by all types
+		 */
+        var insertTypeHtml = function () {
+            var isactive;
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var html = "";
+                if (type == "hotel" || type == "villa") {
+                    isactive = "active";
+                    html = 'isother="0"';
+                } else {
+                    isactive = getIsActive();
+                    html = 'oactive="active" otype="' + type + '" isother="1"';
+                }
+                if ($(".map-factsheet ." + type).length == 0) {
+                    $(".map-factsheet").append('<li class="' + type + ' ' + isactive + '" ' + html + '>'
+					+ '<span class="name">' + upperText(type) + '</span><span class="cb"></span><span class="value">0</span></li>');
+                }
+            }
+        }
+
+        /**
+		 *	set type pins count to the li element
+		 */
+        var setTypeValue = function (type, value) {
+            $(".map-factsheet ." + type).find("span.value").text(value);
+        };
+
+        /**
+		 *	set type pins count to the li element
+		 */
+        var updateTypeValues = function () {
+            var total = 0;
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var index = selectTypeIndex(type);
+                var len = markers[index].length;
+                total += len;
+                setTypeValue(type, len); // set type's pins count
+            }
+            setTypeValue("all", total); // set total count
+        }
+
+        /**
+		 * map move end listener
+		 *
+		 * @private
+		 */
+        var MoveEndListener = function () {
+            //we now have the current and previous bounderies, but we do not want to load up everything.
+            // but what if they zoom out? then we could have 4 different bounderies that are invalidated
+            // we need to go through and produce multiple bounderies
+            var rects_to_load = new Array();
+            var new_bounds = map.getBounds();
+ 
+            var old_bounds = new google.maps.LatLngBounds(oMaxBounds.getSouthWest(), oMaxBounds.getNorthEast()); // this way copy the old bounds
+
+            var new_sw = new_bounds.getSouthWest();
+            var new_ne = new_bounds.getNorthEast();
+           
+            //extend the old bounds
+            if (!oMaxBounds.contains(new_sw) || !oMaxBounds.contains(new_ne)) {
+                oMaxBounds.extend(new_sw);
+                oMaxBounds.extend(new_ne);
+
+                $('#map_loader_box').show().fadeTo('fast', '0.9');
+                load_markers(oMaxBounds, old_bounds, true);
+            }
+        };
+
+        /**
+		 * get the map object
+		 *
+		 * @return {Map}  google map object.
+		 */
+        self.getmap = function () {
+            return map;
+        };
+
+        /**
+        * set Map location parameters 
+        *
+        * @param {Object} opts: {}
+        * @param {Boolean} isUpdate: update map location and zoom after set the map params
+        */
+        self.setMapLocation = function (opts, isUpdate) {
+            start_location_lat = opts.start_location_lat || start_location_lat;
+            start_location_lng = opts.start_location_lng || start_location_lng;
+            start_location_zoom = parseInt(opts.start_location_zoom) || start_location_zoom;
+            start_location_type = eval(opts.start_location_type) || start_location_type;
+            start_showing_marker = opts.start_showing_marker || start_showing_marker;
+            //update map
+            if (isUpdate) {
+                map.setCenter(new google.maps.LatLng(start_location_lat, start_location_lng));
+                map.setMapTypeId(start_location_type);
+                map.setZoom(start_location_zoom);
+            }
+        };
+
+        /**
+		 * init map only
+		 *
+		 * @param {Object} opts: {}
+		 * @param {Function} callback
+		 */
+        self.initialize = function (opts, callback) {
+            if (opts != null) {
+                self.setMapLocation(opts);
+            }
+            if (map == null) {
+                init.initMap();
+            }
+            if (callback) {
+                callback;
+            }
+        };
+
+        /**
+		 * init map and load markers via ajax
+		 *
+		 * @param {Object} opts: {}
+		 * @param {Function} callback
+		 */
+        self.initAndLoad = function (opts, callback) {
+            if (opts != null) {
+                self.setMapLocation(opts);
+            }
+            if (map == null) {
+                init.initMap();
+            }
+            init.initMapEvent();
+            init.initLoadingBox();
+            init.initIcons();
+            init.initMarkerManager();
+
+            if (callback) {
+                callback;
+            }
+        };
+
+        /**
+		 * select Marker by point
+		 *
+		 * @param {Point} point: The google map point
+		 * @param {Number} zoomlevel: zoom value
+		 * @param {String} type
+		 */
+        self.selectMarkerByPoint = function (point, zoomlevel, type, changeIcon) {
+            // checks if there is a marker at the point, and if not, it attempts to
+            // load the selected marker from the database, and then clicks it.
+            var click_her = getMarkerAtPoint(point, type);
+
+            if (click_her === null) {
+                if (oMaxBounds == null) {
+                    oMaxBounds = map.getBounds();
+                }
+                var old_bounds = new google.maps.LatLngBounds(oMaxBounds.getSouthWest(), oMaxBounds.getNorthEast());
+                if(!oMaxBounds.contains(point)){
+                    oMaxBounds.extend(point);
+                }
+ 
+                load_markers(
+					old_bounds, oMaxBounds,
+					true,
+					function (data) {
+					    var click_her = getMarkerAtPoint(point, type);
+					    if (click_her === null) {
+					        map.setCenter(point);
+					    } else {
+					        if (zoomlevel) { map.setZoom(zoomlevel); }
+							if(changeIcon){
+								map.setCenter(point);
+								click_her.setIcon(customIcons.selectedIcon);
+							}else{
+								selectMarker(click_her);
+							}
+					    }
+					});
+            } else {
+                if (zoomlevel) { map.setZoom(zoomlevel); }
+                if(changeIcon){
+					map.setCenter(point);
+					click_her.setIcon(customIcons.selectedIcon);
+				}else{
+					selectMarker(click_her);
+				}
+            }
+        };
+
+        /**
+        * load Markers in current bounds
+        *
+        * @param {Function} callback
+        */
+        self.loadMarkers = function (callback) {
+            if (oMaxBounds == null) {
+                oMaxBounds = map.getBounds();
+            }
+            load_markers(oMaxBounds, oMaxBounds, true, callback);
+        };
+
+        /**
+        * zoom the map to certain location
+        *
+        * @param {String} f: coords, format(latitude:longitude:zoom), eg:18.257557:-62.996464:13
+        */
+        self.zoomto = function (f) {
+            if (f != '') {
+                var coords = f.split(":");
+                map.setZoom(coords[2] * 1);
+                map.panTo(new google.maps.LatLng(coords[0], coords[1]));
+            }
+        };
+
+        /**
+        * zoom the map to certain pin and show prop infomation window
+        *
+        * @param {String} f: coords, format(latitude:longitude:zoom), eg:18.257557:-62.996464:13
+        * @param {String} type: hotel or villa or beach etc
+        */
+        self.zoomMe = function (f, type) {
+            if (f != '') {
+                var coords = f.split(":");
+                var point = new google.maps.LatLng(coords[0], coords[1]);
+                var zoom = coords[2] * 1;
+                map.setZoom(zoom);
+                map.setCenter(point);
+                self.selectMarkerByPoint(point, zoom, type);
+            }
+        };
+    }
+
+    window.wheretostayMap = new wheretostay.maps();
+    window.zoomMe = wheretostayMap.zoomMe;
+    window.Markers = wheretostayMap.Markers;
+    window.zoomto = wheretostayMap.zoomto;
+
+})(window);

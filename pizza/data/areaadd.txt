@@ -1,0 +1,16 @@
+
+<table>
+<tr>
+<td class="txt1">Address :</td>
+<td style="padding-left:3px;">
+<select id="address" name="address" style="width: 115px;" onchange="zoomOnSelected();">
+	<option value="Please Select">Please Select</option>
+			<option value="24.827329,67.023997">Mai Kolachi/Boat Basin</option>
+				<option value="24.817894,67.03971">Zamzama Commercial</option>
+				<option value="24.815877,67.021604">Bilawal Chowrangi</option>
+				<option value="24.784958,67.04844">Seaview</option>
+				<option value="24.809153,67.062444">Main Kh. Shahbaz</option>
+				<option value="24.830407,67.073984">Main Kh. Ittehad</option>
+		</select></tr>
+								</table>
+								</td>

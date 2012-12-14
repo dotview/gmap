@@ -1,0 +1,289 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+	Bing Map Demo- By dotview
+</title><meta name="description" content="BforB - Referrals that turn into Business." /><meta name="keywords" />
+<link href="scripts/bforb.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    <script type="text/javascript" src="scripts/jQuery-1.4.1.min.js"></script>
+      <script type="text/javascript" src="scripts/geoTools.js"></script>
+      <script type="text/javascript" src="scripts/GeoRSSLayer.js"></script>
+    <script type="text/javascript">
+        var map;
+		var infobox;
+        function GetMap() {
+            var mapOptions = new Object();
+            mapOptions.credentials = "At1D5UrSp74dcpiqNOdCaWL6GeCP0xWZk1UBTw0G4Tjtm2ygfj2mBRxWnNdtVsDk";
+            mapOptions.center = new Microsoft.Maps.Location(48.900, -1.0);
+            mapOptions.zoom = 3;
+
+            // Initialize the map
+            map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), mapOptions);
+
+            map.entities.clear();
+
+            //Define default shape options
+
+            var polylineOptions = {
+                fillColor: new Microsoft.Maps.Color(156, 0, 0, 255)
+            };
+
+            var polygonOptions = {
+                fillColor: new Microsoft.Maps.Color(156, 0, 0, 255),
+                strokeColor: new Microsoft.Maps.Color(156, 0, 255, 0)
+            };
+            infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(0, 0), null);
+			map.entities.push(infobox);
+ 
+            var layer = new GeoRSSLayer(null, polylineOptions, polygonOptions);
+            layer.LoadGeoRSS('data/gml.xml', function (items) {
+			 for(var i =0;i<items.getLength();i++){
+				Microsoft.Maps.Events.addHandler(items.get(i), 'mouseover', displayInfobox);
+                 map.entities.push(items.get(i));
+			 }
+                
+               
+                map.setView({ bounds: layer.GetBounds() });
+            });
+
+
+        }
+		 function displayInfobox(e) {
+              if (e.targetType == 'pushpin') {
+					var link = e.target.Metadata.link;
+				var pinLoc = e.target.getLocation();
+                  infobox.setLocation(pinLoc);
+                  infobox.setOptions({ zIndex:999,
+				  showPointer:true, 
+				  offset:new Microsoft.Maps.Point(0,20),
+				  title: e.target.Metadata.title, 
+				  description: "Location:("+ pinLoc.latitude + ",<br>" + pinLoc.longitude+")<br>AddressID:"+e.target.Metadata.addressid+"<a href='http://www.bforb.com/find/group/"+e.target.Metadata.addressid+"'>Detail</a>"+e.target.Metadata.description });
+			 }
+          }
+        function DisplayLoc(e) {
+            if (e.targetType == 'pushpin') {
+
+                var pinLoc = e.target.getLocation();
+                alert("The location of the pushpin is now " + pinLoc.latitude + ", " + pinLoc.longitude);
+
+            }
+        }
+       function displayEventInfo(e) {
+           if (e.targetType = "item") {
+               var pix = map.tryLocationToPixel(e.target.getLocation(), Microsoft.Maps.PixelReference.control);
+               var ibTitle = document.getElementById('title');
+               ibTitle.innerHTML = e.target.title;
+               var ibDescription = document.getElementById('description');
+               ibDescription.innerHTML = e.target.description;
+               var infobox = document.getElementById('infoBox');
+               infobox.style.top = (pix.y - 60) + "px";
+               infoBox.style.left = (pix.x + 20) + "px";
+               infoBox.style.visibility = "visible";
+               document.getElementById('mapDiv').appendChild(infoBox);
+           }
+       }
+
+      </script>
+
+     
+</head>
+<body>
+    <form method="post" action="" id="form1">
+   
+	
+<!-- Centre-Content -->  
+	<div id="centre-content">  
+        
+
+<div class="centre" onload="GetMap();">
+    <h1 class="main-header">Find it - BingMap Demo</h1>
+</div>	
+
+    <div id="centre-content"> 
+
+ <div id='mapDiv' style="position:relative; width: 100%; height: 300px; float: left; margin-bottom: 10px;"></div>  
+
+  <div style="margin-left: 365px; width: 400px; height: 30px; float: left;">
+   
+    <select name="ctl00$PlaceHolderContent$ddlSearchCity" id="PlaceHolderContent_ddlSearchCity" style="width:210px;">
+	<option selected="selected" value="0">Select from list</option>
+	<option value="0">ENGLAND</option>
+	<option value="1">Bedfordshire</option>
+	<option value="2">Berkshire</option>
+	<option value="3">Bristol</option>
+	<option value="4">Buckinghamshire</option>
+	<option value="5">Cambridgeshire</option>
+	<option value="6">Cheshire</option>
+	<option value="7">County Durham</option>
+	<option value="8">Cornwall</option>
+	<option value="9">Cumbria</option>
+	<option value="10">Derbyshire</option>
+
+</select>   
+
+    <select name="ctl00$PlaceHolderContent$ddlSearchType" id="PlaceHolderContent_ddlSearchType" style="width:75px;">
+	<option selected="selected" value="0">Type...</option>
+	<option value="0">Select All ...</option>
+	<option value="Breakfast">Breakfast</option>
+	<option value="Lunch">Lunch</option>
+	<option value="Evening">Evening</option>
+	<option value="Women">Women</option>
+
+</select>
+    <a id="PlaceHolderContent_lnkListResults" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$lnkListResults&#39;,&#39;&#39;)">search</a>&nbsp;&nbsp;<a id="PlaceHolderContent_lnkNewSearch" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$lnkNewSearch&#39;,&#39;&#39;)">Clear</a>
+ </div>
+     <div class="event-full-header">  
+        <ul>
+            <li style="width: 470px; text-align: left; padding: 3px 0 0 2px;">
+                <a id="PlaceHolderContent_lnkGroupName" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$lnkGroupName&#39;,&#39;&#39;)" style="color:White;text-decoration: none;">Group Name</a></li>
+            <li class="event-postcode"><a id="PlaceHolderContent_lnkNextMeeting" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$lnkNextMeeting&#39;,&#39;&#39;)" style="color:White;text-decoration: none;">Next Meeting</a></li>
+            <li class="event-type"><a id="PlaceHolderContent_lnkEventType" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$lnkEventType&#39;,&#39;&#39;)" style="color:White;text-decoration: none;">Event Type</a></li>
+        </ul>          	
+    </div> 
+    <div class="event-full-box">      
+             <ul>
+                <div>
+	<table cellspacing="0" id="PlaceHolderContent_GridGroups" style="width:901px;border-collapse:collapse;">
+		<tr>
+			<th scope="col">
+                                    
+                                </th>
+		</tr><tr>
+			<td>
+                                    <li>	
+                                        <div class="event-row">
+                                            <ul>
+                                                <li><b>Liverpool City Centre - The Liner Hotel</b> (Merseyside) </li>
+                                                <li class="event-postcode"><span style="color: Green;">Today!</span></li>
+                                                <li class="event-type">Breakfast</li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkBookGroup_0" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$GridGroups$ctl02$lnkBookGroup&#39;,&#39;&#39;)">Guest Booking</a></li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkViewGroup_0" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PlaceHolderContent$GridGroups$ctl02$lnkViewGroup&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/find/group/42/&quot;, false, true))">Details</a></li>
+                                            </ul>   
+                                         </div>   
+                                   </li> 
+                                </td>
+		</tr><tr>
+			<td>
+                                    <li>	
+                                        <div class="event-row">
+                                            <ul>
+                                                <li><b>Ely - The Cutter Inn</b> (Cambridgeshire) </li>
+                                                <li class="event-postcode"><span style="color: Green;">Today!</span></li>
+                                                <li class="event-type">Breakfast</li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkBookGroup_1" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$GridGroups$ctl03$lnkBookGroup&#39;,&#39;&#39;)">Guest Booking</a></li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkViewGroup_1" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PlaceHolderContent$GridGroups$ctl03$lnkViewGroup&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/find/group/45/&quot;, false, true))">Details</a></li>
+                                            </ul>   
+                                         </div>   
+                                   </li> 
+                                </td>
+		</tr><tr>
+			<td>
+                                    <li>	
+                                        <div class="event-row">
+                                            <ul>
+                                                <li><b>Leeds - Crowne Plaza Hotel</b> (West Yorkshire) </li>
+                                                <li class="event-postcode"><span style="color: Green;">Today!</span></li>
+                                                <li class="event-type">Evening</li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkBookGroup_2" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$GridGroups$ctl04$lnkBookGroup&#39;,&#39;&#39;)">Guest Booking</a></li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkViewGroup_2" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PlaceHolderContent$GridGroups$ctl04$lnkViewGroup&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/find/group/53/&quot;, false, true))">Details</a></li>
+                                            </ul>   
+                                         </div>   
+                                   </li> 
+                                </td>
+		</tr><tr>
+			<td>
+                                    <li>	
+                                        <div class="event-row">
+                                            <ul>
+                                                <li><b>Bedford - The Swan Hotel</b> (Bedfordshire) </li>
+                                                <li class="event-postcode"><span style="color: Green;">Today!</span></li>
+                                                <li class="event-type">Breakfast</li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkBookGroup_3" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$GridGroups$ctl05$lnkBookGroup&#39;,&#39;&#39;)">Guest Booking</a></li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkViewGroup_3" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PlaceHolderContent$GridGroups$ctl05$lnkViewGroup&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/find/group/65/&quot;, false, true))">Details</a></li>
+                                            </ul>   
+                                         </div>   
+                                   </li> 
+                                </td>
+		</tr><tr>
+			<td>
+                                    <li>	
+                                        <div class="event-row">
+                                            <ul>
+                                                <li><b>Liverpool - Marina Bar & Grill</b> (Merseyside) </li>
+                                                <li class="event-postcode"><span style="color: Green;">Today!</span></li>
+                                                <li class="event-type">Breakfast</li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkBookGroup_4" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$GridGroups$ctl06$lnkBookGroup&#39;,&#39;&#39;)">Guest Booking</a></li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkViewGroup_4" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PlaceHolderContent$GridGroups$ctl06$lnkViewGroup&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/find/group/70/&quot;, false, true))">Details</a></li>
+                                            </ul>   
+                                         </div>   
+                                   </li> 
+                                </td>
+		</tr><tr>
+			<td>
+                                    <li>	
+                                        <div class="event-row">
+                                            <ul>
+                                                <li><b>Penkridge - Hatherton Country House Hotel </b> (Staffordshire) </li>
+                                                <li class="event-postcode"><span style="color: Green;">Today!</span></li>
+                                                <li class="event-type">Breakfast</li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkBookGroup_5" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$GridGroups$ctl07$lnkBookGroup&#39;,&#39;&#39;)">Guest Booking</a></li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkViewGroup_5" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PlaceHolderContent$GridGroups$ctl07$lnkViewGroup&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/find/group/83/&quot;, false, true))">Details</a></li>
+                                            </ul>   
+                                         </div>   
+                                   </li> 
+                                </td>
+		</tr><tr>
+			<td>
+                                    <li>	
+                                        <div class="event-row">
+                                            <ul>
+                                                <li><b>Bristol - Grand Hotel</b> (Somerset) </li>
+                                                <li class="event-postcode"><span style="color: Green;">Today!</span></li>
+                                                <li class="event-type">Breakfast</li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkBookGroup_6" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$GridGroups$ctl08$lnkBookGroup&#39;,&#39;&#39;)">Guest Booking</a></li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkViewGroup_6" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PlaceHolderContent$GridGroups$ctl08$lnkViewGroup&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/find/group/103/&quot;, false, true))">Details</a></li>
+                                            </ul>   
+                                         </div>   
+                                   </li> 
+                                </td>
+		</tr><tr>
+			<td>
+                                    <li>	
+                                        <div class="event-row">
+                                            <ul>
+                                                <li><b>Bolton - Ladies Group</b> (Lancashire) </li>
+                                                <li class="event-postcode"><span style="color: Green;">Today!</span></li>
+                                                <li class="event-type">Lunch</li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkBookGroup_7" href="javascript:__doPostBack(&#39;ctl00$PlaceHolderContent$GridGroups$ctl09$lnkBookGroup&#39;,&#39;&#39;)">Guest Booking</a></li>
+                                                <li class="book-now-box"><a id="PlaceHolderContent_GridGroups_lnkViewGroup_7" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PlaceHolderContent$GridGroups$ctl09$lnkViewGroup&quot;, &quot;&quot;, false, &quot;&quot;, &quot;/find/group/109/&quot;, false, true))">Details</a></li>
+                                            </ul>   
+                                         </div>   
+                                   </li> 
+                                </td>
+		</tr> 
+	</table>
+</div>
+            </ul>                          	
+     </div>  
+         
+<!-- List -->  
+
+ </div>
+
+	</div>
+<!-- Centre-Content -->  
+
+</div>
+<!-- Content -->  
+ 
+
+<script type="text/javascript">
+//<![CDATA[
+GetMap('');//]]>
+</script>
+</form>
+
+</body>
+</html>

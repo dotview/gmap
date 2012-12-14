@@ -1,0 +1,221 @@
+<html>
+<head>
+	<title> Map Pin </title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="styles/common.css" type="text/css" />
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
+	<script type="text/javascript" charset="UTF-8" src="http://maps.google.com/maps/api/js?sensor=false"></script>	
+	<script type="text/javascript" src="js/jquery.js"></script>	
+	<script src="js/jquery.ui.core.min.js" type="text/javascript"></script>
+	<script src="js/jquery.ui.widget.min.js" type="text/javascript"></script>
+	<script src="js/jquery.ui.position.min.js" type="text/javascript"></script>
+	<script src="js/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
+	<script src="js/jquery.tools.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
+			<link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/css" media="all" />
+			
+			<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/jquery.mappin_old.js"></script>
+	<script type="text/javascript">
+	var JSObject = {
+		init : function(){
+			$("#accommodationName").autocomplete({
+				source: "data/autoComplete.json",
+				minLength: 2,
+				select: function(event, ui) {
+					if(ui.item) {
+						$("#accommodationId").val(ui.item.id);
+					}
+				},
+				change: function(event, ui) {
+					if(ui.item) {
+						$("#accommodationId").val(ui.item.id);
+					} else {
+						$("#accommodationId").val("");
+					}
+				}
+			});
+			$(".ctrlPanel").click(function(e){
+				var top1,left1;
+				top1= $(this).offset().top+40;
+				left1= $(this).offset().left-90;
+				$("#mapTooltip").appendTo(".map");
+				overlayobj=$("a[rel]").overlay({
+					mask: {
+						color: '#000',
+						loadSpeed: 200,
+						opacity: .2,
+						zIndex: 10101
+					},
+					closeOnClick: false,
+					closeOnEsc: false,
+					top:top1,
+					left:left1,
+					zIndex: 10102,
+					fixed:false,
+					load:true
+				});
+				setTooltipPos();
+				overlayobj.load();
+			});
+			$(window).resize(function() {
+				setTooltipPos();
+			});			 
+		}
+	};
+	function setTooltipPos(){
+		var top1,left1;	
+		top1= $(".ctrlPanel").offset().top+40;
+		left1= $(".ctrlPanel").offset().left-90;
+		$("#mapTooltip").css({
+			top:top1,
+			left:left1
+		});
+	}
+$(document).ready(function(){
+	
+	JSObject.init();
+
+	$("#map_canvas").mapPin({
+		fadeInSpeed:500,
+		fadeOutSpeed:'fast',
+		messageFadeOutDuration: 3000,
+		pinFadeOutDuration:100,
+		processBarStyles:{top:20,left:240},//position relative to parent
+		mapOptions:{
+			zoom: 4,
+			mapTypeId:google.maps.MapTypeId.ROADMAP
+		}
+	});	
+	$("#map_canvas2").mapPin({
+		fadeInSpeed:500,
+		fadeOutSpeed:'fast',
+		messageFadeOutDuration: 3000,
+		pinFadeOutDuration:100,
+		processBarStyles:{top:20,left:240},//position relative to parent
+		mapOptions:{
+			zoom: 4,
+			mapTypeId:google.maps.MapTypeId.ROADMAP
+		}
+	});	
+	$( "#tabs" ).tabs();
+});
+
+</script>
+</head>
+<body>
+<div class="preloadSprite"></div>
+<div class="hinweis-bottom-rounded hinweistip-rounded" id="mapTooltip">
+		<div style="overflow: visible; height: auto;" class="hinweistip-outer">
+			<div class="hinweistip-inner">
+				<div class="fTop"><div class="hinweistip-title">Add a destination to your map</div> <div class="hinweistip-close"><a class="close"></a></div></div>
+				<div class="mapTooltipInner">
+				<div class="hininnerSubtitle">Select Destination</div>
+			 <input type="text" class="hininput" value="hotel/attraction,city,state" id="accommodationName" />	
+						<input type="hidden" id="accommodationId" value="" name="review.accommodation.accommodationId" />			
+				 <div style="float:left;margin: 4px;">	<a class="buttonClass2A buttonBeenHere" id="buttonBeenHere">
+							<div class="identifier">Been here</div> 
+							<div class="statusBox5097">21</div>
+							<div class="clear"></div>
+						</a>	</div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="hinweistip-extra"></div>
+		<div style="z-index: 98; display: block;" class="hinweistip-arrows"></div>
+	</div>	
+	 
+		<div class="hinweis-right-rounded hinweistip-rounded" id="mapTooltip2">
+			<div style="overflow: visible; height: auto;" id="hinweistip-outer">
+				<div id="hinweistip-inner">
+					<div class="fTop"><div class="hinweistip-title" id="hinweistip-title"></div> <div class="hinweistip-close"><a class="close"></a></div></div>
+					<div id="hinweistip-content">
+					</div>
+					<div class="hinctrlpanel">
+					<a id="removeMarker">Remove this destination</a> </div>
+				</div>
+			</div>
+			<div class="hinweistip-extra"></div>
+			<div style="z-index: 98; display: block;"  class="hinweistip-arrows"></div>
+		</div>
+		
+		<div class="ctrlPanel"   id="divResult-hinweistip-content">
+			<a id="addDestinationLink" rel="#mapTooltip">
+			<div class="statusBoxplus"> + </div><div class="identifier">Add more destinations</div> 
+						<div class="clear"></div>
+			</a> 
+</div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Nunc tincidunt</a></li>
+		<li><a href="#tabs-2">Proin dolor</a></li>
+	 
+	</ul>
+	<div id="tabs-1">
+	 
+	
+		<div id="map_canvas"  class="map"></div>	
+		</div>
+	</div>	 
+	
+</div>
+	<div id="tabs-2">
+	
+		
+		<div class="container">		
+	<div class="hinweis-bottom-rounded hinweistip-rounded" id="mapTooltip">
+		<div style="overflow: visible; height: auto;" class="hinweistip-outer">
+			<div class="hinweistip-inner">
+				<div class="fTop"><div class="hinweistip-title">Add a destination to your map</div> <div class="hinweistip-close"><a class="close"></a></div></div>
+				<div class="mapTooltipInner">
+				<div class="hininnerSubtitle">Select Destination</div>
+			 <input type="text" class="hininput" value="hotel/attraction,city,state" id="accommodationName" />	
+						<input type="hidden" id="accommodationId" value="" name="review.accommodation.accommodationId" />			
+				 <div style="float:left;margin: 4px;">	<a class="buttonClass2A buttonBeenHere" id="buttonBeenHere">
+							<div class="identifier">Been here</div> 
+							<div class="statusBox5097">21</div>
+							<div class="clear"></div>
+						</a>	</div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="hinweistip-extra"></div>
+		<div style="z-index: 98; display: block;" class="hinweistip-arrows"></div>
+	</div>	
+	<div class="map-container">	 
+		<div class="hinweis-right-rounded hinweistip-rounded" id="mapTooltip2">
+			<div style="overflow: visible; height: auto;" id="hinweistip-outer">
+				<div id="hinweistip-inner">
+					<div class="fTop"><div class="hinweistip-title" id="hinweistip-title"></div> <div class="hinweistip-close"><a class="close"></a></div></div>
+					<div id="hinweistip-content">
+					</div>
+					<div class="hinctrlpanel">
+					<a id="removeMarker">Remove this destination</a> </div>
+				</div>
+			</div>
+			<div class="hinweistip-extra"></div>
+			<div style="z-index: 98; display: block;"  class="hinweistip-arrows"></div>
+		</div>
+		
+		<div class="ctrlPanel"   id="divResult-hinweistip-content">
+			<a id="addDestinationLink" rel="#mapTooltip">
+			<div class="statusBoxplus"> + </div><div class="identifier">Add more destinations</div> 
+						<div class="clear"></div>
+			</a> 
+		</div>
+		<div id="map_canvas2" class="map"></div>	
+		
+		</div>
+	</div>	
+	
+		</div>
+ 
+</div>
+
+ 
+	
+
+ </body>
+</html>

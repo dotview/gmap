@@ -1,0 +1,36 @@
+{
+    "userDestinations": [
+        {
+            "accommodationId": 0,
+            "attractionId": null,
+            "destinationId": 5,
+            "latitude": 33.65972,
+            "longitude": -85.83167,
+            "name": "Anniston, AL"
+        },
+        {
+            "accommodationId": 19,
+            "attractionId": null,
+            "destinationId": 6,
+            "latitude": 41.99,
+            "longitude": -87.86,
+            "name": "The Westin O'Hare"
+        },
+        {
+            "accommodationId": 32,
+            "attractionId": null,
+            "destinationId": 8,
+            "latitude": 38.22,
+            "longitude": -85.58,
+            "name": "Extended Stay America Louisville - Hurstbourne"
+        },
+        {
+            "accommodationId": 0,
+            "attractionId": null,
+            "destinationId": 35,
+            "latitude": 32.840559999999996,
+            "longitude": -87.8875,
+            "name": "Eutaw, AL"
+        }
+    ]
+}

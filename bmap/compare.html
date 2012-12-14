@@ -1,0 +1,171 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>BaiDu地图标注簇</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style/common.css" />
+
+    <script src="http://api.map.baidu.com/api?v=1.2&services=true" type="text/javascript"></script>
+
+    <script src="./data/data.json" type="text/javascript"></script>
+
+    <script type="text/javascript" src="./js/markerclusterer.js"></script>
+
+    <script type="text/javascript">
+
+
+        var styles = [[{
+            url: 'images/people35.png',
+            height: 35,
+            width: 35,
+            opt_anchor: [16, 0],
+            opt_textColor: '#ff00ff',
+            opt_textSize: 10
+        }, {
+            url: 'images/people45.png',
+            height: 45,
+            width: 45,
+            opt_anchor: [24, 0],
+            opt_textColor: '#ff0000',
+            opt_textSize: 11
+        }, {
+            url: 'images/people55.png',
+            height: 55,
+            width: 55,
+            opt_anchor: [32, 0],
+            opt_textSize: 12
+}],
+         [{
+             url: 'images/heart30.png',
+             height: 26,
+             width: 30,
+             opt_anchor: [4, 0],
+             opt_textColor: '#ff00ff',
+             opt_textSize: 10
+         }, {
+             url: 'images/heart40.png',
+             height: 35,
+             width: 40,
+             opt_anchor: [8, 0],
+             opt_textColor: '#ff0000',
+             opt_textSize: 11
+         }, {
+             url: 'images/heart50.png',
+             width: 50,
+             height: 44,
+             opt_anchor: [12, 0],
+             opt_textSize: 12
+}]];
+
+            var markerClusterer = null;
+            var map = null;
+            var map_org = null;
+            var imageUrl = 'images/chart.png';
+
+            function CreateRandom(iFirstValue, iLastValue) {
+                var iChoces = Math.abs(iFirstValue - iLastValue);
+
+                return Math.round((Math.random() * iChoces + iLastValue), 5);
+            }
+
+            function refreshMap() {
+                if (markerClusterer) {
+                    markerClusterer.clearMarkers();
+                }
+                var markers = [];
+
+                var markerImage = new BMap.Icon(imageUrl, new BMap.Size(24, 32));
+
+                for (var i = 0; i < data.count; ++i) {
+                    var latLng = new BMap.Point(data.latlngs[i].lng, data.latlngs[i].lat)
+                    var marker = new BMap.Marker(latLng, { icon: markerImage });
+                    markers.push(marker);
+
+                    var marker_org = new BMap.Marker(latLng, { icon: markerImage });
+                    map_org.addOverlay(marker_org);
+                }
+
+
+                markerClusterer = new MarkerClusterer(map, markers, {
+                    maxZoom: 15,
+                    gridSize: null,
+                    styles: styles[null]
+                });
+            }
+
+            function map_initialize() {
+                map = new BMap.Map("map_property");
+
+                map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
+                map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
+                map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件
+                map.enableScrollWheelZoom();
+
+
+                var myLatlng = new BMap.Point(120.267701, 30.244256);
+                map.centerAndZoom(myLatlng, 6);
+
+                map_org = new BMap.Map("map_property_org");
+                map_org.centerAndZoom(myLatlng, 6);
+
+                var lb = new BMap.Label("<a href=\"http://kuaidi001.sinaapp.com\">kuaidi001</a>");
+                lb.setStyle({
+                    color: "red",
+                    fontSize: "12px",
+                    display: "none"
+                });
+                map.addOverlay(lb);
+
+                map.addEventListener('moveend', function() {
+                    map_org.setCenter(map.getCenter());
+                });
+                map.addEventListener('zoomend', function() {
+                    map_org.setZoom(map.getZoom());
+                    map_org.setCenter(map.getCenter());
+                });
+
+                refreshMap();
+            }
+
+            function clearClusters(e) {
+                markerClusterer.clearMarkers();
+            }
+
+    </script>
+
+</head>
+<body topmargin="0" onload="map_initialize();" marginheight="0" scroll="no">
+    <div id="inline-actions">
+        <!-- <input id="refresh" type="button" value="刷新标记" onclick="refreshMap();" class="item">
+        <input id="Button1" type="button" value="清除标记" onclick="clearClusters(event);" class="item">
+       -->
+    </div>
+    <div id="column_main"><span style="color:Red;margin:8px;"><a style="margin:8px;" href="index.html"><<<返回</a></span>
+        <div style="margin:0 auto;">
+           
+            <table width="100%" border=0><tr><td width="50%">
+             <span style="color:Red;margin:20px;">使用聚簇的效果</span>
+            </td><td width="50%">
+            <span style="color:Red;margin:20px;">原始效果</span>
+            </td></tr>
+            
+            <tr><td>  <div style="height: 582px;  background-color: rgb(229, 227, 223); border: 2px solid #80AB73;"
+                    id="map_property" class="map_right">
+                </div>
+            </td><td>  <div style="height: 582px;  background-color: rgb(229, 227, 223); border: 2px solid #80AB73;"
+                    id="map_property_org" class="map_right">
+                </div>
+            </td></tr></table>
+        </div>
+    </div>
+    <div id="bottom">
+        <div class="inner">
+            &copy; 2011 by Dotview | <a href="http://map.baidu.com/" target="_blank">百度地图</a>
+            | <a href="http://t.sina.com/dotview" target="_blank">新浪微博</a> |
+
+            <script src="http://s21.cnzz.com/stat.php?id=3061506&web_id=3061506" language="JavaScript"></script>
+
+        </div>
+    </div>
+</body>
+</html>

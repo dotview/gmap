@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="http://hot-table.com/wp-content/themes/hot-table/reset.css"
+        type="text/css" />
+    <link href="http://hot-table.com/wp-content/themes/hot-table/jquery.mCustomScrollbar.css"
+        rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="http://hot-table.com/wp-content/themes/hot-table/js/jquery.js"></script>
+
+    <script type="text/javascript" src="http://hot-table.com/wp-content/themes/hot-table/js/jquery.cycle.js"></script>
+
+    <script type="text/javascript" src="http://hot-table.com/wp-content/themes/hot-table/js/jquery.validate.js"></script>
+
+    <script type="text/javascript" src="http://hot-table.com/wp-content/themes/hot-table/js/common.js"></script>
+
+    <script type="text/javascript" src="http://hot-table.com/wp-content/themes/hot-table/js/jquery.mousewheel.min.js"></script>
+
+	<script type="text/javascript" src="http://jscrollpane.kelvinluck.com/script/jquery.jscrollpane.min.js"></script>
+    <!--<script type="text/javascript" src="http://hot-table.com/wp-content/themes/hot-table/js/jquery.jscrollpane.js"></script>-->
+	
+    <script type="text/javascript" id="sourcecode">
+	$(function()
+	{		
+		$('.scroll-pane, .scroll-panel').jScrollPane(
+		{
+
+			showArrows: true,
+			animateScroll: true,
+			animateDuration: 200,
+			mouseWheelSpeed: 25,
+			keyboardSpeed: 50,
+			animateSteps: true
+		});
+		
+		$('.popup_wrapper').hide();
+		$('.popup').click(function(){
+			$('.popup_overlay').height($(document).height());
+			$('.popup_overlay').fadeIn(200);
+			$('.popup_wrapper').delay(100).fadeIn(200);
+			$(window).scrollTop(0);
+			$('.popup_wrapper').css({'margin-top':-$('.popup_wrapper').height()/2})
+		});
+		$('.btn_close').click(function(){
+			$('.popup_wrapper').fadeOut(200);
+			$('.popup_overlay').delay(100).fadeOut(200);
+		});
+
+	});
+    </script>
+
+    <script type="text/javascript">
+$(document).ready(function() {
+	$('.slideshow_logo_frame')
+		.cycle({
+			fx:     'scrollUp', 
+			speed:  'slow',
+			timeout: 10000,
+
+			cleartype:true ,
+			cleartypeNoBg: true
+		});
+		
+		$('.slideshow_frame')
+		.cycle({
+			fx:     'fade', 
+			speed:  1000,
+			timeout: 5000,
+
+			cleartype:true ,
+			cleartypeNoBg: true
+		});	
+		
+		
+		$('#restaurant_images')
+		.cycle({
+			fx:     'fade', 
+			speed:  1000,
+			timeout: 5000,
+
+			cleartype:true ,
+			cleartypeNoBg: true
+		});	
+		
+		
+		$('input[type=text], input[type=password], input[type=checkbox]').each(function(){
+			//alert ($(this).outerWidth());
+			$(this).wrap('<div class="form_element_wrapper" style="width:'+$(this).outerWidth()+'px;" />')
+		})	
+	});
+	
+	
+$(window).load(function(){
+	$('#mappopup').parent().css({'z-index':99})	
+})
+    </script>
+
+    <meta charset="UTF-8" />
+    <!--<meta name="viewport" content="width=device-width" />-->
+    <title>search restaurants | Hot-Table Dining Club</title>
+    <link rel="stylesheet" type="text/css" media="all" href="http://hot-table.com/wp-content/themes/hot-table/style.css" />
+	<style>
+	#hoverDiv:hover,.hoverDiv:hover{
+    background: none repeat scroll 0 0 #e1e1e1;
+}
+#hoverDiv:hover h2,.hoverDiv:hover h2 {
+    background: none repeat scroll 0 0 #e1e1e1;
+}
+	</style>
+</head>
+<body>
+    <div class="wrapper">
+      
+        <!--header ends here-->
+        <div class="container search_wrapper">
+           
+            <div class="content home_wrapper">
+                
+                <link href="http://hot-table.com/wp-content/themes/hot-table/mapstyle.css" rel="stylesheet"
+                    type="text/css" />
+
+                <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+                <script type="text/javascript" src="infobubble.js"></script>
+				<script type="text/javascript" src="searchAjaxMap.js"></script>
+                <script type="text/javascript">
+var postalVal='';
+var cuisineVal='';
+var searchType='';
+
+var noRecord='0';
+var map;
+var counter = 0;
+var markerArray = [];
+var html = [];
+var previousBubble = null;
+var ID=0;
+var openBubble=null;
+var  oMaxBounds;
+var curID=-1;
+var idlelistener ;
+  //alert(noRecord)    
+$(document).ready(function(){
+	$('input#cuisine').focus(function(){
+		$('#cusine_types').slideDown(200);
+	})
+	$('.close_cuisine_types').click(function(){
+		$('#cusine_types').slideUp(200);
+	})
+})
+$(document).ready(function () {
+viewmap(postalVal,cuisineVal,ID,searchType,noRecord);
+});
+</script>
+
+                <style type="text/css">
+                    .gmap3
+                    {
+                        margin-top: 20px;
+                        width: 535px;
+                        height: 482px;
+                    }
+                    .search_bar
+                    {
+                        position: relative;
+                        z-index: 99;
+                    }
+                    .select_cuisine_wrapper
+                    {
+                        display: inline-block;
+                        position: relative;
+                        vertical-align: middle; *display:inline;zoom:1;}
+                    .select_cuisine
+                    {
+                        position: absolute;
+                        top: 100%;
+                        left: 8px;
+                        width: 140px;
+                        background: #fff;
+                        border: 1px solid #572971;
+                        padding: 5px 0;
+                        display: none;
+                    }
+                    .select_cuisine label
+                    {
+                        display: block;
+                        padding: 3px 5px 3px 0 !important;
+                    }
+                    .select_cuisine label .form_element_wrapper
+                    {
+                        margin-right: 0 !important;
+                    }
+                    .select_cuisine label input
+                    {
+                        margin: 0 5px 0 0;
+                        vertical-align: middle;
+                    }
+                    .select_cuisine .close_cuisine_types
+                    {
+                        position: absolute;
+                        right: 3px;
+                        top: 3px;
+                        z-index: 1;
+                    }
+                </style>
+
+                <script type="text/javascript">
+      function setCusine(value)
+{
+
+           var data = [];
+    $(':checkbox:checked').each(function(i){
+      data[i] = $(this).val();
+	  
+    });
+
+    $('#cuisine').val(data);
+}
+	
+
+	  function checkSearch(val) {
+	  
+	  
+	var PostalCode = document.getElementById("postalCode").value
+	var Cuisine = document.getElementById("cuisine").value;
+	document.getElementById("searchType").value=val;
+
+	  if(val==0 && PostalCode!='address' && Cuisine!='cuisine')
+	  {
+	  $('#cuisine').val('cuisine');
+	  $('#noRecord').val('0');
+	  }
+	  if(val==1 && Cuisine!='cuisine' && PostalCode!='address' )
+	 {
+	 	 $('#postalCode').val('address');
+		 $('#noRecord').val('0');
+	 }
+		 
+	if(PostalCode=='address' && val==0)
+	{
+		document.searchFrm.submit();
+	}
+	if(Cuisine=='cuisine' && val==1)
+	{
+		document.searchFrm.submit();
+	}
+else
+{
+ jQuery.ajax
+ ({
+  	cache:false,
+	async:false,
+	type: "POST",
+	url:"/wp-checksearch.php",
+	data: "postalCode="+PostalCode+"&cuisine="+Cuisine+"&search="+val,
+	success: function(data)
+	{
+//alert(data);
+		if(data==1)
+		{
+			$('#noRecord').val('0');
+			document.searchFrm.submit();
+		}
+		else
+		{
+			$('#noRecord').val('1');
+			document.searchFrm.submit();
+
+			//alert("No Result Found!");
+			return false;
+		}
+	}
+  });
+ } 
+  return false;
+}
+                </script>
+
+                <div class="clear">
+                </div>
+                <div class="info-box1">
+                    <div class="left_cont">
+                        <div class="search_bar">
+                            <form name="searchFrm" action="" method="post">
+                            <input type="hidden" name="restIDval" id="restIDval" value="" />
+                            <input type="hidden" name="search" value="1" />
+                            <div class="fl">
+                                <label class="fl">
+                                    quick search</label>
+                                <input type="text" value="address" id="postalCode" class="search vm" name="postalCode"
+                                    onblur="if (this.value == '') {this.value = 'address';}" onfocus="if (this.value == 'address') {this.value = '';}" />
+                                <input type="button" class="vm search_button" onclick="checkSearch('0');" value="" />
+                            </div>
+                            <div class="fr">
+                                <label class="fl">
+                                    advanced search</label>
+                                <div class="select_cuisine_wrapper">
+                                    <input type="text" value="cuisine" class="search vm" id="cuisine" name="cuisine"
+                                        onblur="if (this.value == '') {this.value = 'cuisine';}" onfocus="if (this.value == 'cuisine') {this.value = '';}" />
+                                    <div id="cusine_types" class="select_cuisine">
+                                        <div id="hideList">
+                                        </div>
+                                        <label style="margin-left: 5px;">
+                                            <input type="checkbox" name="cuisineCHK" class="cuisineCls" onclick="setCusine('Comfort Food');"
+                                                value="Comfort Food" />
+                                            Comfort Food</label></label>
+                                        <label style="margin-left: 5px;">
+                                            <input type="checkbox" name="cuisineCHK" class="cuisineCls" onclick="setCusine('Fine Dining');"
+                                                value="Fine Dining" />
+                                            Fine Dining</label></label>
+                                        <label style="margin-left: 5px;">
+                                            <input type="checkbox" name="cuisineCHK" class="cuisineCls" onclick="setCusine('Indian');"
+                                                value="Indian" />
+                                            Indian</label></label>
+                                        <label style="margin-left: 5px;">
+                                            <input type="checkbox" name="cuisineCHK" class="cuisineCls" onclick="setCusine('Italian');"
+                                                value="Italian" />
+                                            Italian</label></label>
+                                        <label style="margin-left: 5px;">
+                                            <input type="checkbox" name="cuisineCHK" class="cuisineCls" onclick="setCusine('Japanese');"
+                                                value="Japanese" />
+                                            Japanese</label></label>
+                                        <label style="margin-left: 5px;">
+                                            <input type="checkbox" name="cuisineCHK" class="cuisineCls" onclick="setCusine('Pub Food');"
+                                                value="Pub Food" />
+                                            Pub Food</label></label>
+                                        <label style="margin-left: 5px;">
+                                            <input type="checkbox" name="cuisineCHK" class="cuisineCls" onclick="setCusine('Thi Food');"
+                                                value="Thi Food" />
+                                            Thi Food</label></label>
+                                        <label style="margin-left: 5px;">
+                                            <input type="checkbox" name="cuisineCHK" class="cuisineCls" onclick="setCusine('Vietnamese');"
+                                                value="Vietnamese" />
+                                            Vietnamese</label></label> <a href="#" class="close_cuisine_types">
+                                                <img src="http://hot-table.com/wp-content/themes/hot-table/images/cancell_button.jpg"
+                                                    alt="" width="10" /></a>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="searchType" id="searchType" value="" />
+                                <input type="hidden" name="noRecord" id="noRecord" value="0" />
+                                <input type="button" class="vm search_button" onclick="checkSearch('1');" value="" />
+                            </div>
+                            </form>
+                        </div>
+                        <div class="google_map_wrap">
+                            <div id="map" class="gmap3">
+                            </div>
+                            <div class="map_shadow">
+                            </div>
+                        </div>
+                    </div>
+                    <!--left_cont ends here-->
+                    <div class="right_cont">
+                        <div id="mcs_container">
+                            <div id="restData" class="scroll-pane">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <!--info-box ends here-->
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <!--content ends here-->
+            <div class="clear">
+            </div>
+        </div>
+        <!--container ends here-->
+        <div class="footer">
+            <p class="fl">
+                &copy; Copyright 2012 hot-table</p>
+            <p class="fr">
+                <a href="https://plus.google.com/app/plus/mp/72/?gl=ca&source=mog#~loop:a=g%3A115727908262142503555&view=profile"
+                    target="_blank" title="Google +" class="mright5">
+                    <img src="http://hot-table.com/wp-content/themes/hot-table/images/goole-plus-icon.png"
+                        alt="" class="vm" />
+                </a><a href="https://twitter.com/#!/Hot_Table" target="_blank" title="Twitter" class="mright5">
+                    <img src="http://hot-table.com/wp-content/themes/hot-table/images/twitter-icon.png"
+                        alt="" class="vm" /></a><a href="http://www.facebook.com/pages/hot-table/128397850612979"
+                            target="_blank" title="Facebook" class="mright5"><img src="http://hot-table.com/wp-content/themes/hot-table/images/facebook-icon.png"
+                                alt="" class="vm" />
+                        </a><a href="/?page_id=33" title="contact us" class="mright15">contact us</a>
+                <span><a href="/amember/login">login</a></span></p>
+        </div>
+    </div>
+    <!--wrapper ends here-->
+    <div class="popup_overlay">
+    </div>
+    </div><!--wrapper ends here-->
+</body>
+</html>

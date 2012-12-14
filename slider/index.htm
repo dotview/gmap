@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr" class="js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>Slider search map</title>
+  
+<link rel="shortcut icon" href="./beakun_files/favicon.jpg" type="image/x-icon">
+<script src="http://maps.google.com/maps?file=api&amp;v=2.115&amp;key=AIzaSyAyd947McJec6wCarbEMd0q2t6ILtbmNKY&amp;hl=en" type="text/javascript"></script>
+  <link type="text/css" rel="stylesheet" media="all" href="./beakun_files/admin_menu.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/node.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/defaults.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/system.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/system-menus.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/user.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/content-module.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/date.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/datepicker.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/jquery.timeentry.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/filefield.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/lightbox.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/logintoboggan.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/og.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/jquery-ui.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/slidermap.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/farbtastic.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/calendar.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/fieldgroup.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/views.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/gmap.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/base.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/starter.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/theme.css">
+<link type="text/css" rel="stylesheet" media="all" href="./beakun_files/forms-custom.css">
+  <style type="text/css">#container{width:960px;}.two-sidebars .content-inner{margin-left:240px; margin-right:240px;}.sidebar-first .content-inner{margin-left:240px; margin-right:0;}.sidebar-last .content-inner{margin-right:240px; margin-left:0;}#sidebar-first{width:240px;margin-left:-100%;}#sidebar-last{width:240px;margin-left:-240px;}</style> 
+  <script type="text/javascript" src="./beakun_files/jquery.min.js"></script>
+<script type="text/javascript" src="./beakun_files/drupal.js"></script>
+<script type="text/javascript" defer="defer" src="./beakun_files/admin_menu.js"></script>
+<script type="text/javascript" src="./beakun_files/jquery.bt.min.js"></script>
+<script type="text/javascript" src="./beakun_files/beautytips.js"></script>
+<script type="text/javascript" src="./beakun_files/custom_beakun.js"></script>
+<script type="text/javascript" src="./beakun_files/lightbox.js"></script>
+<script type="text/javascript" src="./beakun_files/og.js"></script>
+<script type="text/javascript" src="./beakun_files/poormanscron.js"></script>
+<script type="text/javascript" src="./beakun_files/jquery-ui.min.js"></script>
+<script type="text/javascript" src="./beakun_files/date.js"></script>
+<script type="text/javascript" src="./beakun_files/slidermap_getdata.js"></script>
+<script type="text/javascript" src="./beakun_files/gmap.js"></script>
+<script type="text/javascript" src="./beakun_files/marker.js"></script>
+<script type="text/javascript" src="./beakun_files/highlight.js"></script>
+<script type="text/javascript" src="./beakun_files/gmap_marker.js"></script>
+<script type="text/javascript" src="./beakun_files/poly.js"></script>
+<script type="text/javascript" src="./beakun_files/gmap_markers.js"></script>
+<script type="text/javascript" src="./beakun_files/icon.js"></script>
+<script type="text/javascript" src="./beakun_files/markerloader_static.js"></script>
+<script type="text/javascript" src="./beakun_files/at-scripts.js"></script>
+<script type="text/javascript" src="./beakun_files/poya.js"></script><style type="text/css">input.styled { display: none; } select.styled { position: relative; width: 190px; opacity: 0; filter: alpha(opacity=0); z-index: 5; } .disabled { opacity: 0.5; filter: alpha(opacity=50); }</style>
+<script type="text/javascript" src="./beakun_files/equalize-columns.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, { "basePath": "/beakun/", "admin_menu": { "margin_top": 1 }, "beautytips": { "form-text": { "positions": [ "top", "bottom" ], "fill": 353535, "padding": 15, "strokeStyle": 353535, "strokeWidth": 0, "spikeLength": 20, "spikeGirth": 20, "cornerRadius": 3, "centerPointX": 0.9, "cssStyles": { "color": "c7c7c7" }, "cssSelect": "form-text", "list": [ "positions", "fill", "padding", "strokeStyle", "strokeWidth", "spikeLength", "spikeGirth", "cornerRadius", "centerPointX", "cssStyles" ] }, ".beautytips": { "positions": [ "top", "bottom" ], "fill": 353535, "padding": 15, "strokeStyle": 353535, "strokeWidth": 0, "spikeLength": 20, "spikeGirth": 20, "cornerRadius": 3, "centerPointX": 0.9, "cssStyles": { "color": "c7c7c7" }, "cssSelect": ".beautytips", "list": [ "positions", "fill", "padding", "strokeStyle", "strokeWidth", "spikeLength", "spikeGirth", "cornerRadius", "centerPointX", "cssStyles" ] }, "bt_text_field": { "positions": [ "right" ], "fill": 353535, "padding": 15, "strokeStyle": 353535, "strokeWidth": 0, "spikeLength": 20, "spikeGirth": 20, "cornerRadius": 3, "centerPointX": 0.9, "cssStyles": { "color": "c7c7c7" }, "cssSelect": "input.form-text", "trigger": [ "focus", "blur" ], "contentSelector": "$(this).nextAll(\'.description:eq(0)\').hide().html()", "width": "275px", "preEval": true, "list": [ "positions", "fill", "padding", "strokeStyle", "strokeWidth", "spikeLength", "spikeGirth", "cornerRadius", "centerPointX", "cssStyles", "trigger", "contentSelector", "width" ] }, "bt_text_area": { "positions": [ "right" ], "fill": 353535, "padding": 15, "strokeStyle": 353535, "strokeWidth": 0, "spikeLength": 20, "spikeGirth": 20, "cornerRadius": 3, "centerPointX": 0.9, "cssStyles": { "color": "c7c7c7" }, "cssSelect": "textarea.form-textarea", "trigger": [ "focus", "dblclick" ], "contentSelector": "$(this).parents(\'.form-item\').find(\'.description\').hide().html()", "width": "275px", "preEval": true, "list": [ "positions", "fill", "padding", "strokeStyle", "strokeWidth", "spikeLength", "spikeGirth", "cornerRadius", "centerPointX", "cssStyles", "trigger", "contentSelector", "width" ] } }, "lightbox2": { "rtl": 0, "file_path": "/beakun/(\\w\\w/)sites/default/files", "default_image": "/beakun/sites/all/modules/lightbox2/images/brokenimage.jpg", "border_size": 10, "font_color": "000", "box_color": "fff", "top_position": "", "overlay_opacity": "0.8", "overlay_color": "000", "disable_close_click": 1, "resize_sequence": 0, "resize_speed": 400, "fade_in_speed": 400, "slide_down_speed": 600, "use_alt_layout": 0, "disable_resize": 0, "disable_zoom": 0, "force_show_nav": 0, "show_caption": 1, "loop_items": 1, "node_link_text": "View Image Details", "node_link_target": 0, "image_count": "Image !current of !total", "video_count": "Video !current of !total", "page_count": "Page !current of !total", "lite_press_x_close": "press \x3ca href=\"#\" onclick=\"hideLightbox(); return FALSE;\"\x3e\x3ckbd\x3ex\x3c/kbd\x3e\x3c/a\x3e to close", "download_link_text": "Download Original", "enable_login": false, "enable_contact": false, "keys_close": "c x 27", "keys_previous": "p 37", "keys_next": "n 39", "keys_zoom": "z", "keys_play_pause": "32", "display_image_size": "", "image_node_sizes": "()", "trigger_lightbox_classes": "", "trigger_lightbox_group_classes": "", "trigger_slideshow_classes": "", "trigger_lightframe_classes": "", "trigger_lightframe_group_classes": "", "custom_class_handler": 0, "custom_trigger_classes": "", "disable_for_gallery_lists": true, "disable_for_acidfree_gallery_lists": true, "enable_acidfree_videos": true, "slideshow_interval": 5000, "slideshow_automatic_start": true, "slideshow_automatic_exit": true, "show_play_pause": true, "pause_on_next_click": false, "pause_on_previous_click": true, "loop_slides": false, "iframe_width": 600, "iframe_height": 400, "iframe_border": 1, "enable_video": 0 }, "cron": { "basePath": "/beakun/poormanscron", "runNext": 1332989755 }, "gmap_markermanager": [  ], "gmap": { "contenttypemap1": { "width": "100%", "height": "400px", "zoom": 14, "maxzoom": "15", "controltype": "Small", "align": "None", "maptype": "Map", "mtc": "standard", "baselayers": { "Map": 1, "Satellite": 1, "Hybrid": 1, "Physical": 1 }, "styles": { "line_default": [ "0000ff", "5", "45", "", "" ], "poly_default": [ "000000", "3", "25", "ff0000", "45" ], "highlight_color": "ff0000" }, "line_colors": [ "#00cc00", "#ff0000", "#0000ff" ], "behavior": { "autozoom": true }, "markermode": "1", "id": "contenttypemap1", "markers": [ { "latitude": 35.584552, "longitude": -82.566863, "markername": "close", "offset": 0, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/12-bones\"\x3e12 Bones\x3c/a\x3e\x3c/h3\x3e\x3cp\x3eOpen from 9:00AM to 6:00PM\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "69", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.571479, "longitude": -82.545401, "markername": "close", "offset": 1, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/biltmore-fitness-123\"\x3eBiltmore Fitness 123\x3c/a\x3e\x3c/h3\x3e\x3cspan class=\'map-phone\'\x3e            +1 828-210-9622    \x3c/span\x3e\x3cbr /\x3e\x3cp\x3eOpen from 7:00AM to 8:00PM\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "18", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.596934, "longitude": -82.553206, "markername": "close", "offset": 2, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/bouchon\"\x3eBouchon\x3c/a\x3e\x3c/h3\x3e\x3cp\x3eOpen from 10:00AM to 7:00PM\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "71", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.568965, "longitude": -82.544431, "markername": "close", "offset": 3, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/fdsfsf\"\x3efdsfsf\x3c/a\x3e\x3c/h3\x3e\x3cspan class=\'map-phone\'\x3e            +1 828-210-9622    \x3c/span\x3e\x3cbr /\x3e\x3cp\x3eOpen from 10:00AM to 7:00PM\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "124", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.592746, "longitude": -82.556456, "markername": "close", "offset": 4, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/fountain-inn-restaurant\"\x3eFountain Inn Restaurant\x3c/a\x3e\x3c/h3\x3e\x3cp\x3eClosed today\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "35", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.594437, "longitude": -82.555422, "markername": "open", "offset": 0, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/jack-wood\"\x3eJack of the  Wood\x3c/a\x3e\x3c/h3\x3e\x3cspan class=\'map-phone\'\x3e(828)252-445\x3c/span\x3e\x3cbr /\x3e\x3cp\x3eOpen from 2:30AM to 3:00AM\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "12", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.594584, "longitude": -82.551718, "markername": "open", "offset": 1, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/poyas-bar\"\x3ePoya\x26#039;s Bar\x3c/a\x3e\x3c/h3\x3e\x3cspan class=\'map-phone\'\x3e+1 828-210-9622\x3c/span\x3e\x3cbr /\x3e\x3cp\x3eClosed today\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "125", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.592746, "longitude": -82.556456, "markername": "open", "offset": 2, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/sky-bar\"\x3esky bar\x3c/a\x3e\x3c/h3\x3e\x3cp\x3eOpen from 10:00AM to 7:00PM\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "136", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.578592, "longitude": -82.588848, "markername": "close", "offset": 5, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/sunny-point-cafe\"\x3eSunny Point Cafe\x3c/a\x3e\x3c/h3\x3e\x3cp\x3eOpen from 4:00AM to 2:00PM\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "70", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.594733, "longitude": -82.554841, "markername": "close", "offset": 6, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/tupelo-honey-cafe\"\x3eTupelo Honey Cafe\x3c/a\x3e\x3c/h3\x3e\x3cspan class=\'map-phone\'\x3e828-255-4863\x3c/span\x3e\x3cbr /\x3e\x3cp\x3eClosed today\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "16", "highlight": 0, "highlightcolor": "#FF0000" } }, { "latitude": 35.595088, "longitude": -82.555232, "markername": "close", "offset": 7, "text": "\x3cdiv class=\"gmap-popup\"\x3e\x3ch3 class=\'map-title node-\'\x3e\x3ca href=\"/beakun/asheville/world-coffee-cafe\"\x3eWorld Coffee Cafe\x3c/a\x3e\x3c/h3\x3e\x3cspan class=\'map-phone\'\x3e(828) 258-1058\x3c/span\x3e\x3cbr /\x3e\x3cp\x3eClosed today\x3c/p\x3e\x3c/div\x3e", "opts": { "title": "30", "highlight": 0, "highlightcolor": "#FF0000" } } ], "longitude": "-92.6246166229248", "latitude": "41.55413214109558" } }, "MapTermNodes": { "1": [ 18, 124, 12, 125, 136, 123, 16 ], "2": [ 69, 71, 35, 70, 30 ] } });
+//--><!]]>
+</script>
+
+
+<!-- END FACEBOOK CODE -->
+
+<script type="text/javascript">  
+      
+      jQuery(function($){
+        $('.bar').mosaic({
+          animation : 'slide'
+        });
+        });
+        
+    </script>
+<script type="text/javascript"> 
+$(document).ready(function(){
+  $('.tpanel').hide();
+  $('.tpanel2').show();
+  $('.tpanel3').hide();
+$(".flip").click(function(){
+    $(".tpanel").slideToggle("slow");
+  });
+$(".flip2").click(function(){ 
+  $(".tpanel2").slideToggle("slow");
+  $(this).text($(this).text() == 'Show Panel' ? 'Hide Panel' : 'Show Panel');
+});
+$(".flip3").click(function(){ 
+  $(".tpanel3").slideToggle("slow");
+  $(this).text($(this).text() == 'Show Panel' ? 'Hide Panel' : 'Show Panel');
+});
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+  
+  // Expand Panel
+  $("#open").click(function(){
+    $("div#panel_slide").slideDown("slow");
+  
+  }); 
+  
+  // Collapse Panel
+  $("#close").click(function(){
+    $("div#panel_slide").slideUp("slow"); 
+  });   
+  
+  // Switch buttons from "Log In | Register" to "Close Panel" on click
+  $("#toggle a").click(function () {
+    $("#toggle a").toggle();
+  });   
+    
+});
+</script>
+<script type="text/javascript">
+var supersleight=function(){var root=false;
+  var applyPositioning=true;
+  var shim='x.gif';
+  var shim_pattern=/x\.gif$/i;
+var fnLoadPngs=function(){if(root){root=document.getElementById(root);}else{root=document;}
+for(var i=root.all.length-1,obj=null;(obj=root.all[i]);i--){if(obj.currentStyle.backgroundImage.match(/\.png/i)!==null){bg_fnFixPng(obj);}
+if(obj.tagName=='IMG'&&obj.src.match(/\.png$/i)!==null){el_fnFixPng(obj);}
+if(applyPositioning&&(obj.tagName=='A'||obj.tagName=='INPUT')&&obj.style.position===''){obj.style.position='relative';}}};var bg_fnFixPng=function(obj){var mode='scale';var bg=obj.currentStyle.backgroundImage;var src=bg.substring(5,bg.length-2);if(obj.currentStyle.backgroundRepeat=='no-repeat'){mode='crop';}
+obj.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='"+mode+"')";obj.style.backgroundImage='url('+shim+')';};var el_fnFixPng=function(img){var src=img.src;img.style.width=img.width+"px";img.style.height=img.height+"px";img.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+src+"', sizingMethod='scale')";img.src=shim;};var addLoadEvent=function(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){if(oldonload){oldonload();}
+func();};}};return{init:function(){addLoadEvent(fnLoadPngs);},limitTo:function(el){root=el;},run:function(){fnLoadPngs();}};}();supersleight.init();
+</script>
+   <script type="text/javascript">
+             $(document).ready(function() {
+                $('div.item-list > ul > li > a').mouseover(function(){
+               // alert($(this).attr("class"));
+                var value = $(this).text();
+                //var src = "/beakun/staging/sites/all/modules/gmap/markers/drupal_over.png" ;
+                var src = "/sites/all/modules/gmap/markers/drupal_over.png" ;
+                
+                $('img[title='+ value +']').attr("src", src);
+                $('img[title='+ value +']').click();
+                });
+                
+                $('div.item-list > ul > li > a').mouseout(function(){
+                var value = $(this).text();
+                //var src = "/beakun/staging/sites/all/modules/gmap/markers/drupal.png" ;
+                var src = "/sites/all/modules/gmap/markers/drupal.png" ;
+                $('img[title='+ value +']').attr("src", src);
+                });
+                  
+            });
+    </script>
+</head>
+<body class="page-fp-banner one-sidebar sidebar-first">
+  <div id="container">
+
+    <div id="skip-nav" class="element-invisible">
+      <!-- To adjust the display of the skip link see the Advanced theme settings (General settings), and never use display:none! -->
+      <a href="#main-content">Skip to main content</a>
+    </div>
+
+        
+    <div id="header" class="clearfix">
+
+              <div id="branding">
+
+                                    <h1 class="logo-site-name">
+                <span id="logo"><a href="/beakun/" rel="home" class="active">Slidering</a></span>                              </h1> <!-- /logo/site name -->
+                      
+          
+        </div> <!-- /branding -->
+      
+              <div id="search-box"><form action="/beakun/"  accept-charset="UTF-8" method="post" id="search-theme-form">
+<div><div id="search" class="container-inline">
+  <div class="form-item" id="edit-search-theme-form-1-wrapper">
+ <label for="edit-search-theme-form-1">Search this site: </label>
+ <input type="text" maxlength="128" name="search_theme_form" id="edit-search-theme-form-1" size="15" value="" title="Enter the terms you wish to search for." class="form-text" />
+</div>
+<span class="button-wrapper edit-submit"><span class="button"><input type="submit" name="op" id="edit-submit" value="Search"  class="form-submit" /></span></span>
+<input type="hidden" name="form_build_id" id="form-eec673bd24ce417bd05f3e7c337578c2" value="form-eec673bd24ce417bd05f3e7c337578c2"  />
+<input type="hidden" name="form_token" id="edit-search-theme-form-form-token" value="145e7adfcd93bdc84cb1cdb41800f1cb"  />
+<input type="hidden" name="form_id" id="edit-search-theme-form" value="search_theme_form"  />
+</div>
+
+</div></form>
+</div> <!-- /search box -->
+      
+      
+    </div> <!-- /header -->
+
+    
+    
+    
+    
+    
+          <div id="secondary-content"><div id="block-custom_beakun-4" class="block block-custom_beakun block-edit-links">
+  <div class="block-inner">
+
+    
+    <div class="content"><div class="box_menu " align="center">
+
+                  <div class="box_city">
+
+                    <form name="city_frm" method="post" action="">
+
+                      <div class="city-dropdown"><span>Asheville</span>
+
+                      <select name="selCity" onchange="submitFrm();" id="changecity">
+
+                        <option value="">Change city</option><option value=10 .  >Asheville</option><option value=31 .  >Encinitas</option><option value=30 .  >Mammoth Lakes</option><option value=32 .  >Redlands</option></select>
+
+                  </div>
+
+                  </form>	
+
+                  </div></div>
+
+    <div class="edit-links"><a href="/beakun/admin/build/block/configure/custom_beakun/4?destination=fp_banner" class="block-edit-link edit-block-block" title="Configure block"><span>Configure</span></a></div>
+  </div>
+</div> <!-- /block -->
+<div id="block-block-19" class="block block-block block-edit-links">
+  <div class="block-inner">
+
+    
+    <div class="content"><div class="slider">
+at <span id="s-time" class="d-time"></span>   on <span id="s-date" class="d-time">01.10.11</span><span id="spanDateIcon"> change date: <input type="hidden" id="slidermap_datepicker" /></span>
+<div id="slider-time"> </div>
+</div>
+</div>
+
+    <div class="edit-links"><a href="/beakun/admin/build/block/configure/block/19?destination=fp_banner" class="block-edit-link edit-block-block" title="Edit block"><span>Edit Block</span></a></div>
+  </div>
+</div> <!-- /block -->
+</div> <!-- /secondary-content -->
+    
+    <div id="columns"><div class="columns-inner clearfix">
+
+      <div id="content-column"><div class="content-inner">
+
+        
+                  <div id="content-top"><div id="block-views-gmap_home_block-block_2" class="block block-views block-edit-links">
+  <div class="block-inner">
+
+    
+    <div class="content"><div class="view view-gmap-home-block view-id-gmap_home_block view-display-id-block_2 view-dom-id-2">
+      <div class="views-admin-links views-hide">
+      <ul class="links"><li class="0"><a href="/beakun/admin/build/views/edit/gmap_home_block?destination=fp_banner#views-tab-block_2"><span>Edit</span></a></li>
+<li class="1"><a href="/beakun/admin/build/views/export/gmap_home_block"><span>Export</span></a></li>
+<li class="2"><a href="/beakun/admin/build/views/clone/gmap_home_block"><span>Clone</span></a></li>
+</ul>
+    </div>
+  
+  
+  
+  
+      <div class="view-content">
+      <div style="width: 100%; height: 400px;" id="gmap-contenttypemap1-gmap0" class="gmap-control gmap-gmap gmap gmap-map gmap-contenttypemap1-gmap">Javascript is required to view this map.</div>    </div>
+  
+  
+  
+  
+  
+  
+</div><!-- /.view -->
+</div>
+
+    <div class="edit-links"><a href="/beakun/admin/build/block/configure/views/gmap_home_block-block_2?destination=fp_banner" class="block-edit-link edit-block-block" title="Configure block"><span>Configure</span></a></div>
+  </div>
+</div> <!-- /block -->
+<div id="block-block-15" class="block block-block block-edit-links">
+  <div class="block-inner">
+
+    
+    <div class="content"><img src="http://client.amarablack.com/beakun/sites/all/themes/adaptivetheme/adaptivetheme_subtheme/images/index.png"></div>
+
+    <div class="edit-links"><a href="/beakun/admin/build/block/configure/block/15?destination=fp_banner" class="block-edit-link edit-block-block" title="Edit block"><span>Edit Block</span></a></div>
+  </div>
+</div> <!-- /block -->
+</div> <!-- /content-top -->
+       
+      </div></div> <!-- /content-column -->
+
+              <div id="sidebar-first" class="sidebar"><div id="block-block-8" class="block block-block block-edit-links">
+  <div class="block-inner">
+
+    
+    <div class="content"><div class="whats-going">
+<span class="see">See</span> <span class="goin_on">what’s going on...</span>
+</div>
+</div>
+
+    <div class="edit-links"><a href="/beakun/admin/build/block/configure/block/8?destination=fp_banner" class="block-edit-link edit-block-block" title="Edit block"><span>Edit Block</span></a></div>
+  </div>
+</div> <!-- /block -->
+<div id="block-custom_beakun-5" class="block block-custom_beakun block-edit-links">
+  <div class="block-inner">
+
+    
+    <div class="content"><ul><li><div class="custom-checkbox box-checked-on">
+  <label class="checked-on">
+    <input type='checkbox' name='1' value='1' class='js-checkbox 1' checked="checked" />
+    <span class="term">Bars</span>
+  </label>
+</div>
+    <ul class="submenu">
+                <li><a href="/beakun/asheville/biltmore-fitness-123" rel="18">Biltmore Fitness 123</a></li>
+                    <li><a href="/beakun/asheville/fdsfsf" rel="124">fdsfsf</a></li>
+                    <li><a href="/beakun/asheville/jack-wood" rel="12">Jack of the  Wood</a></li>
+                    <li><a href="/beakun/asheville/poyas-bar" rel="125">Poya&#039;s Bar</a></li>
+                    <li><a href="/beakun/asheville/sky-bar" rel="136">sky bar</a></li>
+                    <li><a href="/beakun/asheville/test" rel="123">Test</a></li>
+                    <li><a href="/beakun/asheville/tupelo-honey-cafe" rel="16">Tupelo Honey Cafe</a></li>
+              </ul>
+    </li><li><div class="custom-checkbox box-checked-on">
+  <label class="checked-on">
+    <input type='checkbox' name='2' value='2' class='js-checkbox 2' checked="checked" />
+    <span class="term">Restaurants</span>
+  </label>
+</div>
+    <ul class="submenu">
+                <li><a href="/beakun/asheville/12-bones" rel="69">12 Bones</a></li>
+                    <li><a href="/beakun/asheville/bouchon" rel="71">Bouchon</a></li>
+                    <li><a href="/beakun/asheville/fountain-inn-restaurant" rel="35">Fountain Inn Restaurant</a></li>
+                    <li><a href="/beakun/asheville/sunny-point-cafe" rel="70">Sunny Point Cafe</a></li>
+                    <li><a href="/beakun/asheville/world-coffee-cafe" rel="30">World Coffee Cafe</a></li>
+              </ul>
+    </li></ul></div>
+
+    <div class="edit-links"><a href="/beakun/admin/build/block/configure/custom_beakun/5?destination=fp_banner" class="block-edit-link edit-block-block" title="Configure block"><span>Configure</span></a></div>
+  </div>
+</div> <!-- /block -->
+  
+</div> <!-- /sidebar-first -->
+      
+      
+    </div></div> <!-- /columns -->
+
+    
+          <div id="footer">
+
+                  <div id="footer-region"><div id="block-block-17" class="block block-block block-edit-links">
+  <div class="block-inner">
+
+    
+    <div class="content"><div class="footer-img">
+<img src="http://client.amarablack.com/beakun/sites/all/themes/adaptivetheme/adaptivetheme_subtheme/images/logo2.png"   class ="beakun-image" align="right"  />
+</div></div>
+
+    <div class="edit-links"><a href="/beakun/admin/build/block/configure/block/17?destination=fp_banner" class="block-edit-link edit-block-block" title="Edit block"><span>Edit Block</span></a></div>
+  </div>
+</div> <!-- /block -->
+ 
+<div id="block-block-6" class="block block-block block-edit-links">
+  <div class="block-inner">
+
+    
+    <div class="content"><div class="design">@2012 All rights are reseverd.</div></div>
+
+    <div class="edit-links"><a href="/beakun/admin/build/block/configure/block/6?destination=fp_banner" class="block-edit-link edit-block-block" title="Edit block"><span>Edit Block</span></a></div>
+  </div>
+</div> <!-- /block -->
+ 
+</div> <!-- /footer-region -->
+        
+        
+        
+      </div> <!-- /footer -->
+    
+  </div> <!-- /container -->
+ 
+
+</body>
+</html>
+<script>
+function submitFrm()
+{
+      
+}
+  // Insert Default value in og_decription field 
+  $('document').ready(function() {
+  $('#edit-og-description').val("This OG default description value");
+  $('#edit-og-selective-2').attr('checked',true);
+  
+  
+  
+  //$('#gmap-auto1map-gmap0').css('border','1px solid red');
+  //$('#gmap-auto1map-gmap0 #mtgt_unnamed_1').css('border','1px solid red');
+  
+  });
+ 
+</script>

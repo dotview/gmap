@@ -1,0 +1,112 @@
+<html>
+ <head>
+  <title> New Document </title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="styles/common.css" type="text/css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+		<script src="jquery.ui.core.min.js" type="text/javascript"></script>
+		<script src="jquery.ui.widget.min.js" type="text/javascript"></script>
+		<script src="jquery.ui.position.min.js" type="text/javascript"></script>
+		<script src="jquery.ui.autocomplete.min.js" type="text/javascript"></script>
+		<script src="jquery.tools.min.js" type="text/javascript"></script>
+		<script type="text/javascript" charset="UTF-8" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		
+		<script type="text/javascript" src="js/getdata.js"></script>
+
+  <script type="text/javascript">
+var JSObject = {
+		init : function(){
+			$("#accommodationName").autocomplete({
+				source: "autoComplete.txt",
+				minLength: 3,
+				select: function(event, ui) {
+					if(ui.item) {
+						$("#accommodationId").val(ui.item.id);
+					}
+				},
+				change: function(event, ui) {
+					if(ui.item) {
+						$("#accommodationId").val(ui.item.id);
+					} else {
+						$("#accommodationId").val("");
+					}
+				}
+			});
+			
+			$("a[rel]").overlay({
+				mask: {
+					color: '#000',
+					loadSpeed: 200,
+					opacity: .1
+				},
+				closeOnClick: false,
+				closeOnEsc: false,
+			});
+		}
+};
+
+$(document).ready(function(){
+	
+	JSObject.init();
+
+});
+
+  </script>
+  
+  
+  
+
+ </head>
+
+<body onload="initialize();">
+
+  <div class="hinweis-bottom-rounded hinweistip-rounded" id="mapTooltip">
+			<div style="overflow: visible; height: auto;" id="hinweistip-outer">
+				<div id="hinweistip-inner">
+					<div class="fTop"> <div id="hinweistip-close"><a class="close"></a></div>
+					</div>
+					<div id="mapTooltipInner">
+					<h1 class="tooltipHeadline">Add a destination to your map</h1>
+					<input type="text" id="accommodationName"/>	
+					<input type="hidden" id="accommodationId" value="" name="review.accommodation.accommodationId">			
+					<a class="buttonClass2A buttonBeenHere">
+			<div class="identifier">Been here</div> 
+			<div class="statusBox5097">21</div>
+			<div class="clear"></div>
+		</a>
+</div>
+	
+				</div>
+			</div>
+			<div id="hinweistip-extra"></div>
+			<div style="z-index: 98; display: block;" id="hinweistip-arrows" class="hinweistip-arrows"></div>
+		</div>
+		
+  <div class="hinweis-right-rounded hinweistip-rounded" id="mapTooltip2">
+			<div style="overflow: visible; height: auto;" id="hinweistip-outer">
+				<div id="hinweistip-inner">
+									<div class="fTop"> <div id="hinweistip-close"><a class="close"></a></div>
+					</div>
+					<br><br>	<br><br>	<br><br>
+This overlay needs to be placed next to whatever pin opened it. It should be designed to have variable information in it (ie location name)
+	<br><br>	<br><br>	<br><br>
+				</div>
+			</div>
+			<div id="hinweistip-extra"></div>
+			<div style="z-index: 98; display: block;" id="hinweistip-arrows" class="hinweistip-arrows"></div>
+		</div>
+		
+<div class="container">
+	<div class="map-container">
+		  <a id="addDestinationLink" rel="#mapTooltip">Add destinations to your map</a>
+ 
+		 <br>
+		 <br>
+		  <a id="mapPinLink" rel="#mapTooltip2">Click this "map pin"</a>
+		<div id="map-canvas"></div>
+	</div>
+	<div class="adPanel"></div>
+</div>
+
+ </body>
+</html>

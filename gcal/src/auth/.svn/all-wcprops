@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/gmap/!svn/ver/207/1/gcal/src/auth
+END
+apiOAuth.php
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/gmap/!svn/ver/207/1/gcal/src/auth/apiOAuth.php
+END
+apiAuth.php
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/gmap/!svn/ver/207/1/gcal/src/auth/apiAuth.php
+END
+apiAuthNone.php
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/gmap/!svn/ver/207/1/gcal/src/auth/apiAuthNone.php
+END
+apiOAuth2.php
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/gmap/!svn/ver/207/1/gcal/src/auth/apiOAuth2.php
+END
+apiSigner.php
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/gmap/!svn/ver/207/1/gcal/src/auth/apiSigner.php
+END
+apiP12Signer.php
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/gmap/!svn/ver/207/1/gcal/src/auth/apiP12Signer.php
+END
+apiVerifier.php
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/gmap/!svn/ver/207/1/gcal/src/auth/apiVerifier.php
+END
+apiLoginTicket.php
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/gmap/!svn/ver/207/1/gcal/src/auth/apiLoginTicket.php
+END
+apiPemVerifier.php
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/gmap/!svn/ver/207/1/gcal/src/auth/apiPemVerifier.php
+END

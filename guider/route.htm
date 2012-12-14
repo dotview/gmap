@@ -1,0 +1,178 @@
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps Demo</title>
+    <style type="text/css">
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        h3
+	{ margin: 0;
+	}
+        #map_canvas
+        {
+            width: 1315px;
+            height: 650px;
+        }
+        .infowindow *
+        {
+            font-size: 90%;
+            margin: 0;
+        }
+        #top
+        {
+            height: 25px;
+            width: 100%;
+        }
+        
+        #b_overlay.hotel, #b_overlay.hotel_mini
+        {
+            background: #003366 !important;
+        }
+        
+        #b_overlay
+        {
+            background: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            box-shadow: 0.125cm 0.125cm 0.125cm #808080;
+            width: 250px;
+            z-index: 200;
+        }
+        #b_overlay h3
+        {
+            background: #FFFFFF;
+            font-size: 8pt !important;
+            font-weight: bold;
+            margin-bottom: 0;
+            padding: 0.5em !important;
+            text-shadow: none;
+        }
+        
+        .box h3
+        {
+            font-size: 1.8em;
+            font-weight: normal;
+            margin-bottom: 0.4em;
+            text-shadow: 1px 1px 0 white;
+        }
+        #b_overlay h3 img
+        {
+            float: right;
+            padding: 0.25em 0.5em 0 0;
+        }
+        
+        #b_overlay p
+        {
+            color: #FFFFFF !important;
+            clear: right;
+            font-size: 8pt !important;
+            line-height: 1.1;
+            margin: 0;
+            padding: 0.5em !important;
+        }
+        #b_overlay p img
+        {
+            float: left;
+            height: 64px;
+            padding: 0 0.5em 0.5em 0;
+            width: 64px;
+        }
+        #b_overlay_table_prices
+        {
+            clear: both;
+            margin: 0 0 5px 5px;
+            width: auto !important;
+        }
+        
+        .box table
+        {
+            width: 100%;
+        }
+        
+        table, tr, td, th
+        {
+            border: 0 none;
+            border-spacing: 0;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            vertical-align: top;
+        }
+        .b_overlay_tr
+        {
+            font-size: 8pt !important;
+            line-height: 1.1;
+        }
+        .b_overlay_td_room_occupancy
+        {
+            color: #FFFFFF;
+            font-size: inherit;
+            font-weight: bold;
+            padding-bottom: 3px;
+        }
+        .customBox
+        {
+            background: #0866C3;
+            border: 1px solid white;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            position: absolute;
+        } 
+    </style>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+      <script type="text/javascript">
+          google.load("jquery", "1.3.2"); 
+    </script>
+	 <script src="assets/mapThirdparty.js" type="text/javascript"></script>
+  <script src="assets/BpTspSolver_packed.js" type="text/javascript"></script>
+	<script type="text/javascript">
+          
+var map;
+var setmarker;
+var infowindow;
+var setmarkerImage = "http://maps.google.com/mapfiles/ms/micons/ylw-pushpin.png";
+
+var geocoder = new google.maps.Geocoder();
+
+function initialize() {
+    var latlng = new google.maps.LatLng(54.622978,-2.592773);
+    var myOptions = {
+        zoom: 5,
+        center: latlng,
+        mapTypeControl: false,
+        mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
+        navigationControl: true,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        cursor: 'pointer'
+    };
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+ 
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+ 
+		 
+    </script>
+</head>
+<body>
+    <div   style="display:none;">
+	<input id="hse_lat" type="text" />
+	<input id="hse_lng" type="text" />
+	<input id="hse_address" type="text" />
+    </div>
+	 <div id="top"  >
+	 lat:<span id="lat" style="margin-right:12px;"></span> 
+	 lng:<span id="lng" style="margin-right:12px;"></span> 
+	 address:<span id="address"></span>
+	 </div>
+    <div id="map_canvas">
+    </div>
+	<input id="btnsubmit" onclick="show();" type="button" value="test submit value" />
+</body>
+</html>

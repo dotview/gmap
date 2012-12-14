@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+	<html xmlns="http://www.w3.org/1999/xhtml"  xml:lang="en-GB" lang="en-GB">
+		<head><meta charset="iso-8859-1" />
+			<!-- 3112
+			// -->
+	 
+			<link rel="stylesheet" type="text/css" href="http://www.rightmove.co.uk/ps/css11320/concat/standard.css" media="all" />
+			<link rel="stylesheet" type="text/css" href="http://www.rightmove.co.uk/ps/css11320/concat/drawASearch.css" media="all" />
+			<link rel="stylesheet" type="text/css" href="http://www.rightmove.co.uk/ps/css11320/safari.css" />
+		 
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+			<script type="text/javascript" src="js/standard.js"></script>
+		  
+			 <title>Use Draw-a-Search to find property in your defined area on Rightmove</title>
+<meta name="description" content="Use our cutting edge Draw-a-Search tool to draw your very own property search area on Rightmove." />
+<link rel="shortcut icon" href="/ps/images/icons/favicon.ico" />
+<!--[if IE]>
+<meta name="slice" scheme="IE" content="off"/>
+<![endif]-->
+ 
+ </head>
+
+<body class="dya compact">
+
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			document.cookie="rmtcj=3965; path=/";
+		});
+	</script>
+
+	<div id="sitewrapper">
+		 
+		 
+		<div id="pagewrapper" class="clearfix ">
+	<div id="pagecontent" class="clearfix ">
+	<div id="dasheader" class='clearfix'>
+        <div id="daslogo"></div>
+        <ul id="dascontrols" class="clearfix">
+            <li><a href="#" id="dyaundo" class="button disabled secondary" title="Undo">Undo</a></li>
+            <li><a href="#" id="dyaredo" class="button disabled secondary" title="Redo">Redo</a></li>
+            <li id="dyanewarea"><a href="#" id="dyaclear" class="button disabled secondary" title="Clear and draw a new shape">Clear</a></li>
+            <li>
+                <form id="drawASearchForm" action="#" method="get"><a href="#" id="dyasave" class="button disabled secondary" title="Save your drawn area">Save</a>
+                </form></li>
+            <li>
+                <form id="propertySearchCriteria" action="/map.html" method="get"><input type="hidden" name="locationIdentifier"/>
+                            <input type="hidden" name="radius"/>
+                        <a href="#" id="dyaviewresults" class="button disabled" title="View properties">View Properties</a>
+                </form></li>
+        </ul>
+    </div>
+		<div class="primarycontent ">
+		<div id="dyamapcolumn" class="content">
+				<div id="dyamap">
+				<noscript>
+					<div class="content">
+						<p class="errorbox">You must have <b>JavaScript enabled</b> to view Draw-a-Search</p>
+					</div>
+				</noscript>
+				</div>
+			</div>
+		</div><!-- end primarycontent --><div class="secondarycontent">
+		<div id="dyasavedareascolumn" class="content">
+				<h2 id="dyasavedareasheader">
+			Your Saved Areas
+			<a id="dyaloginlink" href="#" class="scriptonly">Sign in</a>
+		</h2>
+		<div id="dyasavedareas">
+	<h3>With Draw-a-Search, you can...</h3>
+	<ul class="benefits">
+		<li><strong>Find properties in your ideal location</strong> by drawing your very own search area</li>
+		<li><strong>Save your own search areas</strong> so you can use them again and again</li>
+		<li><strong>Sign up for alerts</strong> on properties in your search areas</li>
+	</ul>
+	<a href="#" class="video scriptonly">Watch a short <strong> video tutorial</strong></a>
+
+</div>
+		</div><!-- end secondarycontent -->
+</div></div><!-- end pagewrapper -->
+
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false
+" type="text/javascript"></script>
+ 
+</div>
+ 
+
+
+<script type="text/javascript" src="js/drawASearch.js"></script>
+<script type="text/javascript">
+	(function($) { $(function() {
+	RIGHTMOVE.DEFINEYOURAREA.defineAreaMap.init({
+		location : null,
+		channelUri : "",
+		justRegistered : false,
+		bounds : "",
+		polygonMode : "default",
+		registrantId : null,
+		save : false,
+		saveName : null
+	});
+})})(jQuery);
+ </script>
+</body>
+</html>

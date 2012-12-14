@@ -1,0 +1,28 @@
+﻿body{margin:0px; font-size:12px; line-height:20px; font-family:Arial; background-color:#fff; color:#333}
+*{font-size:12px; margin:0}
+
+ul, li{list-style:none; margin:0px; padding:0px}
+
+@-moz-document url-prefix(http), url-prefix(file){img:-moz-broken{-moz-force-broken-image-icon:1 !important}}
+
+a:link{color:#666; text-decoration:none}
+a:visited{color:#666; text-decoration:none}
+a:hover{color:red; text-decoration:none}
+
+img{border:0}
+.thumb{text-align:center; margin:auto 0; float:left; width:160px; height:120px; border:1px solid #ccc; text-align:center; margin-left:4px}
+ 
+select{line-height:24px; border:1px solid #80AB73}
+.lang_cn{background:url(../images/cn.gif) no-repeat; padding-left:20px}
+.lang_us{background:url(../images/us.gif) no-repeat; padding-left:20px}
+
+#bottom {
+	text-align: center;
+	color: #999;
+	line-height: 25px;
+	margin-top: 10px;
+	font-size:12px; 
+}
+#bottom a {
+	color: #999;
+}

@@ -1,0 +1,1105 @@
+/**
+* wheretostay map js
+* 
+* Params:default values, can be override by call public method setMapLocation
+			start_showing_type =['villa','hotel'], // the types array of markers showing when loaded
+            start_sidebar_style = "open", // sidebar style [open | close ]
+            start_showing_marker = false, // using for a property page, showing certain marker
+            start_marker_bigIcon = true, // should set start_showing_marker to true, then this will show a big red icon for the start marker
+            start_showing_infowindow = false, // if or not showing infowindow on the start marker
+			start_location_lat = 18.185324, //start latitude
+            start_location_lng = -63.086750, // start longitiude
+            start_location_zoom = 13, // start zoom level
+			start_location_type = google.maps.MapTypeId.HYBRID; //map type
+*			
+*/
+(function (window) {
+    "use strict";
+	window.wheretostay = window.wheretostay || {};
+    wheretostay.maps = function () {
+        //prop values
+        var map,
+            poi_cache = [],
+            customIcons = [],
+			markers = [],
+			mTypes = [],
+			managers = [],
+            oVillasMarkersCluster = null,
+            oHotelsMarkersCluster = null,
+            marker_stor,
+			marker_beach,
+			marker_restaurant,
+            listenerToRemove = null,
+            map_container,
+            gMapContainer = "#Gmap",
+            gInfowindow = '',
+            oMaxBounds = null,
+            bounds_changed_listener,
+			self = this,
+			curmarker = null,
+			curtype = '',
+			zoomLevel = 1,
+			maxzoom = 10, // markermanager maxzoom param
+
+            //default values, can be override by call public method setMapLocation
+			start_showing_type =['villa','hotel'], // the types array of markers showing when loaded
+            start_sidebar_style = "open", // sidebar style [open | close ]
+            start_showing_marker = false, // using for a property page, showing certain marker
+            start_marker_bigIcon = true, // should set start_showing_marker to true, then this will show a big red icon for the start marker
+            start_showing_infowindow = false, // if or not showing infowindow on the start marker
+			start_location_lat = 18.185324, //start latitude
+            start_location_lng = -63.086750, // start longitiude
+            start_location_zoom = 13, // start zoom level
+			start_location_type = google.maps.MapTypeId.HYBRID; //map type
+
+        /*
+        * pivate method init
+        */
+        var init = {
+            initMap: function () {
+                var myLatlng = new google.maps.LatLng(start_location_lat, start_location_lng);
+                var myOptions = {
+                    zoom: start_location_zoom,
+                    center: myLatlng,
+                    mapTypeControl: true,
+                    mapTypeControlOptions: {
+                        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                        position: google.maps.ControlPosition.BOTTOM_LEFT
+
+                    },
+                    streetViewControl: false,
+                    panControl: true,
+                    zoomControl: true,
+                    zoomControlOptions: {
+                        style: google.maps.ZoomControlStyle.LARGE
+                    },
+                    scaleControl: true,
+                    scrollwheel: false,
+                    mapTypeId: start_location_type
+                };
+
+                map_container = $(gMapContainer);
+                map = new google.maps.Map(map_container.get(0), myOptions);
+            },
+            initMapEvent: function () {
+                map.load_count = 0;
+                var infoWinOptions = {
+                    disableAutoPan: false,
+                    maxWidth: 0,
+                    closeBoxMargin: "10px 2px 2px 2px",
+                    closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+                    isHidden: false,
+                    pane: "floatPane",
+                    enableEventPropagation: false
+                };
+                gInfowindow = new google.maps.InfoWindow(infoWinOptions);
+                
+                google.maps.event.addListener(gInfowindow, 'closeclick', function () {
+                    if ($("li.selItem").length > 0) {
+                        $("li.selItem").removeClass("selItem");
+                    }
+                });
+                //map zoom event listener, no need zoom changed event
+                //google.maps.event.addListener(map, 'zoom_changed', zoomChangeHandler);
+
+                //this event only run once, idle evnet will also raise bounds change bounds_changed
+                bounds_changed_listener = google.maps.event.addListenerOnce(map, 'tilesloaded', tilesLoadedHandler);
+
+            },
+            initLoadingBox: function () {
+                map_container.append($("<div id='map_loader_box'></div>").css({
+                    position: 'absolute',
+                    top: '6px',
+                    left: '100px',
+                    backgroundColor: '#eef',
+                    display: 'none',
+                    fontSize: '14px',
+                    padding: '2px',
+                    paddingTop: '0',
+                    paddingBottom: '0',
+                    'z-index': '59999',
+                    fontFamily: 'Arial'
+                }).html("<img src='http://dev1.www.wheretostay.com/images/global/loader.white.gif' />Loading Map Data.."));
+
+                var barstyle = start_sidebar_style == "open" ?  "listShow" : "listHidden";
+				
+                map_container.append($('<div id="sidebar"  class="' + barstyle + '"><div class="map-factsheet" data-type="all"><div class="head all active"><span id="listToggle" style="cursor: pointer;"></span><span class="value"></span></div></div></div>'));
+
+                insertTypeHtmlByType("villa");
+				insertTypeHtmlByType("hotel");
+				
+                mapfactSheetEventRegister();
+            },
+            initIcons: function () {
+                /*
+                Custom Icon Setup
+                */
+                var selectedIcon = 'http://dev1.www.wheretostay.com/lib/images/pin_48.png';
+                var iconHotel = 'http://www.wheretostay.com/images/maps/75/hotels.png';
+                var iconVilla = 'http://www.wheretostay.com/images/maps/75/villas.png';
+                var iconInn = 'http://www.wheretostay.com/images/maps/75/inns.png';
+                var iconAttr = 'http://www.wheretostay.com/images/maps/75/attractions.png';
+                var iconDining = 'http://www.wheretostay.com/images/maps/75/restaurants.png';
+                var iconBeach = 'http://www.wheretostay.com/images/maps/75/beaches.png';
+                var iconMed = 'http://www.wheretostay.com/images/maps/75/medical.png';
+                var iconServ = 'http://www.wheretostay.com/images/maps/75/services.png';
+                var iconCar = 'http://www.wheretostay.com/images/maps/75/car.png';
+                var iconGrocery = 'http://www.wheretostay.com/images/maps/75/grocery.png';
+                var iconVideo = 'http://www.wheretostay.com/images/maps/75/video.png';
+
+                var baseIcon = new google.maps.MarkerImage('/images/maps/75/default.png', new google.maps.Size(24, 32));
+                //using dot style property
+                customIcons.selectedIcon = selectedIcon;
+                customIcons.hotel = iconHotel
+                customIcons.villa = iconVilla;
+                customIcons.inn = iconInn;
+                customIcons.attractions = iconAttr;
+                customIcons.dining = iconDining;
+                customIcons.beach = iconBeach;
+                customIcons.medical = iconMed;
+                customIcons.service = iconServ;
+                customIcons.car = iconCar;
+                customIcons.grocery = iconGrocery;
+                customIcons.video = iconVideo;
+
+            },
+            initMarkerManager: function () {
+                //new marker manager object
+                //marker_stor = new MarkerManager(map);
+                for (var i = 0; i < 12; i++) {
+                    managers[i] = new MarkerManager(map, { show: false });
+                }
+
+                //new villa cluster object
+                oVillasMarkersCluster = new MarkerClusterer(
+					map, [], {
+					    gridSize: 70,
+					    maxZoom: 15,
+					    styles: [{
+					        'url': "http://www.wheretostay.com/images/maps/cluster_villa.png",
+					        'height': 38,
+					        'width': 67,
+					        'anchor': [5, 40]
+					    }]
+					});
+
+                //new hotel cluster object
+                oHotelsMarkersCluster = new MarkerClusterer(
+                map, [], {
+                    gridSize: 70,
+                    maxZoom: 15,
+                    styles: [{
+                        'url': "http://www.wheretostay.com/images/maps/cluster_hotel.png",
+                        'height': 38,
+                        'width': 67,
+                        'anchor': [5, 40]
+                    }]
+                });
+            },
+
+        };
+
+        /**
+		* map tilesloaded event handler
+		*/
+        var tilesLoadedHandler = function () {
+            oMaxBounds = map.getBounds();
+            console.info("bounds_changed loaded" + new Date());
+            load_markers(oMaxBounds, oMaxBounds, true, function () {
+                if (start_showing_marker) {
+                    var mLatlng = new google.maps.LatLng(start_location_lat, start_location_lng);
+                    self.selectMarkerByPoint(mLatlng, start_location_zoom, null);
+                    toggleSidebar(start_sidebar_style);
+                }
+            });
+
+            //listen idle evnet
+            listenerToRemove = google.maps.event.addListener(map, 'idle', MoveEndListener);
+        }
+
+
+        /**
+		 * map move end listener
+		 *
+		 * @private
+		 */
+        var MoveEndListener = function () {
+            //we now have the current and previous bounderies, but we do not want to load up everything.
+            // but what if they zoom out? then we could have 4 different bounderies that are invalidated
+            // we need to go through and produce multiple bounderies
+            var rects_to_load = new Array();
+            var new_bounds = map.getBounds();
+
+            var old_bounds = new google.maps.LatLngBounds(oMaxBounds.getSouthWest(), oMaxBounds.getNorthEast()); // this way copy the old bounds
+
+            var new_sw = new_bounds.getSouthWest();
+            var new_ne = new_bounds.getNorthEast();
+
+            //extend the old bounds
+            if (!oMaxBounds.contains(new_sw) || !oMaxBounds.contains(new_ne)) {
+                oMaxBounds.extend(new_sw);
+                oMaxBounds.extend(new_ne);
+
+                $('#map_loader_box').show().fadeTo('fast', '0.9');
+                load_markers(oMaxBounds, old_bounds, true);
+            }else{
+				updateTypeValues();
+			}
+        };
+
+        /**
+		* map zoom_changed event handler
+		*/
+        var zoomChangeHandler = function () {
+            var currZoom = map.getZoom();
+            if (currZoom !== zoomLevel) {
+                if (currZoom >= maxzoom) {
+                    $(".map-factsheet div.head[isother='1']").each(function (i, obj) {
+                        $(this).attr("diable", "false");
+                        //get the last status, active or inactive
+                        if ($(this).attr("oactive") == "active") {
+                            $(this).addClass("active");
+                            if ($("#sidebar").hasClass("listShow")) {
+                                $(this).parent().find(".map-list").show();
+                            }
+                        } else {
+                            $(this).removeClass("active");
+                            $(this).parent().find(".map-list").hide();
+                        }
+                    })
+                } else {
+                    $(".map-factsheet div.head[isother='1']").each(function (i, obj) {
+                        $(this).attr("diable", "true");
+                        $(this).removeClass("active");
+                        $(this).parent().find(".map-list").hide();
+                    })
+                }
+				
+                showOrHideMarker(true);
+                zoomLevel = currZoom;
+            }
+			if ($("#sidebar").hasClass("listHidden")) {
+				$(".map-list").hide();
+			}
+        }
+
+        /**
+		* map legend event register
+		*/
+        var mapfactSheetEventRegister = function () {
+            $(".map-factsheet .villa").live("click", function () {
+                if ($(this).hasClass("active")) {
+                    if ($("#sidebar").hasClass("listShow")) {
+
+                        $(this).parent().find(".map-list").slideUp(function () {
+                            oVillasMarkersCluster.clearMarkers();
+                        });
+                    } else {
+                        oVillasMarkersCluster.clearMarkers();
+                    }
+                    $(this).removeClass("active");
+                } else {
+                    var ms = getMarkers("villa");
+                    if ($("#sidebar").hasClass("listShow")) {
+                        $(this).parent().find(".map-list").slideDown(function () {
+                            oVillasMarkersCluster.addMarkers(ms);
+                        });
+                    } else {
+                        oVillasMarkersCluster.addMarkers(ms);
+                    }
+                    $(this).addClass("active");
+                }
+            });
+            $(".map-factsheet .hotel").live("click", function () {
+                if ($(this).hasClass("active")) {
+                    if ($("#sidebar").hasClass("listShow")) {
+                        $(this).parent().find(".map-list").slideUp(function () {
+                            oHotelsMarkersCluster.clearMarkers();
+                        });
+                    } else {
+                        oHotelsMarkersCluster.clearMarkers();
+                    }
+                    $(this).removeClass("active");
+                } else {
+                    var ms = getMarkers("hotel");
+                    if ($("#sidebar").hasClass("listShow")) {
+                        $(this).parent().find(".map-list").slideDown(function () {
+                            oHotelsMarkersCluster.addMarkers(ms);
+                        });
+                    } else {
+                        oHotelsMarkersCluster.addMarkers(ms);
+                    }
+                    $(this).addClass("active");
+                }
+            });
+            //other types event, we use markermanger for the other type
+            $(".map-factsheet div.head[isother='1']").live("click", function () {
+                if ($(this).attr("diable") == "true") {
+                    return false;
+                }
+                var type = $(this).attr("otype");
+                var index = selectTypeIndex(type);
+                if ($(this).hasClass("active")) {
+                    managers[index].hide();
+                    if ($("#sidebar").hasClass("listShow")) {
+                        $(this).parent().find(".map-list").slideUp();
+                    }
+                    $(this).attr("oactive", "").removeClass("active");
+                } else {
+                    managers[index].show();
+                    if ($("#sidebar").hasClass("listShow")) {
+                        $(this).parent().find(".map-list").slideDown();
+                    }
+                    $(this).attr("oactive", "active").addClass("active");
+                }
+                managers[index].refresh();
+            });
+
+            // click event for each li element
+            jQuery("#sidebar .map-factsheet li").live("click", function () {
+                var type = $(this).parent().attr("data-type");
+                var mid = $(this).attr("attr-id");
+                if ($(this).hasClass("selItem")) {
+                    $(this).removeClass("selItem");
+                    gInfowindow.close();
+                } else {
+
+                    var marker = get_marker(type, mid);
+                    if (marker == null) return;
+
+                    google.maps.event.trigger(marker, "click");
+                    //marker.setAnimation(google.maps.Animation.BOUNCE);
+                    if (type != "villa" && type != "hotel") {
+                        //map.panTo(marker.getPosition());
+                        google.maps.event.trigger(map, 'dragend');
+                    }
+                }
+
+            });
+
+            // click event show or hide sidebar
+            $("#listToggle").bind("click", toggleSidebarHandler);
+        }
+
+        /**
+		 * show or hide side bar 
+		 */
+        var toggleSidebarHandler = function () {
+            var bar = $("#sidebar");
+            if (bar.hasClass("listHidden")) {
+                bar.animate({ 'width': '220px' }, 500, function () {
+                    bar.removeClass("listHidden").addClass("listShow");
+                });
+
+                $("ul.map-list").parent().each(function (i, obj) {
+                    if ($(obj).find("div.head").hasClass("active")) {
+                        $(obj).find("ul.map-list").show();
+                    }else{
+						$(obj).find("ul.map-list").hide();
+					}
+                })
+            } else {
+
+                bar.animate({ 'width': '116px' }, 500, function () {
+                    bar.removeClass("listShow").addClass("listHidden");
+                });
+                $("ul.map-list").parent().each(function (i, obj) {
+                    if ($(obj).find("div.head").hasClass("active")) {
+                        $(obj).find("ul.map-list").hide();
+                    }
+                })
+            }
+        }
+
+        /**
+		 * show or hide side bar 
+		 */
+        var toggleSidebar = function (style) {
+            if (style == "open") {
+                $("#sidebar").css({ 'width': '220px' });
+                $("ul.map-list").parent().each(function (i, obj) {
+                    if ($(obj).find("div.head").hasClass("active")) {
+                        $(obj).find("ul.map-list").show();
+                    }else{
+						$(obj).find("ul.map-list").hide();
+					}
+                })
+            } else {
+                $("#sidebar").css({ 'width': '116px' });
+                $("ul.map-list").hide();
+            }
+        }
+
+        /**
+		 * this is the ajax powered function which loads the markers through json_onscroll.
+		 *
+		 * @param {GBounds} bounds: Marker to be added to the map
+		 * @param {Boolean} reset_viewport: if reset viewport
+		 *
+		 * @private
+		 */
+        var load_markers = function (bounds, old_bounds, reset_viewport, callback) {
+            if (map.load_count == 0) {
+                $('#map_loader_box').fadeIn('slow');
+            }
+            map.load_count++;
+            var getVars = '';
+            //get the bounds ne and sw value, so we can only get pins within this bounds
+            if (bounds instanceof google.maps.LatLngBounds) {
+                var southWest = bounds.getSouthWest().toUrlValue();
+                var northEast = bounds.getNorthEast().toUrlValue();
+            } else {
+                var oBounds = bounds[bounds.length - 1];
+                var southWest = oBounds.getSouthWest().toUrlValue();
+                var northEast = oBounds.getNorthEast().toUrlValue();
+            }
+            var old_sw = southWest;
+            var old_ne = northEast;
+            if (old_bounds instanceof google.maps.LatLngBounds) {
+                old_sw = old_bounds.getSouthWest().toUrlValue();
+                old_ne = old_bounds.getNorthEast().toUrlValue();
+            }
+
+
+            //jQuery.getJSON("/maps/new_get_pins/" + old_ne + ":" + old_sw + "/" + northEast + ":" + southWest, function (data) {
+            jQuery.getJSON("js/pins.json", function (data) {
+                map.load_count--;
+                if (map.load_count == 0) {
+                    $('#map_loader_box').fadeOut('slow');
+                }
+
+                //show markers on map and update category html
+                showMarkersOnMaps(data.markers);
+                //clearMarkerFromCluster();
+                //addMarkerToCluster();
+
+                //insertTypeHtml();
+                updateTypeValues();
+
+                showOrHideMarker();
+
+                if (callback) {
+                    callback(data);
+                }
+                $('#map_loader_box').fadeOut('fast');
+            });
+        };
+
+        /**
+		 *	show poi array to the markers array
+		 *
+		 * @param {Array} poi_array: poi array from server
+		 */
+        var showMarkersOnMaps = function (poi_array) {
+            for (var i = 0; i < poi_array.length; i++) {
+                var poi = poi_array[i];
+                var n = get_markers_index(poi.type, poi.id);
+
+                if (n == -1) {
+                    var certainPoint = false;
+                    var title = ((typeof poi.property_name != "undefined" && poi.property_name != "") ? poi.property_name : poi.type + poi.id);
+                    var mkr = createMarker(
+						new google.maps.LatLng(poi.lat, poi.lng),
+						poi.type,
+						poi.id, title,
+						certainPoint
+					);
+                    //push marker to the markers object
+                    pushMarker(poi.type, mkr);
+
+                    switch (poi.type) {
+                        case 'hotel':
+                            oHotelsMarkersCluster.addMarker(mkr);
+                            break;
+                        case 'villa':
+                            oVillasMarkersCluster.addMarker(mkr);
+                            break;
+                        default:
+                            var index = selectTypeIndex(poi.type);
+                            managers[index].addMarker(mkr, maxzoom);
+                            break;
+                    }
+                    insertListHtml(poi.type, poi.id, title);
+                }
+            }
+        };
+
+        /**
+		 *	clear markers   cluster 
+		 */
+        var clearMarkerFromCluster = function () {
+            oHotelsMarkersCluster.clearMarkers();
+            oVillasMarkersCluster.clearMarkers();
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var index = selectTypeIndex(type);
+                if (type != "hotel" && type != "villa") {
+                    managers[index].clearMarkers();
+                }
+            }
+        }
+        /**
+		 *	show or hide cluster and manager according to the checkbox value
+		 */
+        var showOrHideMarker = function (isother) {
+            if (isother == null) {
+                oHotelsMarkersCluster.clearMarkers();
+                if ($(".map-factsheet .hotel").length > 0 && $(".map-factsheet .hotel").hasClass("active")) {
+                    oHotelsMarkersCluster.addMarkers(getMarkers("hotel"));
+                }
+                oHotelsMarkersCluster.redraw();
+
+                oVillasMarkersCluster.clearMarkers();
+                if ($(".map-factsheet .villa").length > 0 && $(".map-factsheet .villa").hasClass("active")) {
+                    oVillasMarkersCluster.addMarkers(getMarkers("villa"));
+                }
+                oVillasMarkersCluster.redraw();
+            }
+	
+            $(".map-factsheet div.head[isother='1']").each(function (i, obj) {
+                var type = $(obj).attr("otype");
+                var index = selectTypeIndex(type);
+                if ($(obj).hasClass("active")) {
+                    managers[index].show();
+                } else {
+                    managers[index].hide();
+                }
+                managers[index].refresh();
+            })
+        }
+        /**
+		 *	add markers to cluster, now we call the addMarkers method, add lots of markers once a time.
+		 */
+        var addMarkerToCluster = function () {
+            oHotelsMarkersCluster.addMarkers(getMarkers("hotel"));
+            oVillasMarkersCluster.addMarkers(getMarkers("villa"));
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var index = selectTypeIndex(type);
+                if (type != "hotel" && type != "villa") {
+                    managers[index].addMarkers(getMarkers(type), maxzoom);
+                }
+            }
+        }
+
+        /**
+		*	expands a bounds by so many lat/lng in order to avoid things such as floating point error
+		*
+		* @param {GBounds} bounds: google map bounds
+		* @param {Double} degree_buffer: extend bounds value
+		* @return {GBounds}
+		*/
+        var expandBounds = function (bounds, degree_buffer) {
+            return new google.maps.LatLngBounds(
+                    new google.maps.LatLng(
+                        bounds.getSouthWest().lat() - degree_buffer,
+                        bounds.getSouthWest().lng() - degree_buffer),
+                    new google.maps.LatLng(
+                        bounds.getNorthEast().lat() + degree_buffer,
+                        bounds.getNorthEast().lng() + degree_buffer));
+        };
+
+
+        /**
+        * create the marker object
+		* @Return: marker
+        */
+        var createMarker = function (point, type, id, title, certainPoint) {
+            if (certainPoint) {
+                var marker = new google.maps.Marker({
+                    position: point,
+                    title: title
+                });
+            } else {
+                var mkerImage = new google.maps.MarkerImage(customIcons[type], new google.maps.Size(24, 32));
+                var marker = new google.maps.Marker({
+                    position: point,
+                    icon: mkerImage,
+                    title: title
+                });
+            }
+
+            marker.type = type;
+            marker.id = id;
+
+            google.maps.event.addListener(marker, 'click', function () {
+				//for cluster markers, set them visible
+				if(marker.getMap() == null){
+					map.setZoom(17);
+				}
+				map.panTo(marker.getPosition());
+                // load up the proper info window
+                selectMarker(this);
+
+                if ($("#sidebar").hasClass("listShow")) {
+                    selectItemDiv(this.id);
+                }
+            });
+
+            return marker;
+        };
+
+        var selectItemDiv = function (marker_id) {
+            $("#sidebar .map-factsheet li.selItem").removeClass("selItem");
+            $("#sidebar .map-factsheet").find("li[attr-id='" + marker_id + "']").addClass("selItem");
+            $("#sidebar").stop().scrollTo("li[attr-id='" + marker_id + "']", 800);
+        }
+
+        /**
+        * show info window content
+		*		
+		* @param {GMarker} marker: google.maps.Marker
+        */
+        var selectMarker = function (marker) {
+            // next we want to open the ext window		
+            gInfowindow.setContent("<div style='height:150px;width:400px;'><img src='http://dev1.static.wheretostay.com/images/global/loading-lrg-black.gif' /></div>");
+            gInfowindow.open(map, marker);
+
+            
+            var marker_type = marker.type,
+			marker_id = marker.id;
+
+            $.get("js/detail.txt", function (data) {
+                //$.get("/maps/markerbubble/" + marker_type + "/" + marker_id, function (data) {
+                var content = '<div id="mhframe">' + data + '</div>';
+                gInfowindow.setContent(content);
+            });
+        }
+
+
+        /**
+        * get marker object according to the provided map point
+		* if provide type, it will be more faster to find the marker.
+		* First it will find which array contain the type's markers, then find the marker in the type's markers array
+		*
+		* @param {GPoint} point: google.maps.LatLng
+		* @param {String} type: type(hotel,villa..etc)
+		* @Return: marker
+        */
+        var getMarkerAtPoint = function (point, type) {
+            //if type, then find markers in certain type
+            if (type != null) {
+                return getMarkerAtPointByType(point, type);
+            }
+
+            //if type is null, then find all markers in all types
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var mkr = getMarkerAtPointByType(point, type);
+                if (mkr != null) {
+                    return mkr;
+                }
+            }
+            // point is not in there
+            return null;
+        };
+
+        /**
+        * get marker object according to the provided map point and type
+		* 
+		* @param {GPoint} point: google.maps.LatLng
+		* @param {String} type: type(hotel,villa..etc)
+		* @Return {GMarker} marker
+        */
+        var getMarkerAtPointByType = function (point, type) {
+            var mkrs = getMarkers(type);
+            for (var n = 0; n < mkrs.length; n++) {
+                if (point.equals(mkrs[n].getPosition())) {
+                    curmarker = mkrs[n];
+                    curtype = type;
+                    return mkrs[n];
+                }
+            }
+            // point is not in there
+            return null;
+        }
+
+        /**
+        * get marker index according to the provided id and type
+		* 
+		* @param {String} poi_type
+		* @param {String} poi_id
+		* @Return {Number} n
+        */
+        var get_markers_index = function (poi_type, poi_id) {
+            var ms = getMarkers(poi_type);
+            for (var n = 0, len = ms.length; n < len; n++) {
+                if (poi_id == ms[n].id) {
+                    return n;
+                }
+            }
+            return -1;
+        };
+
+        /**
+       * get marker according to the provided id and type
+       * 
+       * @param {String} poi_type
+       * @param {String} poi_id
+       * @Return {GMarker} n
+       */
+        var get_marker = function (poi_type, poi_id) {
+            var ms = getMarkers(poi_type);
+            for (var n = 0, len = ms.length; n < len; n++) {
+                if (poi_id == ms[n].id) {
+                    return ms[n];
+                }
+            }
+            return null;
+        };
+
+        /**
+		 *	push marker to markers array.
+		 */
+        var pushMarker = function (type, mkr) {
+            //select which arrry to push
+            var n = selectTypeIndex(type);
+            if (n == -1) {
+                n = add_type(type);
+            }
+            markers[n].push(mkr);
+        }
+
+        /**
+		 *	push type to mTypes array.
+		 *
+		 * @param {String} type.
+		 */
+        var add_type = function (type) {
+            mTypes[mTypes.length] = type;
+            markers[markers.length] = [];
+            //managers[managers.length] = new MarkerManager(map);
+            return mTypes.length - 1;
+        };
+
+        /**
+		 *	get the index of mTypes by type name
+		 */
+        var selectTypeIndex = function (type) {
+            for (var i = 0; i < mTypes.length; i++) {
+                if (type == mTypes[i]) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        /**
+		 *	get markers by type
+		 *
+		 * @param {String} type.
+		 */
+        var getMarkers = function (type) {
+            //select which arrry to push
+            var n = selectTypeIndex(type);
+            if (n == -1) {
+                return [];
+            }
+            return markers[n];
+        }
+
+
+        /**
+		 *	check if currnet map zoom should show the certain markers 
+		 */
+        var getIsActive = function (type) {
+            //return map.getZoom() >= maxzoom ? "active" : "";
+			for(var i=0;i<start_showing_type.length;i++){
+				if(start_showing_type[i] == type){
+					return "active";
+				}
+			}
+			return "nonactive";
+        }
+
+        var upperText = function (str) {
+            return str.slice(0, 1).toUpperCase() + str.slice(1);
+        }
+
+        /**
+		 *	append li html by all types
+		 */
+        var insertTypeHtml = function () {
+            var isactive;
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var html = "";
+                if (type == "hotel" || type == "villa") {
+                    isactive = "active";
+                    html = 'isother="0"';
+                } else {
+                    isactive = getIsActive(type);
+					var disable = map.getZoom() >= maxzoom ? "" : " diable='true'";
+                    html = 'oactive="active" otype="' + type + '" isother="1" '+ disable;
+                }
+                if ($(".map-factsheet ." + type).length == 0) {
+                    $(".map-factsheet").append('<li class="' + type + ' ' + isactive + '" ' + html + '>'
+					+ '<span class="name">' + upperText(type) + '</span><span class="cb"></span><span class="value">0</span></li>');
+                }
+            }
+        }
+		function insertTypeHtmlByType (type){
+			var typeUl = $("#sidebar").find("div.map-factsheet[data-type='" + type + "']");
+            var html = "";
+            var isactive = getIsActive(type);
+            if (type == "hotel" || type == "villa") {
+                //isactive = "active";
+                html = 'oactive="" otype="' + type + '" isother="0"';
+            } else {
+				//no disable
+				var disable = ""; //map.getZoom() >= maxzoom ? "" : "diable='true'";
+                html = 'oactive="" otype="' + type + '" isother="1" '+ disable;
+            }
+            var ulhidecss = $("#sidebar").hasClass("listShow") && isactive == "active"? "" : "hide";
+			//var headactive = $("#sidebar").hasClass("listShow") && isactive == "active"? "active" : "";
+            if (typeUl.length == 0) {
+                typeUl = $('<div class="map-factsheet" data-type="' + type + '">'
+				+ '<div class="head ' + type + ' ' + isactive + '" ' + html + '>'
+				+ '<span class="cb"></span><img src="' + customIcons[type] + '"/><span class="name">' + upperText(type) + '</span><span class="value">0</span>'
+				+ '<span class="direction '+liststyle+'"></span></div><ul class="map-list ' + ulhidecss + '" data-type="' + type + '"></ul></div>');
+                $("#sidebar").append(typeUl);
+            }
+		}
+		
+        var insertListHtml = function (type, id, title) {     
+            insertTypeHtmlByType(type);
+			
+			var typeUl = $("#sidebar").find("div.map-factsheet[data-type='" + type + "']");		
+            var listUL = typeUl.find("ul.map-list[data-type='" + type + "']");
+            if (listUL.length == 0) {
+				var isactive = getIsActive(type);
+				var ulhidecss = $("#sidebar").hasClass("listShow") && isactive == "active"? "" : "hide";
+                listUL = $('<ul class="map-list ' + ulhidecss + '" data-type="' + type + '"></ul>');
+                typeUl.append(listUL);
+            }
+            listUL.append("<li attr-id='" + id + "'>" + title + "</li>");
+        }
+        /**
+		 *	set type pins count to the li element
+		 */
+        var setTypeValue = function (type, value) {
+            $(".map-factsheet[data-type='" + type + "'] div.head").find("span.value").text(value);
+        };
+
+        /**
+		 *	set type pins count to the li element
+		 */
+        var updateTypeValues_all = function () {
+            var total = 0;
+            for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+                var index = selectTypeIndex(type);
+                var len = markers[index].length;
+                total += len;
+                setTypeValue(type, len); // set type's pins count
+            }
+            setTypeValue("all", total); // set total count
+        }
+
+		/**
+		 *	set type pins count to the li element (only in map viewport)
+		 */
+		var updateTypeValues = function () {
+		  var total = 0;
+		  for (var i = 0; i < mTypes.length; i++) {
+                var type = mTypes[i];
+				var mkrArr;
+				var index = selectTypeIndex(type);
+				mkrArr = markers[index];
+				var subCount = getVisiableMarkersCount(type,mkrArr);
+				total += subCount;
+				setTypeValue(type, subCount); // set type's pins count		
+            }
+		    setTypeValue("all", total); // set total count
+		}
+		//get getVisiableMarkersCount
+		var getVisiableMarkersCount = function (type,mkrArr){
+			var subCount = 0 ;
+			var mapBounds = map.getBounds();
+			for (var k = 0; k< mkrArr.length; k++)  {
+				if (!mkrArr[k]) {continue};
+				var $li = $("#sidebar .map-factsheet[data-type='"+type+"']").find("li[attr-id='" + mkrArr[k].id + "']");
+				if (mapBounds.contains(mkrArr[k].getPosition())) {
+					subCount++;
+					$li.show();		
+				}else{
+					$li.hide();		
+				}
+			}
+			return subCount;
+		} 
+        /**
+		 * get the map object
+		 *
+		 * @return {Map}  google map object.
+		 */
+        self.getmap = function () {
+            return map;
+        };
+
+        /**
+        * set Map location parameters 
+        *
+        * @param {Object} opts: {}
+        * @param {Boolean} isUpdate: update map location and zoom after set the map params
+        */
+        self.setMapLocation = function (opts, isUpdate) {
+            start_location_lat = opts.start_location_lat || start_location_lat;
+            start_location_lng = opts.start_location_lng || start_location_lng;
+            start_location_zoom = parseInt(opts.start_location_zoom) || start_location_zoom;
+            start_location_type = eval(opts.start_location_type) || start_location_type;
+            start_showing_marker = opts.start_showing_marker || start_showing_marker;
+            start_marker_bigIcon = opts.start_marker_bigIcon || start_marker_bigIcon;
+            start_showing_infowindow = opts.start_showing_infowindow || start_showing_infowindow;
+            start_sidebar_style = opts.start_sidebar_style || start_sidebar_style;
+			start_showing_type = opts.start_showing_type || start_showing_type;
+            //update map
+            if (isUpdate) {
+                map.setCenter(new google.maps.LatLng(start_location_lat, start_location_lng));
+                map.setMapTypeId(start_location_type);
+                map.setZoom(start_location_zoom);
+            }
+        };
+
+        /**
+		 * init map only
+		 *
+		 * @param {Object} opts: {}
+		 * @param {Function} callback
+		 */
+        self.initialize = function (opts, callback) {
+            if (opts != null) {
+                self.setMapLocation(opts);
+            }
+            if (map == null) {
+                init.initMap();
+            }
+            if (callback) {
+                callback;
+            }
+        };
+
+        /**
+		 * init map and load markers via ajax
+		 *
+		 * @param {Object} opts: {}
+		 * @param {Function} callback
+		 */
+        self.initAndLoad = function (opts, callback) {
+            if (opts != null) {
+                self.setMapLocation(opts);
+            }
+            if (map == null) {
+                init.initMap();
+            }
+            init.initMapEvent();
+            init.initIcons();
+			init.initLoadingBox();
+            init.initMarkerManager();
+
+            if (callback) {
+                callback;
+            }
+        };
+
+        /**
+		 * select Marker by point
+		 *
+		 * @param {Point} point: The google map point
+		 * @param {Number} zoomlevel: zoom value
+		 * @param {String} type
+		 */
+        self.selectMarkerByPoint = function (point, zoomlevel, type) {
+            // checks if there is a marker at the point, and if not, it attempts to
+            // load the selected marker from the database, and then clicks it.
+            var click_her = getMarkerAtPoint(point, type);
+
+            if (click_her === null) {
+                if (oMaxBounds == null) {
+                    oMaxBounds = map.getBounds();
+                }
+                var old_bounds = new google.maps.LatLngBounds(oMaxBounds.getSouthWest(), oMaxBounds.getNorthEast());
+                if (!oMaxBounds.contains(point)) {
+                    oMaxBounds.extend(point);
+                }
+
+                load_markers(
+					old_bounds, oMaxBounds,
+					true,
+					function (data) {
+					    var click_her = getMarkerAtPoint(point, type);
+					    if (click_her === null) {
+					        map.setCenter(point);
+					    } else {
+					        if (zoomlevel) { map.setZoom(zoomlevel); }
+					        if (start_marker_bigIcon) {
+					            map.setCenter(point);
+					            click_her.setIcon(customIcons.selectedIcon);
+					        } 
+					        if (start_showing_infowindow) {
+					            google.maps.event.trigger(click_her, "click");
+					        }
+					    }
+					});
+            } else {
+                if (zoomlevel) { map.setZoom(zoomlevel); }
+                if (start_marker_bigIcon) {
+                    map.setCenter(point);
+                    click_her.setIcon(customIcons.selectedIcon);
+
+                }
+                if (start_showing_infowindow) {
+                    google.maps.event.trigger(click_her, "click");
+                }
+            }
+        };
+
+        /**
+        * load Markers in current bounds
+        *
+        * @param {Function} callback
+        */
+        self.loadMarkers = function (callback) {
+            if (oMaxBounds == null) {
+                oMaxBounds = map.getBounds();
+            }
+            load_markers(oMaxBounds, oMaxBounds, true, callback);
+        };
+
+        /**
+        * zoom the map to certain location
+        *
+        * @param {String} f: coords, format(latitude:longitude:zoom), eg:18.257557:-62.996464:13
+        */
+        self.zoomto = function (f) {
+            if (f != '') {
+                var coords = f.split(":");
+                map.setZoom(coords[2] * 1);
+                map.panTo(new google.maps.LatLng(coords[0], coords[1]));
+            }
+        };
+
+        /**
+        * zoom the map to certain pin and show prop infomation window
+        *
+        * @param {String} f: coords, format(latitude:longitude:zoom), eg:18.257557:-62.996464:13
+        * @param {String} type: hotel or villa or beach etc
+        */
+        self.zoomMe = function (f, type) {
+            if (f != '') {
+                var coords = f.split(":");
+                var point = new google.maps.LatLng(coords[0], coords[1]);
+                var zoom = coords[2] * 1;
+                map.setZoom(zoom);
+                map.setCenter(point);
+                self.selectMarkerByPoint(point, zoom, type);
+            }
+        };
+    }
+
+    window.wheretostayMap = new wheretostay.maps();
+    window.zoomMe = wheretostayMap.zoomMe;
+    window.Markers = wheretostayMap.Markers;
+    window.zoomto = wheretostayMap.zoomto;
+
+})(window);

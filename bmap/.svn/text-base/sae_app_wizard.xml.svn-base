@@ -1,0 +1,9 @@
+<appwizard><introduction><name></name><author>bmap cluster</author><icon></icon><homepage></homepage><description><![CDATA[百度地图标注群，簇,MarkerCluster]]></description></introduction><platform><services><service></service></services><appconfig><tpl><![CDATA[
+name: <<appname>>
+version: <<version>>
+#cron:
+#    - description: cron test
+#      url: index.php
+#      schedule: every 43 mins
+#      timezone: Beijing
+]]></tpl></appconfig></platform><code><initScript>index.php</initScript></code></appwizard>

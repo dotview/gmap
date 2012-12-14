@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>google Maps</title>
+<link href="stylesheets/map.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/styles.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	.mainct{margin:0 auto;text-align:center;width: 680px;}
+    #map_canvas {
+    width: 640px;
+    height: 480px;
+    margin:0px auto;
+    }
+    .map_popup {
+    width: 300px;
+    font-family: arial, sans-serif;
+    color: #000000;
+    font-size: 12px;
+    text-align:left;
+    }
+    .map_popup img {
+    margin-top: 25px;
+    float: right;
+    }
+    .map_popup a:link, .map_popup a:hover, .map_popup a:visited, .map_popup a:active {
+    color: #512483;
+    text-decoration: underline;
+    }
+    #map_popup_header {
+    color: #512483;
+    font-size: 14px;
+    font-weight: bold;
+    }
+    #map_container{
+    background:#fff;
+    padding:10px 0;
+    }
+    span.legend, span.legend_disabled {
+    display: block;
+    width: 107px;
+    height: 51px;
+    padding: 0px;
+    margin: 0px;
+    background: url('images/map_icons/map_legend.gif') no-repeat 0 0;
+    cursor: pointer;
+    }
+    span.legend_disabled {
+    background: url('images/map_icons/map_legend_disabled.gif') no-repeat 0 0;
+    }
+</style>
+</head>
+<body>
+ 
+ <div class="mainct">
+<table width="660" border="0" cellspacing="0" cellpadding="0" >
+    <tbody>
+        <tr>
+            <td align="center">
+            <div id="map_container">
+            <!-- START INSERTING INTO EXISTING PAGE HERE -->
+            <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+            <script type="text/javascript" src="scripts/maps.js"></script>
+            <script type="text/javascript">
+    cm_lat = -27.804398;
+    cm_lng = 133.775136;
+    cm_zoom = 4;
+    cm_regionName = 'all';
+</script>
+            <table style="margin-top: 0px; margin-right: 0px; margin-bottom: 10px; margin-left: 0px; background-color: #e6e4e4;" width="640" border="0" cellspacing="5" cellpadding="5">
+                <tbody>
+                    <tr>
+                        <td align="left">
+                        <p>Use the drop down menu to select individual solutions. Use the zoom and direction arrows to navigate to your area of interest. Click on a flag to view resource details.<br />
+                        HINT: Zoom in for a better view of areas with multiple flags</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><select style="float: left;" onchange="cm_updateSolutions()" id="map_solutions" class="drop-down">
+                        <option class="drop-down" value="0">All Solutions</option>
+                        <option class="drop-down" value="1">Solution 1: Exclude grazing</option>
+                        <option class="drop-down" value="2">Solution 2: Volunteer pasture</option>
+                        <option class="drop-down" value="3">Solution 3: Saltbush</option>
+                        <option class="drop-down" value="4">Solution 4: Saltbush &amp; Understorey</option>
+                        <option class="drop-down" value="5">Solution 5: Tall Wheatgrass</option>
+                        <option class="drop-down" value="6">Solution 6: Puccinellia</option>
+                        <option class="drop-down" value="7">Solution 7: Vegetative grasses</option>
+                        <option class="drop-down" value="8">Solution 8: Temperate perennials</option>
+                        <option class="drop-down" value="9">Solution 9: Sub-tropicals</option>
+                        <option class="drop-down" value="10">Solution 10: Legumes</option>
+                        <option class="drop-down" value="11">Solution 11: Non-Grazing</option>
+                        </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="map-header">
+            </div>
+            <div class="clear"></div>
+            <div id="map_canvas"></div>
+            <table style="margin-top: 10px; background-color: #e6e4e4;" width="640" height="50" border="0" align="center" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr class="legend-backg">
+                        <td align="center" style="padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                        <p>Select the document type to turn it on and off and be visible on the map:</p>
+                        </td>
+                    </tr>
+                    <tr class="legend-backg">
+                        <td align="left" valign="top">
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    <span title="Click to show or hide item" class="legend" id="cm_fs" onclick="cm_filter(this, 'fs');" style="width: 100px; background-position: 0px 0px;">
+                                    </span></td>
+                                    <td>
+                                    <span title="Click to show or hide item" class="legend" id="cm_cs" onclick="cm_filter(this, 'cs');" style="width: 100px; background-position: -100px 0px;">
+                                    </span></td>
+                                    <td>
+                                    <span title="Click to show or hide item" class="legend" id="cm_fc" onclick="cm_filter(this, 'fc');" style="width: 98px; background-position: -200px 0px;">
+                                    </span></td>
+                                    <td>
+                                    <span title="Click to show or hide item" class="legend" id="cm_rr" onclick="cm_filter(this, 'rr');" style="width: 108px; background-position: -296px 0px;">
+                                    </span></td>
+                                    <td>
+                                    <span title="Click to show or hide item" class="legend" id="cm_pp" onclick="cm_filter(this, 'pp');" style="width: 110px; background-position: -406px 0px;">
+                                    </span></td>
+                                    <td>
+                                    <span title="Click to show or hide item" class="legend" id="cm_cmp" onclick="cm_filter(this, 'cmp');" style="width: 120px; background-position: -520px 0px;">
+                                    </span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+ 
+ </div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/gmap/!svn/ver/207/1/gcal/src/service
+END
+apiModel.php
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/gmap/!svn/ver/207/1/gcal/src/service/apiModel.php
+END
+apiService.php
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/gmap/!svn/ver/207/1/gcal/src/service/apiService.php
+END
+apiUtils.php
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/gmap/!svn/ver/207/1/gcal/src/service/apiUtils.php
+END
+apiBatch.php
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/gmap/!svn/ver/207/1/gcal/src/service/apiBatch.php
+END
+apiServiceResource.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/gmap/!svn/ver/207/1/gcal/src/service/apiServiceResource.php
+END
+apiServiceRequest.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/gmap/!svn/ver/207/1/gcal/src/service/apiServiceRequest.php
+END

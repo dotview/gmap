@@ -1,0 +1,88 @@
+/*Main Display Elements */
+#poiBox * { font-family: arial, sans-serif; font-size: 12px}
+#poiBox {width: 800px; border: 4px solid #ddd; height: 500px; padding: 0px; background: #efefef; margin: 0 auto;}
+#map {width: 100%; height: 100%; float: left; border: 0px solid #ddd; overflow: hidden; margin-right: -0px; position: relative; left: 0px !important}
+#sidebar {display: block; width: 55px; margin-left: 0px; float: right; height: 100%; background: #fff;  border: 0px solid #ddd; position: relative; ;overflow:auto; overflow-x: hidden; overflow-y; scroll;margin-bottom: -100%; z-index: 30}
+
+/* Category List */
+#poiList {margin: 0px; padding: 0px; width: 230px}
+#poiList li {list-style:none;text-indent: 0px; margin: 3px;  background: url(../images/unchecked.png) 188px 6px no-repeat; height: 30px; line-height: 30px; font-weight: bold;}
+#poiList a {background-position: -0px -12px !important; cursor:pointer; display: block; line-height: 18px; height: 18px; padding: 5px 10px 5px 40px; border: 1px solid #ededed; font-weight: bold; overflow: hidden}
+#poiList a:hover {border: 1px solid #aaa}
+
+/* Checked Category */
+.visibleLayer {	background: url(../images/checked.png) 188px 6px  no-repeat #ededed !important;   -moz-border-radius: .6em;   -webkit-border-radius: .6em;   border-radius: .6em; }
+
+/* Category List Hide / Show */
+#listToggle {display: block; height: 24px; line-height: 24px; font-weight: bold; padding-left: 40px;}
+.listVisible {background: url(../images/collapseIcon.png) top left no-repeat}
+.listHidden {background: url(../images/expandIcon.png) top left no-repeat}
+
+/* Info Window Bubble */
+.gs-result {width: 200px; height: 100px; display: block}
+.gs-title {font-weight: bold}
+.gs-sv-link {font-weight: bold; color: #009; text-decoration:underline; padding-left: 18px; background: url(../images/sv.png) no-repeat left; margin-right: 3px}
+.gs-dd-link {font-weight: bold; color: #009; text-decoration:underline; padding-left: 18px; background: url(../images/directions.png) no-repeat left;}
+.gs-customHTML {width: 200px}
+
+/* Loading Spinner */
+#mapLoading {
+-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+-moz-border-radius: .6em;
+-webkit-border-radius: .6em;
+border-radius: .6em;
+width: 50px; height: 50px; border: 1px solid #ccc;
+ position: relative; background: #fff url(../images/loading.gif) center center no-repeat;}
+
+/* Information Box */ 
+#infoBox {border-top: 2px solid #CCC; width: 95%;  background: rgb(255, 255, 255); background: rgba(255, 255, 255, 0.8); padding: 0px 0px; height: 60px;}
+#infoBoxClose {background: url(../images/close.png) no-repeat; height: 16px; width: 16px; cursor: pointer; }
+#infoBox h4 {margin: 5px 0px 4px 24px}
+#infoBox p {margin: 0px 8px; font-size: .8em}
+
+/* Street View Box */
+#svFrame {position: absolute; border: 2px solid #ccc; border-right: 7px solid #ccc; width: 90%; height: 70%; background: rgb(255, 255, 255); background: rgba(255, 255, 255, 0.8); padding: 0px 0px; z-index: 40}
+#svBox {width: 100%; height: 100%; margin: 0px; border: 2px solid #fff; border-top: 16px solid #fff; background: #fff url(../images/loading.gif) center center no-repeat;}
+#svBoxClose {background: url(../images/close.png) no-repeat; height: 16px; width: 16px; cursor: pointer;}
+
+/* Directions Box */
+#ddFrame {position: absolute; border: 2px solid #ccc; width: 90%; height: 70%; background: rgb(255, 255, 255); background: rgba(255, 255, 255, 0.8); padding: 0px 0px; z-index: 40}
+#ddBox {overflow-y: scroll; width: 97%; height: 92%; margin: 0px; border: 2px solid #fff; border-top: 16px solid #fff; background: #fff  center center no-repeat;}
+#ddBoxClose {background: url(../images/close.png) no-repeat; height: 16px; width: 16px; cursor: pointer;}
+#ddBoxPrint {background: url(../images/print.png) no-repeat; height: 16px; width: 26px;padding-left: 20px ;left: 4px !important; cursor: pointer; text-decoration: none; color: #66e}
+
+/* Top Controls */
+#overlayControl {left: 40px; top: 10px}
+#searchForm {display: block; float: left; margin-left: 5px; margin-top: -1px; padding-top: 0px}
+#searchTxt {height: 24px; padding: 0px; border: 1px solid #000; width: 260px; padding-left: 5px;  font-weight: bold; margin-right: 3px; margin-bottom: 2px}
+#searchButton {height: 26px; margin-top: -1px;}
+#geoTarget {display: block; width: 26px; height: 26px; background: url(../images/geotarget.png) no-repeat;cursor: pointer; position: absolute; left: 320px; top: -2px}
+
+/* User Category Search Form */
+#user {background-image: none !important}
+#user form {background: url(../images/user.png) 0px -12px no-repeat; padding-left: 38px; padding-top: 4px; height: 24px; margin: 0px}
+#userPOITxt {width: 123px}
+
+/* Category List Icons */
+#thai a {background: url(../images/thai.png) 0px -1px no-repeat}
+#pizza a {background: url(../images/pizza.png) 0px -1px no-repeat}
+#school a {background: url(../images/school.png) 0px -1px no-repeat}
+#church a {background: url(../images/church.png) 0px -1px no-repeat}
+#gym a {background: url(../images/gym.png) 0px -1px no-repeat}
+#bank a {background: url(../images/bank.png) 0px -1px no-repeat}
+#university a {background: url(../images/university.png) 0px -1px no-repeat}
+#computers a {background: url(../images/computers.png) 0px -1px no-repeat}
+#bread a {background: url(../images/bread.png) 0px -1px no-repeat}
+#police a {background: url(../images/police.png) 0px -1px no-repeat}
+#postal a {background: url(../images/postal.png) 0px -1px no-repeat}
+#dentist a {background: url(../images/dentist.png) 0px -1px no-repeat}
+#doctor a {background: url(../images/doctor.png) 0px -1px no-repeat}
+#vet a {background: url(../images/vet.png) 0px -1px no-repeat}
+#golf a {background: url(../images/golf.png) 0px -1px no-repeat}
+#newsagent a {background: url(../images/newsagent.png) 0px -1px no-repeat}
+#parking a {background: url(../images/parking.png) 0px -1px no-repeat}
+#playground a {background: url(../images/playground.png) 0px -1px no-repeat}
+#property a {background: url(../images/home.png) 0px -1px no-repeat}
+#photo a {background: url(../images/photo.png) 0px -1px no-repeat}

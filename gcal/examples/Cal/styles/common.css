@@ -1,0 +1,287 @@
+ body {
+	color: #333333;
+	background: #EEF3FA;
+	font-family: Arial,Helvetica,sans-serif;
+	margin: 0 auto;
+}
+.mapTooltip {
+	display: none;
+	left: 529px;
+	position: absolute ;clear: both;
+	top: 412px;
+	width: 410px;
+	z-index: 10102;
+}
+.mapTooltip2 {
+	display: none;
+	left: 529px;
+	position: absolute;
+	top: 402px;
+	width: 400px;
+	z-index: 9999;
+}
+.hinweistip-rounded {
+	padding: 4px 0 20px;
+	font-size: 12px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #fff;
+	border: 3px solid #3495F6;
+}
+.hinweistip-title {
+	font-weight: bold;
+	color: #666;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #91C4F7;
+}
+.hinweistip-inner .hininnerSubtitle {
+	float: left;
+	margin: 8px 20px;
+	width: 90%;
+}
+.hinweistip-inner .hininnerSubtitle {
+	float: left;
+	margin: 8px 20px;
+	width: 90%;
+}
+.hinweistip-close a.close {
+	height: 14px;
+	width: 14px;
+	display: block;
+	float: right;
+	margin: -25px -10px;
+	cursor: pointer;
+}
+.hinweistip-arrows {
+	display: none;
+	position: absolute;
+	top: 70px;
+	left: -11px;
+	width: 11px;
+	height: 22px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	border-width: 0;
+}
+.hinweistip-rounded .ratings2 {
+	float: right;
+}
+.hinweistip-rounded ul li {
+	border-bottom: 1px solid #ccc;
+	line-height: 23px;
+}
+.hinweistip-rounded ul li.last {
+	border-bottom: none;
+}
+.hinweistip-rounded .hinweistip-arrows {
+	border-color: #fff;
+}
+.fTop {
+	padding: 5px 20px 0px 20px;
+}
+.hinweistip-rounded h1 {
+	font-size: 18px;
+	padding: 0 10px 5px 0;
+	border-bottom: 1px solid #ccc;
+	margin: -9px 0 10px 20px;
+	/*width: 360px;*/
+	
+}
+/* need to be more specific here to override ThemeRoller defaults*/
+	div.hinweistip-rounded .hinweistip-arrows {
+	font-size: 0;
+	line-height: 0%;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	background: transparent none;
+}
+div.hinweis-right-rounded .hinweistip-arrows {
+	right: 100% !important;
+	width: 17px;
+	height: 35px;
+	top: 15px;
+	left: auto;
+}
+div#mapTooltip.hinweis-right-rounded .hinweistip-arrows {
+	top: 70px !important;
+}
+div.hinweis-left-rounded .hinweistip-arrows {
+	left: 100%;
+	margin-right: -11px;
+	border-width: 11px 0 11px 11px;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-bottom-color: transparent;
+}
+div.hinweis-bottom-rounded .hinweistip-arrows {
+	top: -17px;
+	left: 39%;
+	background: url(sprite2.png) 0 -857px;
+	width: 35px;
+	height: 17px;
+}
+.hininput {
+	background-color: #fff;
+	float: left;
+	margin: 4px 0px 4px 20px;
+	width: 200px;
+	border-radius: 5px 5px 5px 5px;
+	border: 1px solid #91C4F7;
+	color: #3495F6;
+}
+.buttonClass2A {
+	background-color: #DDEEFF;
+	border-radius: 15px 15px 15px 15px;
+	color: #3495F6;
+	cursor: pointer;
+	display: block;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 20px;
+	margin-bottom: 5px;
+	min-width: 70px;
+	padding-left: 15px;
+	width: 125px;
+}
+.buttonClass2A .identifier {
+	color: #3495F6;
+	height: 20px;
+	margin-left: 10px;
+}
+.identifier {
+	display: inline-block;
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 21px;
+}
+.buttonClass2A .statusBox5097 {
+	background-color: #FFFFFF;
+	color: #3495F6;
+}
+.statusBoxplus {
+	background-color: #3495F6;
+	border-radius: 12px 12px 12px 12px;
+	color: #FFFFFF;
+	float: left;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 12px;
+	height:12px;
+	margin: 2px 12px 0 0;
+	padding: 0 1px 4px;
+	text-align: center;
+}
+.clear {
+	clear: both;
+}
+.container {
+	text-align: left;
+	margin: 20px auto 0;
+	width: 1100px;
+	background: #fff;
+	overflow: visible;
+	padding: 8px; 
+}
+.map {
+	width: 780px;
+	height: 600px;
+}
+.map-container {
+	width: 790px;
+	height: 600px;
+	margin-top: 10px;
+	position: relative; 
+}
+.adPanel {
+	float: right;
+	width: 300px;
+	background: #ccc;
+	height: 250px;
+	margin-top: 10px;
+}
+.hinweistip-content {
+	padding: 0 0 0 20px;
+}
+.ctrlPanel {
+	position: absolute;
+	right: 20px;
+	top: 50px;
+	z-index: 10100;
+	padding: 0 4px;
+	cursor: pointer;
+	background-color: #FFFFFF;
+	border: 2px solid #3495F6;
+	color: #3495F6;
+	font-weight: bold;
+	border-radius: 22px 22px 22px 22px;
+	font-size: 12px;
+}
+.hinctrlpanel {
+	cursor: pointer;
+	margin: 8px;
+	color: #3495F6;
+	padding: 0 2px;
+	width: 140px;
+}
+.divProcessResult{
+	position: absolute;
+	margin: 0 auto;
+	text-align: center;
+	left: 240px;
+	top: 40px;
+	_min-width: 260px;
+	width: 260px;
+	height:50px; 
+	z-index: 99999;
+	color: #3495F6;
+	font-weight: bold;
+	font-size: 16px;
+	font-size: 12px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #fff;
+	border: 3px solid #3495F6;
+}
+.ui-autocomplete {text-align:left;}
+
+body
+        {
+            margin: 0px;
+            font-size: 12px;
+            font-family: Arial;
+            background-color: #fff;
+            color: #333;
+        }
+        *
+        {
+            font-size: 12px;
+            margin: 0;
+        }
+        .adp-placemark
+        {
+            background: #EEEEEE;
+            border: 1px solid #c0c0c0;
+            width: 100%; 
+        }
+        .adp-summary
+        {
+            line-height: 28px;
+            padding: 4px;
+        }
+        .adp-step td
+        {
+            border-top: 1px solid #c0c0c0;
+            padding: 2;
+        }
+        .adp-substep
+        {
+            padding: 2px;
+        }
+		.box{display:none;}
+		.selectedicon{border:1px solid green;}
+		.hininnerInput{margin:8px 20px;}
+		.mapTooltip p{margin-top:4px;}

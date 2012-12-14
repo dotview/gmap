@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+<TITLE>Diet  Calculator</TITLE>
+<LINK href="http://superpowerslim.com/css/style.css" type=text/css rel=stylesheet>
+<SCRIPT src="http://code.jquery.com/jquery-1.4.2.min.js" type=text/javascript></SCRIPT>
+<SCRIPT src="js/diet_calculator.js" type="text/javascript"></SCRIPT>
+</HEAD>
+<BODY>
+<DIV id=main_container>
+<DIV id=contain_middle>
+<DIV id=content>
+ 
+<DIV class=ancalc>
+ 
+<TABLE cellPadding=1 align=left border=0>
+  <TBODY>
+  <TR>
+    <TD style="BACKGROUND: #2066af" vAlign=top align=left>
+      <TABLE cellSpacing=1 cellPadding=5 border=0>
+        <TBODY>
+        <TR>
+          <TH class=top colSpan=2>Diet Phase Meal Calorie Calculator</TH></TR>
+        <TR>
+          <TH colSpan=2>Enter the following data </TH></TR>
+        <TR>
+          <TD>Weight:</TD>
+          <TD><INPUT maxLength=4 size=3 name=wt id=wt> <SELECT name=wu id=wu> <OPTION value="lb"
+              selected>Lb</OPTION> <OPTION value="kg">Kg</OPTION></SELECT> </TD></TR>
+        <TR>
+          <TD>Number of Meals Per Day:</TD>
+          <TD><INPUT maxLength=3 size=3 id=num></TD></TR>
+        <TR>
+          <TD colSpan=2><INPUT id="Calculate" type="image" src="http://SuperPowerSlim.com/images/calculatebutton.png" value=Calculate name=button></TD></TR>
+        <TR>
+          <TH colSpan=2>Results </TH></TR>
+        <TR>
+          <TD>Total Calories per day: </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Total> 
+        Calories                 </TD></TR>
+        <TR>
+          <TD>Calories of Protein Per Day:  </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=ProteinPerDay> 
+        Calories                 </TD></TR>
+		<TR>
+          <TD>Calories of Carbohydrates Per Day:  </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=CarbohydratesPerDay> 
+        Calories                 </TD></TR>
+		<TR>
+          <TD>Calories of Protein Per Meal:   </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=ProteinPerMeal> 
+        Calories                 </TD></TR>
+		<TR>
+          <TD>Calories of Carbohydrates Per Meal :  </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=CarbohydratesPerMeal> 
+        Calories                 </TD></TR>
+		<TR>
+          <TH colSpan=2>Cooked Carbohydrate Weight Per Meal: </TH></TR>
+        <TR>
+          <TD>Oatmeal (Dry Weight):</TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Oatmeal_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=Oatmeal_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Brown Rice: </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=BrownRice_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=BrownRice_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Sweet Potato:    </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=SweetPotato_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=SweetPotato_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Quinoa:     </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Quinoa_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=Quinoa_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Yam:   </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Yam_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output  maxLength=6 size=6 id=Yam_g> 
+        g            </TD></TR>
+		<TR>
+          <TH colSpan=2>Cooked Protein Weight Per Meal: </TH></TR>
+        <TR>
+          <TD>Eggs: </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Eggs_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=Eggs_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Beef Steak:  </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=BeefSteak_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=BeefSteak_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Chicken:  </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Chicken_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=Chicken_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Fish:    </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Fish_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=Fish_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Pork:  </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Pork_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=Pork_g> 
+        g            </TD></TR>
+		<TR>
+          <TD>Lobster/Shrimp/Crab: </TD>
+          <TD><INPUT class=output maxLength=6 size=6 id=Lobster_oz> 
+        oz  &nbsp; &nbsp;<INPUT class=output maxLength=6 size=6 id=Lobster_g> 
+        g            </TD></TR>
+        <TR>
+          <TD colSpan=2><A 
+            href="http://superpowerslim.com/">SuperPowerSlim.com</A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+</DIV>
+</DIV>
+</DIV>
+</BODY></HTML>

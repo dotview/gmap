@@ -1,0 +1,6 @@
+<div><table style="width:300px; cursor:pointer;"><tbody><tr><td colspan="2"><div class="briefAddress" style="margin-bottom:3px; padding:5px; font-size:12px; color:#2E64A4;text-decoration:underline;background-color: #eceff6;border: 1px solid #d4dae8; "><a href="#" target="_blank">American Sports Medicine Institute
+,2660 10th Avenue South
+, Birmingham	Alabama
+</a></div></td></tr><tr><td vallign="top" style="width:110px"><a href="#" target="_blank"><img src="http://i.oodleimg.com/item/3217036212t_1l_single-family_houses_in_signal_hill_(signal_hill)_ca/?1352190941" border="0" style="width:100px; height:66px"></a></td><td vallign="top"><div class="briefPrice" style="font-size:12px;">TEST</div><div class="briefBedBathSqft" style="font-size:12px;">www.asmi.org
+<br>ljohnson@asmi.org
+</div><div class="briefPropertyType" style="font-size:12px;">Category: TEST</div></td></tr><tr></tr></tbody></table></div>

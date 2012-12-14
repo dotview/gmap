@@ -1,0 +1,263 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Guiderer</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+<link href='http://fonts.googleapis.com/css?family=EB+Garamond|Open+Sans:700,400,300' rel='stylesheet' type='text/css'>
+  <link href="assets/all-a0d283c06c67e4b144314a4494490aff.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="assets/reveal-0bd01a4abece5a897351190e76de71fd.css" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script src="assets/modernizr-2.0.6.min.js"></script>
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="JDd0+46uDg2IihLjhedffHENniRe4Gkc4h8a3dk1BZQ=" name="csrf-token" />
+  
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    
+  <script src="assets/BpTspSolver.js" type="text/javascript"></script>
+  <script src="assets/vendor-d10869393235022e7bf318b11d858c6a.js" type="text/javascript"></script>
+  
+<style>.highlight{background-color:#eee;}
+.infowindowcontent{margin: 8px;float:left;}
+.infowindowcontent img{width:100px;height:100px;}
+.infowindowcontent .info-img{float:left;}
+.infowindowcontent .info-c{width:150px;float:left;margin-left:10px;}
+.infowindowcontent .fn{font-weight:bold;}
+</style>
+</head>
+
+<body>
+
+  <div class="container ">
+    <header id="guidererHead">
+	<div id="brandHead">
+	  <a href="/">
+  	  <h1 id="logo">Guiderer</h1>
+	  </a>
+  </div>
+  <div id="secondaryHead">
+	
+	<a href="/pages/how" class="button howWorks">how guiderer works?</a>
+      <p class="userControl">
+		<a href="/users/sign_in" class="signIn">Sign In</a>
+ /
+       <a href="/users/sign_in" class="signUp">Sign Up</a>
+
+
+      </p>
+  </div>
+</header>
+      <section id="main" role="main">
+        <div id="getStartedWrap">
+          <section id="getStarted">
+            <div id="colMain">
+  <h2></h2>
+  <h3>Prizzi / Italy  | </h3>
+  <p></p>
+   <section id="guidePOIMap">
+   <div class="POImap" style="width:100%;height:400px;"></div>
+   </section>
+  <section id="guidePOIList">
+      <section class="guideItemPOI clearfix show">
+        <header class="guideItemPOIHeader"><h3>cozzolino</h3></header>
+        <section class="guideItemPOIContent">
+        <div class="guideItemPOIMainCol">
+              <img alt="Cozzolino6--190x130" height="375" src="http://guiderer_dev.s3.amazonaws.com/uploads/picture/filename/59/cozzolino6--190x130.jpg" width="375" />
+            <br/>
+    	</div>
+        <div class="guideItemPOISideCol">
+        </div>
+        	<div class="guideItemPOIMap">
+        	  <div class="gmap" data-lat="37.720051" data-lng="13.434967"></div>
+        	  
+        	  
+        	  <h3>Description</h3>
+            <p></p>
+           	<h3>Location</h3>
+			      <div class="vcard">
+              <span class="fn org">cozzolino</span> 
+              <div class="adr"> 
+                <span class="street-address">Via Ugo La Malfa, 2</span><br/>
+                <span class="locality">Prizzi</span>, <span class="region">Sicilia</span>
+              </div>   
+              <span class="tel">091 8345425</span>
+                <a href="" target="_blank"></a>
+           </div>
+        	  
+        	  
+					</div>
+				</section>
+        <footer class="guideItemPOIFooter">
+        </footer>
+      </section>
+      <section class="guideItemPOI clearfix show">
+        <header class="guideItemPOIHeader"><h3>coffee</h3></header>
+        <section class="guideItemPOIContent">
+        <div class="guideItemPOIMainCol">
+              <img alt="5067609248_452dc4af80" height="375" src="http://guiderer_dev.s3.amazonaws.com/uploads/picture/filename/58/5067609248_452dc4af80.jpg" width="375" />
+            <br/>
+    	</div>
+        <div class="guideItemPOISideCol">
+        </div>
+        	<div class="guideItemPOIMap">
+        	  <div class="gmap" data-lat="37.721951" data-lng="13.43208"></div>
+        	  
+        	  
+        	  <h3>Description</h3>
+            <p></p>
+           	<h3>Location</h3>
+			      <div class="vcard">
+              <span class="fn org">coffee</span> 
+              <div class="adr"> 
+                <span class="street-address">Corso Umberto I, 17</span><br/>
+                <span class="locality">Prizzi</span>, <span class="region">Sicilia</span>
+              </div>   
+              <span class="tel">091 8346578</span>
+                <a href="" target="_blank"></a>
+           </div>
+        	  
+        	  
+					</div>
+				</section>
+        <footer class="guideItemPOIFooter">
+        </footer>
+      </section>
+      <section class="guideItemPOI clearfix show">
+        <header class="guideItemPOIHeader"><h3>bar, restaurant</h3></header>
+        <section class="guideItemPOIContent">
+        <div class="guideItemPOIMainCol">
+              <img alt="64drd6ko4weszot6xjz5kg18c_k7vlx8_t" height="375" src="http://guiderer_dev.s3.amazonaws.com/uploads/picture/filename/57/64drd6ko4weszot6xjz5kg18c_k7vlx8_t.jpeg" width="375" />
+            <br/>
+    	</div>
+        <div class="guideItemPOISideCol">
+        </div>
+        	<div class="guideItemPOIMap">
+        	  <div class="gmap" data-lat="37.622759" data-lng="13.490679"></div>
+        	  
+        	  
+        	  <h3>Description</h3>
+            <p></p>
+           	<h3>Location</h3>
+			      <div class="vcard">
+              <span class="fn org">bar, restaurant</span> 
+              <div class="adr"> 
+                <span class="street-address">Via Molino, 4</span><br/>
+                <span class="locality">Santo Stefano Quisquina</span>, <span class="region"></span>
+              </div>   
+              <span class="tel">0922 982 604</span>
+                <a href="" target="_blank"></a>
+           </div>
+        	  
+        	  
+					</div>
+				</section>
+        <footer class="guideItemPOIFooter">
+        </footer>
+      </section>
+      <p>
+        <a href="/guides/25/init" class="button">Add POI (+)</a>
+        <a href="/guides/25/edit" class="button">Edit Guide</a>
+		<a href="/guides/25" class="button" data-method="delete" rel="nofollow">Delete</a>
+        </p>		
+  </section>
+</div>
+<div id="colAside">  
+  <a href="#" data-reveal-id="shareForm" data-animation="fade" class="button alignRight">Share</a>
+</div>
+ <div id="shareForm" title="Share Your Guide" class="reveal-modal">
+	
+  <div class="shareCol">
+	<a href="#" class="close">×</a>
+    <h2>Email to a Friend</h2>
+    <form>
+      <fieldset>
+        <label for="emailInput">Email</label>
+        <input type="text" name="emailInput" id="emailInput"/>
+        <br/>
+        <label for="message">Your message</label><br/>
+        <textarea id="message" name="message"></textarea><br/>
+        <button id="sendGuide" name="sendGuide">Send</button>
+      </fieldset>
+    </form>
+  </div>
+  <div class="shareCol">
+    <h2>Share with your Network</h2>
+    <p>Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+    
+                                                              
+ 
+
+    
+  </div>
+</div>
+
+
+            <footer>
+            </footer>
+          </section>
+        </div>
+      </section>        
+    
+    <footer id="guidererFooter"> 
+	<div class="footerCol">
+		<h2>Guiderer for:</h2>
+		<ul>
+			<li><a href="#">Hotels and Lodging</a></li>
+			<li><a href="#">Travel Agencies</a></li>
+			<li><a href="#">Personal Tour Guides</a></li>
+			<li><a href="#">Tourism Authorities</a></li>
+		</ul>
+	</div>
+	<div class="footerCol">
+		<h2>Solution:</h2>
+		<ul>
+			<li><a href="/pages/how">How does Guiderer work?</a></li>
+			<li><a href="/pages/advertise">Make money with Guiderer</a></li>
+			<li><a href="/pages/faq">FAQ</a></a></li>
+
+		</ul>
+	</div>
+	<div class="footerCol">
+		<h2>Guiderer:</h2>
+		<ul>
+			<li><a href="/pages/contact">Contact</a></li>
+			<li><a href="/pages/advertise">Advertise</a></li>
+			<li><a href="/pages/join">Join us</a></li>
+			<li><a href="/pages/about">About us</a></li>
+		</ul>
+	</div>
+	<div class="footerCol wide">
+		<h2>Subscribe to newsletter:</h2>
+		<form action="http://guiderer.us2.list-manage1.com/subscribe/post" method="post" >
+				<input type="text" value="Enter your E-mail" onfocus="this.value = (this.value=='Enter your E-mail')? '' : this.value;" onblur="this.value = (this.value=='')? 'Enter your E-mail' : this.value;"  name="MERGE0" id="MERGE0" />
+				<input type="submit" class="button" value="go" />
+				<input type="hidden" name="u" value="bc0c9778097c576a64b547145">
+				<input type="hidden" name="id" value="79a6b86054">
+				</form>
+		
+		
+	</div>
+	<div class="footerCol wide">
+		<h2>Connect with us</h2>
+		<a href="/users/auth/facebook" class="connectLink facebook"></a>
+		<a href="#" class="connectLink twitter"></a>
+		<a href="#rss" class="connectLink rss"></a>
+	</div>
+	<p><small>&copy;2010-2012 Guiderer.  All Rights Reserved.</small></p>
+</footer>
+
+  </div> <!--! end of #container -->
+  
+  <script src="assets/application-8487f7ec05baf964bcee9298adcf3eef.js" type="text/javascript"></script>
+
+</body>
+</html>

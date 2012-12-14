@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Jquery Wizard</title>
+<link href="http://worcesterwideweb.com/jquery/wizard/style.css" rel="stylesheet" type="text/css" />
+<link href="style/wizard.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+<script type="text/javascript">
+var curindex = 1;
+var lastindex = 0;
+function loadnext(index){
+ 
+		if(curindex+index<=0 || curindex+index >=4) return;
+		
+		lastindex = curindex;
+		curindex = curindex+index;
+		
+		var divout;
+		var prev;
+		if(index<0){
+			divout = lastindex;
+			prev = curindex-2;
+			prev = prev<=0? 0: prev;
+		}
+		else{
+			divout = curindex -index;
+		    prev = lastindex-1;
+			prev = prev>=2? 2: prev;
+		}
+		$("." + divout).hide();
+		$("." + curindex).fadeIn("fast");
+
+		$(".current").removeClass("current");
+		$(".lastDone").removeClass("lastDone");
+		$(".done").removeClass("done");
+		if(curindex>1)$("#mainNav li:eq("+prev+")").addClass("lastDone");
+		 
+		$("#mainNav li:eq("+(curindex-1)+")").addClass("current");
+		$("#mainNav li:lt("+prev+")").addClass("done");
+		
+		
+	 
+}
+
+
+
+</script>
+</head>
+<body>
+<div id="wizardwrapper">
+	<ul id="mainNav" class="fiveStep">
+      <li class="current"><a href="#" title=""><em>Step 1: XXXXXXXX</em><span>Et nequ a quam turpis duisi</span></a></li>
+      <li class=""><a href="#" title=""><em>Step 2: XXXXXXXX</em><span>Et nequ a quam turpis duisi</span></a></li>
+      
+      <li class="mainNavNoBg"><a title=""><em>Step 3: XXXXXXXX</em> <span>Et nequ a quam turpis duisi</span></a></li>
+    </ul>
+	<div class="buttons">
+      <button type="submit" class="previous"  onclick="loadnext(-1);"> <img src="images/arrow_left.png" alt=""/> Back </button>
+      <button type="submit" class="next" onclick="loadnext(1);"> Next <img src="images/arrow_right.png" alt="" /> </button>
+    </div>
+	
+  <div class="1">
+    <h3></h3>
+    <div id="wizardcontent"> 
+	<form action="details" id="form-input" enctype="multipart/form-data" method="post">
+		<h2>Step 1 of 3 - Enter your company details</h2>
+		<div id="kml-generator-left">
+			<h3>Choose input method</h3>
+			<p>
+				<input type="radio" class="radio" name="input-type" id="input-type-form" value="form" checked="checked">
+				<label class="radio" for="input-type-form">Manual input</label>
+				<br>
+				<input type="radio" class="radio" name="input-type" id="input-type-csv" value="csv">
+				<label class="radio" for="input-type-csv">File upload</label>
+			</p>
+			
+			<div id="csv-format" class="invisible">
+				<h4 style="margin-top: 2em;">Format CSV</h4>
+				<p>
+					Please use the following column order in your CSV file.
+				</p>
+				<ol>
+					<li>Name</li>
+					<li>Address</li>
+					<li>City</li>
+					<li>Zipcode</li>
+					<li>State</li>
+					<li>Country code (<a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm" target="_blank">ISO standard</a>)</li>
+					<li>Main phone number</li>
+					<li>Description (HTML allowed)</li>
+				</ol>
+				<p>
+					<strong>Note:</strong>
+					First line of CSV file must not contain location details since it's skipped by this tool. Use it for column titles.
+				</p>
+			</div>
+
+					</div>
+
+		<div id="kml-generator-right">
+			<div id="kml-input">
+				<fieldset id="input-form">
+											<h3>Fill in your location details</h3>
+										<p>
+						<label for="name">Name <span class="required">*</span></label>
+						<input type="text" name="name" id="name" class="required input-col example" value="Your business name">
+					</p>
+					<p>
+						<label for="address">Address <span class="required">*</span></label>
+						<input type="text" name="address" id="address" class="required input-col example" value="Your address">
+					</p>
+					<p>
+						<label for="city">City <span class="required">*</span></label>
+						<input type="text" name="city" id="city" class="required input-col example" value="Your city">
+					</p>
+					<p>
+						<label for="state">State</label>
+						<input type="text" name="state" id="state" class="input-col example" value="OR">
+					</p>
+					<p>
+						<label for="zipcode">Zipcode <span class="required">*</span></label>
+						<input type="text" name="zipcode" id="zipcode" class="required input-col example" value="12345">
+					</p>
+					<p>
+						<label for="country">Country <span class="required">*</span></label>
+						<select name="country" id="country" class="required input-col">
+							<option value="">Select country</option><option value="US">United States</option><option value="CA">Canada</option><option value="-">----------</option>
+														<option value="AF">Afghanistan</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AS">American Samoa</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AI">Anguilla</option><option value="AQ">Antarctica</option><option value="AG">Antigua And Barbuda</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AW">Aruba</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BM">Bermuda</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BA">Bosnia And Herzegovina</option><option value="BW">Botswana</option><option value="BV">Bouvet Island</option><option value="BR">Brazil</option><option value="IO">British Indian Ocean Territory</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CV">Cape Verde</option><option value="KY">Cayman Islands</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CX">Christmas Island</option><option value="CC">Cocos (Keeling) Islands</option><option value="CO">Columbia</option><option value="KM">Comoros</option><option value="CG">Congo</option><option value="CK">Cook Islands</option><option value="CR">Costa Rica</option><option value="CI">Cote D'Ivorie (Ivory Coast)</option><option value="HR">Croatia (Hrvatska)</option><option value="CU">Cuba</option><option value="CY">Cyprus</option><option value="CZ">Czech Republic</option><option value="CD">Democratic Republic Of Congo (Zaire)</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="TP">East Timor</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="ET">Ethiopia</option><option value="FK">Falkland Islands (Malvinas)</option><option value="FO">Faroe Islands</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="FX">France, Metropolitan</option><option value="GF">French Guinea</option><option value="PF">French Polynesia</option><option value="TF">French Southern Territories</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GI">Gibraltar</option><option value="GR">Greece</option><option value="GL">Greenland</option><option value="GD">Grenada</option><option value="GP">Guadeloupe</option><option value="GU">Guam</option><option value="GT">Guatemala</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HM">Heard And McDonald Islands</option><option value="HN">Honduras</option><option value="HK">Hong Kong</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MO">Macau</option><option value="MK">Macedonia</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MQ">Martinique</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="YT">Mayotte</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="MS">Montserrat</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar (Burma)</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="AN">Netherlands Antilles</option><option value="NC">New Caledonia</option><option value="NZ">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="NU">Niue</option><option value="NF">Norfolk Island</option><option value="KP">North Korea</option><option value="MP">Northern Mariana Islands</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PW">Palau</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PN">Pitcairn</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="PR">Puerto Rico</option><option value="QA">Qatar</option><option value="RE">Reunion</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="SH">Saint Helena</option><option value="KN">Saint Kitts And Nevis</option><option value="LC">Saint Lucia</option><option value="PM">Saint Pierre And Miquelon</option><option value="VC">Saint Vincent And The Grenadines</option><option value="SM">San Marino</option><option value="ST">Sao Tome And Principe</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SK">Slovak Republic</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="GS">South Georgia And South Sandwich Islands</option><option value="KR">South Korea</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SJ">Svalbard And Jan Mayen</option><option value="SZ">Swaziland</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TG">Togo</option><option value="TK">Tokelau</option><option value="TO">Tonga</option><option value="TT">Trinidad And Tobago</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="TM">Turkmenistan</option><option value="TC">Turks And Caicos Islands</option><option value="TV">Tuvalu</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="UK">United Kingdom</option><option value="US" selected="selected">United States</option><option value="UM">United States Minor Outlying Islands</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VA">Vatican City (Holy See)</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="VG">Virgin Islands (British)</option><option value="VI">Virgin Islands (US)</option><option value="WF">Wallis And Futuna Islands</option><option value="EH">Western Sahara</option><option value="WS">Western Samoa</option><option value="YE">Yemen</option><option value="YU">Yugoslavia</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option>
+						</select>
+					</p>						
+					<p>
+						<label for="phone">Main phone number</label>
+						<input type="text" name="phone" id="phone" class="input-col example" value="(123) 456-7890">
+					</p>
+					<p>
+						<label for="description">
+							Description<br>
+													</label>
+												<textarea name="description" id="description" class="description input-col"></textarea><br>
+</p><div id="description-instruction" class="">
+	<small>
+				For the description you can use variables mentioned below click to insert). The variables will be replaced by the corresponding values of this form.<br>
+		<a href="javascript:insertAtCaret('description', '{name}');" class="tooltip">{name}</a>,
+		<a href="javascript:insertAtCaret('description', '{address}');" class="tooltip">{address}</a>,
+		<a href="javascript:insertAtCaret('description', '{city}');" class="tooltip">{city}</a>,
+		<a href="javascript:insertAtCaret('description', '{zipcode}');" class="tooltip">{zipcode}</a>,
+		<a href="javascript:insertAtCaret('description', '{state}');" class="tooltip">{state}</a>,
+		<a href="javascript:insertAtCaret('description', '{country}');" class="tooltip">{country}</a>,
+		<a href="javascript:insertAtCaret('description', '{phone}');" class="tooltip">{phone}</a>
+	</small><br>
+</div>
+					<p></p>
+					
+					<p id="error-msg-step1" class="error invisible"></p><p>
+
+					</p><p class="clear">
+						<input type="hidden" name="is-edit-location" id="is-edit-location" value="">
+						<input type="hidden" name="nr-locations" id="nr-locations" value="3">
+						<input type="hidden" name="current-location" id="current-location" value="3">
+						<label>&nbsp;</label>
+													<button type="button" class="btn" id="btn-add-location">
+								<img src="images/button-add.png">
+							</button>
+							<button type="button" class="btn invisible" id="btn-save-location">
+								<img src="images/button-save.png">
+							</button>
+											</p>
+				
+					<p class="small"><em>* This field is required</em></p>
+					
+											<div id="location-basket" class="">
+							<p id="next-step-input-1" class="align-right no-margin">
+								<button type="submit" class="btn" id="btn-submit-step1">
+									<img src="images/button-step2.png">
+								</button>
+							</p>
+							
+							<h4>Current locations</h4>
+							<table cellpadding="0" cellspacing="0" id="location-basket-table" class="locations">
+								<colgroup>
+									<col style="width: 150px;">
+									<col style="width: 500px;">
+									<col>
+									<col>
+								</colgroup>
+								<tbody><tr>
+									<th>Name</th>
+									<th>Details</th>
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
+								</tr>
+								<tr id="location-1">
+	<td>0000</td>
+	<td>sandun, 330012 Hangzhou (China)</td>
+	<td><a href="javascript:editLocation(1);" title="Edit this location"><img src="images/edit.png" alt="Edit this location"></a></td>
+	<td><a href="javascript:removeLocation(1, false);" title="Remove this location"><img src="images/remove.png" alt="Remove this location"></a></td>
+</tr><tr>
+</tr><tr id="location-2">
+	<td>0</td>
+	<td>Xihu,Hangzhou, 85226 Hangzhou (China)</td>
+	<td><a href="javascript:editLocation(2);" title="Edit this location"><img src="images/edit.png" alt="Edit this location"></a></td>
+	<td><a href="javascript:removeLocation(2, false);" title="Remove this location"><img src="images/remove.png" alt="Remove this location"></a></td>
+</tr><tr>
+							</tr></tbody></table>
+							
+														
+							<p class="grey">
+								Do you see the locations of your previous visit and want to get rid of them? Just <a href="javascript:removeAllLocations('input');">remove them</a> and start over.
+							</p>
+						</div>
+									</fieldset>
+			
+				<fieldset id="input-csv" class="invisible">
+					<h3>Upload CSV file</h3>
+					<p>
+						<label for="csv-input">Upload CSV</label>
+						<input type="hidden" name="max-file-size" value="10000000">
+						<input type="file" name="csv-input" id="csv-input">
+					</p>
+					<p>
+						<label for="csv-input-separator">Column separator</label>
+						<input type="radio" class="radio" name="csv-input-separator" id="csv-column-comma" value="comma" checked="checked"> <label for="csv-column-comma" class="radio-inline">Comma</label>
+						<input type="radio" class="radio" name="csv-input-separator" id="csv-column-semicolon" value="semicolon"> <label for="csv-column-semicolon" class="radio-inline">Semicolon</label>
+					</p>
+					<p id="next-step-csv" class="align-right">
+						<button type="submit" class="btn" id="btn-submit-step1">
+							<img src="images/button-step2.png">
+						</button>
+					</p>
+				</fieldset>
+				
+				<div id="csv-example" class="invisible">
+					<br><h5>CSV file example</h5>
+					<p>
+						<img src="images/csv-example.png" alt="Example of CSV file">
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</form>
+  
+    
+    <div style="clear:both"></div>
+  </div>
+</div>
+  <div id="wizardpanel" class="2">
+    <h3>Step 2</h3>
+    <div id="wizardcontent">
+
+<form action="generate" id="form-details" enctype="multipart/form-data" method="post">
+		<h2>Step 2 of 3 - KML and Geo sitemap details</h2>
+		<fieldset id="input-general"></fieldset>
+						<fieldset>
+				
+				<p>
+					<label for="geositemap-url" class="block">Your website <span class="required">*</span></label>
+					<input type="text" name="geositemap-url" id="geositemap-url" value="http://gmap.sinaapp.com" class="input " tabindex="1">
+					/<span id="geositemap-url-filename">locations.kml</span>
+					<input type="text" name="kml-filename" id="kml-filename" value="locations.kml" class="input invisible" style="width: 100px;">
+					<a href="javascript:;" id="kml-filename-edit" class="tooltip">[edit]</a>
+				</p>
+				<p class="small">
+					Upload your generated KML to the root this domain. 
+					If you want to place your KML file in a subdirectory of your domain, just mention the full path (without the filename).
+				</p>
+				
+				<br>
+				<p>
+					<label for="kml-name">Description for your KML file</label>
+					<input type="text" name="kml-name" id="kml-name" value="Locations for 0000." tabindex="2">
+				</p>
+				<p>
+					<label for="kml-author">Author</label>
+					<input type="text" name="kml-author" id="kml-author" value="00" class="input " tabindex="3">
+				</p>
+				
+								<p class="small"><em>* This field is required</em></p>
+			</fieldset>
+			
+			<p id="error-msg-step2" class="error invisible"></p><p>
+			
+			</p><p>
+				<a href="input" class="button"><img src="images/button-back-small.png" alt="Go back to step 1"></a>
+				<button type="submit" class="btn" id="btn-submit-step2" style="margin-left: 235px;">
+					<img src="images/button-kml.png">
+				</button>
+			</p>
+			<p>
+				
+			</p>
+		 
+	</form>
+
+	</div>
+     
+  </div>
+  
+  
+  <div id="wizardpanel" class="3">
+    <h3>Step 3</h3>
+    <div id="wizardcontent">
+<fieldset id="show-submit-step2"  style="display: block; ">
+						<p class="float-right small"><a href="javascript:hideObject('show-submit-step2');">Close this window</a></p>
+			<h3>Choose your option</h3>
+			<p>
+				<input type="radio" class="radio" name="step2-choice" id="step2-choice-download" value="download" checked=""> <label for="step2-choice-download" class="radio normal">Download now!</label><br>
+				<input type="radio" class="radio" name="step2-choice" id="step2-choice-email" value="email" <label="" for="step2-choice-email">Send me an email when download is ready <span class="required">*</span>
+			</p>
+			<p id="step2-show-submit-email" class="invisible">
+				<input type="text" name="submit-step2-email" value="" id="submit-step2-email">			
+			</p>
+
+			<p id="error-msg-step2b" class="error invisible"></p>
+			
+			<button type="submit" class="btn" id="step2-choice-submit" style="margin-left: 22px;">
+				<img src="images/button-kml.png">
+			</button>
+			<p>
+				<strong>* </strong>
+				If you have more than 50 locations the download can take a long time. 
+				Please enter your email address and you will be notified when ready.
+				If this is the first time you've used this service with your email address, please make sure that you reply to the confirmation email.
+				<strong>Without confirmation we can't start generating your Geo sitemap and KML file.</strong>
+			</p>
+		</fieldset>
+
+	</div>
+    
+  </div>
+ 
+   
+  
+</div>
+</body>
+</html>

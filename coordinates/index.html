@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" >
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps coordinates </title>
+    <style type="text/css">
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+		#container{
+			width:1200px;
+			margin:0 auto;
+		}
+        #map_canvas
+        {
+            width: 1200px;
+            height: 750px;
+        }
+        .infowindow *
+        {
+            font-size: 90%;
+            margin: 0;
+        }
+        #top
+        {
+            height: 25px;
+            width: 100%;
+        }
+		#address{width:300px;}
+    </style>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"	></script> 
+	<script type="text/javascript">
+          google.load("jquery", "1.3.2");
+    </script>
+	<script type="text/javascript" src="js/map.js"></script>
+	<script type="text/javascript">
+jQuery.noConflict();
+
+jQuery(document).ready(function(){
+	jQuery("#btnSearch").bind('click', function(ev) {
+        MapSearch(jQuery("#address").val());
+	});
+	jQuery("#location").change(function(){
+		MapSearch(jQuery(this).val());
+	})
+	jQuery("#buffer").change(function(){
+		setCircle(jQuery(this).val());
+	})
+})		 
+    </script>
+</head>
+<body>
+<div id="container">
+	<input type="hidden" id="lat" name="lat" value="54.176673824279355">
+	<input type="hidden" id="lng" name="lng" value="-6.539518127441397">
+	<div id="top">
+	 location:
+	 <select id="location">
+	 <option value="">--select--</option><option value="Carlow, Ireland">Carlow</option><option value="Kilkenny, Ireland">Kilkenny</option><option value="Wexford, Ireland">Wexford</option>
+	 </select>
+	 <select size="1" id="buffer" class="" title="" name="buffer">
+		<option value="">Select . . .</option>
+		<option value="1000">1km</option>
+		<option value="2000">2km</option>
+		<option value="5000" selected>5km</option>
+		<option value="10000">10km</option>
+		<option value="20000">20km</option>
+	 </select>
+	 address:<input id="address" type="text"  placeholder="Please input the address"/>
+	 <input id="btnSearch" type="button" value="search">
+	 latitude:<input id="result_lat" name="result_lat" type="text" />
+	 longitude:<input id="result_lng" name="result_lng" type="text" />
+	</div>
+    <div id="map_canvas"></div> 
+</div>
+</body>
+</html>

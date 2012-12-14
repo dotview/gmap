@@ -1,0 +1,1624 @@
+booking.map = {
+    buildCurrentHotel: function(a) {
+        var b = {};
+        b[a.b_id] = a;
+        b[a.b_id]["title"] = a.b_name;
+        b[a.b_id].b_image_url = a.b_main_photo;
+        booking[sNSStartupLoad].googleMaps.parseJsonData(b)
+    }
+};
+booking[sNSStartupLoad].googleMaps = {
+    priority: 9,
+    api_version: 3.3,
+    map_inited: false,
+    sensor: false,
+    protocol: "http",
+    json_params: ["dest_type", "dest_id", "b_param_pr_id", "b_param_class", "b_param_hotelfacility", "b_param_district_id", "b_param_hoteltag", "b_param_chaincode", "b_param_score_min"],
+    map: null,
+    map_object: null,
+    animating: false,
+    placemark_amount: 0,
+    placemark_type: "hotel",
+    placemarks: {},
+    hotels_cache: {},
+    b_clusters_found: 0,
+    max_length_of_hotel_description: 250,
+    map_scroll: {
+        x: 0,
+        y: 0
+    },
+    map_scroll_base: {
+        x: 0,
+        y: 0
+    },
+    map_width: 515,
+    map_height: 400,
+    latitude: 0,
+    longitude: 0,
+    current_zoom: undefined,
+    search_destination_without_district: (document.getElementById("destination") ? document.getElementById("destination").value: ""),
+    search_destination: ((booking.env.district_city_name) ? booking.env.district_city_name: (document.getElementById("destination") ? document.getElementById("destination").value: "")),
+    map_pos_x: 0,
+    map_pos_y: 0,
+    good_browser: true,
+    fixZoom: false,
+    clicked_marker: false,
+    pan_item_coords: undefined,
+    pan_item: true,
+    disambiguation_bbox: null,
+    final_zoom: 0,
+    initPopup: false,
+    cur_selected_hotel: null,
+    b_force_no_clusters: false,
+    filter: {
+        hotel: true,
+        hotel_current: true,
+        city: true,
+        city_current: true,
+        landmark: true,
+        landmark_current: true,
+        airport: true,
+        airport_current: true,
+        disambiguation: true,
+        disambiguation_best: true
+    },
+    b_cluster_mapping: {
+        country: "region",
+        region: "city",
+        city: "district",
+        district: "hotel",
+        anon: "hotel"
+    },
+    b_map_icons: {
+        hotel: {
+            image: booking.env.icons + "/marker-hotel-blue.png",
+            min: 7,
+            zOrder: 10000,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        cluster: {
+            image: booking.env.icons + "/clusters/cluster.png",
+            min: 1,
+            max: 13,
+            width: 42,
+            height: 20,
+            zOrder: 10000,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        cluster_1: {
+            image: booking.env.icons + "/clusters/cluster.png",
+            min: 7,
+            zOrder: 10000,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        hotel_mini: {
+            image: booking.env.icons + "/marker-hotel-mini.png",
+            min: 7,
+            width: 11,
+            height: 12,
+            zOrder: 10000,
+            infoWindowAnchor: [5.5, 12],
+            iconAnchor: [5.5, 12]
+        },
+        hotel_matching_criteria: {
+            image: booking.env.icons + "/marker-hotel-orange.png",
+            min: 8,
+            zOrder: 5000,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        hotel_matching_criteria_mini: {
+            image: booking.env.icons + "/marker-hotel-mini-orange.png",
+            min: 8,
+            width: 11,
+            height: 12,
+            zOrder: 5000,
+            infoWindowAnchor: [5.5, 12],
+            iconAnchor: [5.5, 12]
+        },
+        hotel_not_matching_criteria: {
+            image: booking.env.icons + "/marker-hotel-grey.png",
+            min: 8,
+            zOrder: 100,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        hotel_not_matching_criteria_mini: {
+            image: booking.env.icons + "/marker-hotel-mini-grey.png",
+            min: 8,
+            zOrder: 100,
+            width: 11,
+            height: 12,
+            infoWindowAnchor: [5.5, 12],
+            iconAnchor: [5.5, 12]
+        },
+        hotel_current: {
+            image: booking.env.icons + "/marker-hotel-orange-large.png",
+            min: 4,
+            zOrder: 11000,
+            width: 26,
+            height: 27,
+            infoWindowAnchor: [13, 27],
+            iconAnchor: [13, 27]
+        },
+        airport: {
+            image: booking.env.icons + "/marker-airport.png",
+            min: 5,
+            zOrder: 90,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        airport_current: {
+            image: booking.env.icons + "/marker-airport-large.png",
+            min: 5,
+            zOrder: 90,
+            width: 26,
+            height: 27,
+            infoWindowAnchor: [13, 27],
+            iconAnchor: [13, 27]
+        },
+        landmark: {
+            image: booking.env.icons + "/marker-landmark.png",
+            min: 12,
+            zOrder: 80,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        landmark_current: {
+            image: booking.env.icons + "/marker-landmark-large.png",
+            min: 12,
+            zOrder: 80,
+            width: 26,
+            height: 27,
+            infoWindowAnchor: [13, 27],
+            iconAnchor: [13, 27]
+        },
+        city: {
+            image: booking.env.icons + "/marker-city.png",
+            min: 4,
+            max: 16,
+            zOrder: 70,
+            width: 9,
+            height: 9,
+            infoWindowAnchor: [4.5, 9],
+            iconAnchor: [4.5, 4.5]
+        },
+        city_current: {
+            image: booking.env.icons + "/marker-city-large.png",
+            min: 4,
+            max: 16,
+            zOrder: 70,
+            width: 15,
+            height: 15,
+            infoWindowAnchor: [7.5, 15],
+            iconAnchor: [7.5, 7.5]
+        },
+        country: {
+            image: booking.env.icons + "/marker-city.png",
+            min: 4,
+            max: 10,
+            zOrder: 60,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        region: {
+            image: booking.env.icons + "/marker-city.png",
+            min: 5,
+            zOrder: 50,
+            infoWindowAnchor: [8.5, 20],
+            iconAnchor: [8.5, 20]
+        },
+        district: {
+            image: booking.env.icons + "/marker-city.png",
+            min: 7,
+            zOrder: 40,
+            width: 9,
+            height: 9,
+            infoWindowAnchor: [4.5, 9],
+            iconAnchor: [4.5, 4.5]
+        },
+        lat_long_current: {
+            image: booking.env.icons + "/marker-city.png",
+            min: 4,
+            max: 16,
+            zOrder: 40,
+            width: 9,
+            height: 9,
+            infoWindowAnchor: [4.5, 9],
+            iconAnchor: [4.5, 4.5]
+        },
+        disambiguation_best: {
+            image: booking.env.icons + "/map/disambiguation_marker_best.png",
+            min: 0,
+            max: 20,
+            zOrder: 41,
+            width: 34,
+            height: 38,
+            infoWindowAnchor: [4.5, 9],
+            iconAnchor: [17, 38]
+        },
+        disambiguation: {
+            image: booking.env.icons + "/map/disambiguation_marker.png",
+            min: 0,
+            max: 20,
+            zOrder: 40,
+            width: 34,
+            height: 38,
+            infoWindowAnchor: [4.5, 9],
+            iconAnchor: [17, 38]
+        }
+    },
+    init: function() {
+        var b = this;
+        if ($.browser.msie && $.browser.version < 8) {
+            this.good_browser = false
+        }
+        if (booking.env.b_map_center_latitude) {
+            this.latitude = booking.env.b_map_center_latitude
+        }
+        if (booking.env.b_map_center_longitude) {
+            this.longitude = booking.env.b_map_center_longitude
+        }
+        if (window && window.location) {
+            this.sProtocol = window.location.protocol
+        }
+        GLatLng = function(c, d) {
+            return {
+                b_latitude: c,
+                b_longitude: d
+            }
+        };
+        $(".show_map").click(function() {
+            var e = $(this);
+            if (e.attr("href")) {
+                var c = e.attr("href");
+                if (c != "#") {
+                    if ($("#" + c.split("#")[1]).length) {
+                        b.map_target = $("#" + c.split("#")[1]).get(0)
+                    }
+                }
+            }
+            if (e.attr("latitude")) {
+                b.latitude = e.attr("latitude")
+            }
+            if (e.attr("longitude")) {
+                b.longitude = e.attr("longitude")
+            }
+            if (e.attr("id")) {
+                var f = e.attr("id").replace("show_id", "");
+                if (f != "open_map") {
+                    b.cur_selected_hotel = f;
+                    b.b_force_no_clusters = true;
+                    if (e.attr("data-coords")) {
+                        var d = e.attr("data-coords").split(",");
+                        if (typeof d[1] != "undefined") {
+                            b.latitude = d[1];
+                            b.longitude = d[0]
+                        }
+                    }
+                    if (e.attr("rel")) {
+                        b.final_zoom = parseInt($(this).attr("rel"))
+                    }
+                    if ($("#sr_map").length) {
+                        $(window).scrollTo("#sr_map")
+                    }
+                }
+            }
+            b.googleCreate(b.latitude, b.longitude);
+            if (booking.env.b_action == "searchresults" && !booking.env.b_site_experiment_map_in_disambiguation && b.search_destination) {
+                b.setMapCookie("map_open", b.search_destination + booking.env.b_ufi + "1")
+            }
+            if (typeof(booking.google.mapTracker) != "undefined") {
+                booking.google.trackEvent(booking.google.mapTracker, "Display", document.body.id)
+            }
+            return false
+        });
+        $("#fixed_map_container").each(function() {
+            if (booking.env.b_map_center_latitude && booking.env.b_map_center_longitude) {
+                b.map_width = $("#fixed_map_container_wrapper").width();
+                $("#fixed_map_container_wrapper").replaceWith('<div id="b_gmap" style="padding:0px;height:' + landing_map_height + ";width:" + b.map_width + 'px;position:relative;border:0 !important;"><div id="b_gmap_inner" style="width:' + b.map_width + 'px;" latitude="' + booking.env.b_map_center_latitude + '" longitude="' + booking.env.b_map_center_longitude + '">&nbsp;</div>' + b.legendHTML() + "</div>");
+                if (booking.env.b_site_experiment_city_page_cleanup != "undefined" && booking.env.b_site_experiment_city_page_cleanup) {} else {
+                    if (booking.env.b_site_experiment_landing_pages_cleanup != "undefined" && booking.env.b_site_experiment_landing_pages_cleanup) {} else {
+                        $("#promo_map_box .landing").hide().before('<p style="text-align: right;"><a href="#" style="background: url(\'//s.bstatic.com/static/img/my_hotels_actions.gif\') no-repeat 0 3px; text-decoration: none; padding-left: 12px;" onclick="$(this).parent().next().toggle(); return false;">' + booking.env.more_destinations + "</a></p>")
+                    }
+                }
+                b.map_target = $("#b_gmap_inner").get(0);
+                b.googleCreate(booking.env.b_map_center_latitude, booking.env.b_map_center_longitude);
+                $(window).resize(function() {
+                    if (b.map_resize_timeout) {
+                        clearTimeout(b.map_resize_timeout)
+                    }
+                    b.map_resize_timeout = setTimeout(function() {
+                        var c = $("#fixed_map_container_wrapper").width();
+                        if (c < 513) {
+                            $("#b_gmap, #b_gmap_inner").css({
+                                width: "100%"
+                            })
+                        }
+                    },
+                    100)
+                })
+            }
+        });
+        $("*[datamap]").each(function() {
+            var c = 'url("http://maps.google.com/' + $(this).attr("datamap") + '")';
+            $(this).css({
+                "background-image": c
+            })
+        });
+        $(".thumbnailmap").each(function() {
+            if (!$(this).attr("datamap")) {
+                var c = 'url("http://maps.google.com/staticmap?center=' + $(this).attr("latitude") + "," + $(this).attr("longitude") + "&zoom=" + b.getZoom() + "&size=215x150&" + booking.env.b_google_maps_key_params + '&sensor=false")';
+                $(this).css({
+                    "background-image": c
+                })
+            }
+        });
+        if (booking.promotions) {
+            this.preLoadPromotions()
+        }
+        if (booking.loadCurrentHotels) {
+            booking.loadCurrentHotels()
+        }
+        if (booking.env.b_site_experiment_map_in_disambiguation && booking.env.b_destinations_found_js) {
+            booking.env.b_destinations_found_js.reverse();
+            this.parseJsonData(booking.env.b_destinations_found_js);
+            this.mapScrollListener("dis_item_list")
+        }
+        this.preLoadMatchingHotels();
+        if ((booking.env.b_action == "searchresults" && b_cookie && b_cookie.map_open && b.search_destination && b_cookie.map_open === b.search_destination + booking.env.b_ufi + "1") || (!booking.env.b_is_landing_page && booking.env.force_map_open) || booking.env.b_site_experiment_map_in_disambiguation) {
+            if (booking.env.b_site_experiment_map_in_disambiguation) {
+                this.googleCreate(0, 0)
+            } else {
+                if ($(".show_map").length) {
+                    var a = $(".show_map").get(0);
+                    $(a).click()
+                } else {
+                    $("#show_map").click()
+                }
+            }
+        }
+    },
+    legendHTML: function(g) {
+        if (booking.env.b_action != "hotel" && booking.env.b_action != "searchresults") {
+            var o = '<div id="b_map_horizontal_legend" style="clear:both;"><h3>' + booking.env.map_legend + '</h3><table cellpadding="0" cellspacing="0"><tbody>';
+            if (booking.env.b_action === "searchresults") {
+                if (booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+                    o += '<tr><td><img src="' + this.b_map_icons.hotel_matching_criteria_mini["image"] + '" />'
+                } else {
+                    o += '<tr><td><img src="' + this.b_map_icons.hotel_matching_criteria["image"] + '" />'
+                }
+                o += "</td><th>" + booking.env.map_hotel_matching_your_selection_criteria + "</th>";
+                if (booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+                    o += '<td><img src="' + this.b_map_icons.hotel_not_matching_criteria_mini["image"] + '" />'
+                } else {
+                    o += '<td><img src="' + this.b_map_icons.hotel_not_matching_criteria["image"] + '" />'
+                }
+                o += "</td><th>" + booking.env.map_other_hotel + "</th>"
+            } else {
+                if (booking.env.b_action === "hotel") {
+                    o += '<td><img src="' + this.b_map_icons.hotel_current["image"] + '" /></td><th>' + booking.env.current_hotel + "</th>"
+                }
+                if (booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+                    o += '<td><img src="' + this.b_map_icons.hotel_mini["image"] + '" />'
+                } else {
+                    o += '<td><img src="' + this.b_map_icons.hotel["image"] + '" />'
+                }
+                o += "</td><th>" + booking.env.map_hotel + "</th>"
+            }
+            o += '<td><img src="' + this.b_map_icons.landmark["image"] + '" /></td><th>' + booking.env.map_landmark + "</th>";
+            o += '<td><img src="' + this.b_map_icons.city["image"] + '" /></td><th>' + booking.env.city + "</th>";
+            o += '<td><img src="' + this.b_map_icons.airport["image"] + '" /></td><th>' + booking.env.airport + "</th></tr>";
+            o += "</tbody></table>";
+            o += "<p>" + booking.env.map_click_these_markers_on_the_map_for_more_detailed_information + "</p>";
+            if (booking.env.b_site_experiment_no_map_button_on_hotel_page == 0) {
+                o += '<p><a id="reload_currently_displayed_hotels" href="#">' + booking.env.map_show_prices_and_availability_for_displayed_hotels + "</a></p>"
+            }
+            o += "</div>"
+        } else {
+            if (booking.env.b_site_experiment_map_toggle_icons_hp) {
+                var d = '<td class="map_toggle_opt map_opt_current_hotel" data-rel="toggle_current_hotel" ><input id="toggle_current_hotel" type="checkbox" class="map_toggle_opt" checked="checked" data-type="hotel_current"/></td>';
+                var l = '<td class="map_toggle_opt map_opt_other_hotel" data-rel="toggle_other_hotel" ><input id="toggle_other_hotel" type="checkbox" class="map_toggle_opt" checked="checked" data-type="hotel"/></td>';
+                var e = '<td class="map_toggle_opt map_opt_landmark" data-rel="toggle_landmark" ><input id="toggle_landmark" type="checkbox" class="map_toggle_opt" checked="checked" data-type="landmark"/></td>';
+                var b = '<td class="map_toggle_opt map_opt_airport" data-rel="toggle_airport" ><input id="toggle_airport" type="checkbox" class="map_toggle_opt" checked="checked" data-type="airport"/></td>';
+                var k = ' class="map_toggle_opt map_opt_current_hotel" data-rel="toggle_current_hotel" ';
+                var j = ' class="map_toggle_opt map_opt_other_hotel" data-rel="toggle_other_hotel" ';
+                var c = ' class="map_toggle_opt map_opt_landmark" data-rel="toggle_landmark" ';
+                var a = ' class="map_toggle_opt map_opt_airport" data-rel="toggle_airport" ';
+                var n = " width: 156px; "
+            } else {
+                var d = "";
+                var l = "";
+                var e = "";
+                var b = "";
+                var k = "";
+                var j = "";
+                var c = "";
+                var f = "";
+                var a = "";
+                var n = ""
+            }
+            if (typeof g == "undefined") {
+                g = 390
+            }
+            if (booking.env.b_lang == "ru" && booking.env.b_site_experiment_dont_fix_map_height) {
+                var o = '<div id="b_map_legend" style="height: ' + g + 'px;"><table><tbody>'
+            } else {
+                var o = '<div id="b_map_legend" style="height: ' + g + "px; " + n + '"><h3>' + booking.env.map_legend + "</h3><table><tbody>"
+            }
+            if (booking.env.b_action === "searchresults") {
+                if (booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+                    o += '<tr><td><img src="' + this.b_map_icons.hotel_matching_criteria_mini["image"] + '" />'
+                } else {
+                    o += '<tr><td><img src="' + this.b_map_icons.hotel_matching_criteria["image"] + '" />'
+                }
+                o += "</td><th>" + booking.env.map_hotel_matching_your_selection_criteria + "</th></tr>";
+                if (booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+                    o += '<td><img src="' + this.b_map_icons.hotel_not_matching_criteria_mini["image"] + '" />'
+                } else {
+                    o += '<td><img src="' + this.b_map_icons.hotel_not_matching_criteria["image"] + '" />'
+                }
+                o += "</td><th>" + booking.env.map_other_hotel + "</th></tr>"
+            } else {
+                if (booking.env.b_action === "hotel") {
+                    o += "<tr>" + d + "<td " + k + ' ><img src="' + this.b_map_icons.hotel_current["image"] + '" /></td><th ' + k + " >" + booking.env.current_hotel + "</th></tr>"
+                }
+                if (booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+                    o += '<tr><td><img src="' + this.b_map_icons.hotel_mini["image"] + '" />'
+                } else {
+                    o += "<tr>" + l + "<td " + j + ' ><img src="' + this.b_map_icons.hotel["image"] + '" />'
+                }
+                o += "</td><th " + j + " >" + booking.env.map_hotel + "</th></tr>"
+            }
+            o += "<tr>" + e + "<td " + c + ' ><img src="' + this.b_map_icons.landmark["image"] + '" /></td><th ' + c + " >" + booking.env.map_landmark + "</th></tr>";
+            if (!booking.env.b_site_experiment_map_toggle_icons_hp) {
+                o += '<tr><td><img src="' + this.b_map_icons.city["image"] + '" /></td><th ' + f + " >" + booking.env.city + "</th></tr>"
+            }
+            o += "<tr>" + b + "<td " + a + ' ><img src="' + this.b_map_icons.airport["image"] + '" /></td><th ' + a + " >" + booking.env.airport + "</th></tr>";
+            o += "</tbody></table>";
+            if (booking.env.map_legend_districts_dropdown) {
+                o += '<p class="ledge">' + booking.env.map_legend_copy_hover_bold + "</p>";
+                o += '<p class="ledge">' + booking.env.map_legend_copy_click_bold + "</p>";
+                if (booking.env.map_legend_districts_dropdown) {
+                    var m = "";
+                    o += "<h4>" + booking.env.map_legend_districts + '</h4><select id="map_district_filter" style="width: 100%;"><option value="">' + booking.env.map_legend_copy_zoom + "</option>";
+                    for (var h in booking.env.map_legend_districts_dropdown) {
+                        if (booking.env.map_legend_districts_dropdown[h].name === booking.env.b_district_name) {
+                            m = 'selected="selected"'
+                        } else {
+                            m = ""
+                        }
+                        o += '<option value="' + booking.env.map_legend_districts_dropdown[h].url + '" ' + m + ">" + h + "</option>"
+                    }
+                    o += "</select>"
+                }
+            } else {
+                o += '<p style="font-size: 11px;">' + booking.env.map_click_these_markers_on_the_map_for_more_detailed_information + "</p>";
+                if (booking.env.b_site_experiment_no_map_button_on_hotel_page == 0) {
+                    o += '<p><a id="reload_currently_displayed_hotels" class="button" href="#">' + booking.env.map_legend_show_prices + "</a><small>(" + booking.env.map_show_prices_and_availability_for_displayed_hotels + ")</small></p>"
+                }
+            }
+            o += "</div>"
+        }
+        return o
+    },
+    googleInit: function(e, a) {
+        var d = this;
+        var c = d.sProtocol + "//maps.google.com/maps/api/js?v=" + this.api_version + "&callback=rerunCreateMap&sensor=";
+        c += (this.sensor) ? "true": "false";
+        c += "&language=";
+        c += (booking.env.b_lang) ? booking.env.b_lang: "en";
+        var b = document.createElement("script");
+        b.type = "text/javascript";
+        b.src = c;
+        window.rerunCreateMap = function() {
+            d.googleCreate(e, a)
+        };
+        $("head").append(b)
+    },
+    googleCreate: function(b, e) {
+        var c = this;
+        if (!booking.env.b_ufi) {
+            booking.env.b_ufi = ""
+        }
+        if (typeof google != "undefined" && typeof google.maps != "undefined") {
+            if (!this.map) {
+                var d = new google.maps.LatLng(b, e);
+                var m = {
+                    zoom: c.getZoom(),
+                    center: d,
+                    mapTypeControlOptions: {
+                        mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID]
+                    },
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    mapTypeControl: true,
+                    navigationControl: true,
+                    scaleControl: true,
+                    streetViewControl: false,
+                    scrollwheel: booking.env.b_site_experiment_map_scrollwheel
+                };
+                var a = "";
+                if (booking.env.b_action == "searchresults" && !booking.env.b_is_disambiguation && booking.env.js_experiment_tracking.cookies_for_map !== ";") {
+                    a = '<img style="visibility: hidden;" src="/js_tracking?ver=1;what=Cookies+for+map+open;sid=' + booking.env.b_sid + ";aid=" + booking.env.b_aid + ";pid=" + booking.env.pageview_id + ";exps=" + booking.env.js_experiment_tracking.cookies_for_map + '">'
+                }
+                if (booking.env.js_experiment_tracking.map_tracking_drag !== ";") {
+                    a += '<img style="visibility: hidden;" src="/js_tracking?ver=1;what=Map+Drag+Exp+Open;sid=' + booking.env.b_sid + ";aid=" + booking.env.b_aid + ";pid=" + booking.env.pageview_id + ";exps=" + booking.env.js_experiment_tracking.map_tracking_drag + '">'
+                }
+                if (booking.env.b_action == "hotel" && booking.env.js_experiment_tracking.map_toggle_icons_hp !== ";") {
+                    a += '<img style="visibility: hidden;" src="/js_tracking?ver=1;what=Map+Toggle+Icons+Open;sid=' + booking.env.b_sid + ";aid=" + booking.env.b_aid + ";pid=" + booking.env.pageview_id + ";exps=" + booking.env.js_experiment_tracking.map_toggle_icons_hp + '">'
+                }
+                if (booking.env.country_has_limited_geodata && booking.env.js_experiment_tracking.map_hybrid_view_special_countries !== ";") {
+                    a += '<img style="visibility: hidden;" src="/js_tracking?ver=1;what=Map+Special+Countries+Limited+Geodata+Open;sid=' + booking.env.b_sid + ";aid=" + booking.env.b_aid + ";pid=" + booking.env.pageview_id + ";exps=" + booking.env.js_experiment_tracking.map_hybrid_view_special_countries + '">'
+                }
+                if (a) {
+                    $(document.body).append(a)
+                }
+                if (typeof this.map_target == "undefined") {
+                    if (booking.env.b_site_experiment_map_in_disambiguation) {
+                        this.map_target = document.getElementById("disambiguation_map")
+                    } else {
+                        if ($("#sr_map").length) {
+                            $("#open_map").hide();
+                            $("#frm").append('<input type="hidden" name="map" value="1" id="force_map">');
+                            $("#sr_map").show().html('<div id="b_map_container" class="static" style="z-index:999;"><div id="b_gmap"><a href="#" id="close_map">' + booking.env.close_map + "</a>" + this.legendHTML() + '<div id="b_gmap_inner"></div></div></div>');
+                            if (booking.env.b_site_experiment_extended_map_legend) {
+                                $("#b_gmap").width($("#sr_map").width() - 2);
+                                $("#b_gmap_inner").width($("#sr_map").width() - 193)
+                            } else {
+                                $("#b_gmap, #b_gmap_inner").width($("#sr_map").width() - 2)
+                            }
+                            setTimeout(function() {
+                                if (booking.env.b_site_experiment_dont_fix_map_height != 1) {
+                                    $("#b_gmap_inner").height($("#b_map_legend").height() + 52)
+                                }
+                                if (booking.env.b_site_experiment_extended_map_legend == 1) {
+                                    c.map_width = c.map_width - 45
+                                } else {
+                                    c.map_width = c.map_width - 138
+                                }
+                            },
+                            1000);
+                            $(window).scrollTo("#sr_map");
+                            $("#close_map").click(function() {
+                                $("#b_map_container").hide();
+                                $("#open_map").show();
+                                if (booking.env.b_action == "searchresults") {
+                                    if (typeof(b_cookie) == "undefined") {
+                                        b_cookie = {}
+                                    }
+                                    b_cookie.map_open = "";
+                                    if (typeof(JSON) != "undefined") {
+                                        $.cookie("b", JSON.stringify(b_cookie), {
+                                            path: "/",
+                                            domain: booking.env.b_domain_end
+                                        })
+                                    }
+                                }
+                                if (typeof booking.google != "undefined") {
+                                    if (typeof(booking.google.mapTracker) != "undefined") {
+                                        booking.google.trackEvent(booking.google.mapTracker, "Close", document.body.id)
+                                    }
+                                }
+                                $("#filterbox_options a, #sort_by a").each(function() {
+                                    this.href = this.href.slice(0, -4)
+                                });
+                                c.initPopup = false;
+                                return false
+                            })
+                        } else {
+                            if ($("#sr_map").length) {
+                                $("#sr_map").show().html('<div id="b_map_container" class="static" style="z-index:999;"><div id="b_gmap"><a href="#" id="close_map">' + booking.env.close_map + "</a>" + this.legendHTML() + '<div id="b_gmap_inner"></div></div></div>')
+                            } else {
+                                var i = (document.body.offsetWidth > 1052 && booking.env.b_site_experiment_larger_map_on_hotel_page) ? ' class="larger"': "";
+                                var g = (window.innerHeight > 577 && booking.env.b_site_experiment_larger_map_on_hotel_page) ? window.innerHeight - 150: 427;
+                                var k,
+                                j;
+                                if (booking.env.b_site_experiment_map_toggle_icons_hp) {
+                                    k = " width: 681px; ";
+                                    j = " width: 735px; "
+                                } else {
+                                    k = j = ""
+                                }
+                                $(document.body).append('<div id="b_map_container" style="z-index:999; display: none;"' + i + '><div id="b_gmap" style="height: ' + g + "px; " + k + '"><div id="b_map_title"><h2>' + booking.env.map + '</h2><a href="#" id="close_map">' + booking.env.close_map + '</a></div><div id="b_gmap_inner" style="height: ' + (g - 27) + 'px;"></div>' + this.legendHTML(g - 37) + '</div><div id="b_shadow" style="height: ' + (g + 47) + "px; " + j + '"></div></div>');
+                                c.map_width = $("#b_gmap_inner").width();
+                                c.map_height = $("#b_gmap_inner").height()
+                            }
+                            var h = ($(document).width() - $("#b_gmap").width()) / 2;
+                            var f = $(document).scrollTop() + (($(window).height() - $("#b_gmap").height()) / 2);
+                            $("#b_map_container").css({
+                                left: h + "px",
+                                top: f + "px",
+                                "z-index": 999
+                            });
+                            $("#b_map_container").show();
+                            $("#close_map").click(function() {
+                                $("#b_map_container").hide();
+                                $("#open_map").show();
+                                if (typeof booking.google != "undefined") {
+                                    if (typeof(booking.google.mapTracker) != "undefined") {
+                                        booking.google.trackEvent(booking.google.mapTracker, "Close", document.body.id)
+                                    }
+                                }
+                                if (booking.env.b_action == "searchresults") {
+                                    if (typeof(b_cookie) == "undefined") {
+                                        b_cookie = {}
+                                    }
+                                    b_cookie.map_open = "";
+                                    if (typeof(JSON) != "undefined") {
+                                        $.cookie("b", JSON.stringify(b_cookie), {
+                                            path: "/",
+                                            domain: booking.env.b_domain_end
+                                        })
+                                    }
+                                }
+                                c.initPopup = false;
+                                return false
+                            });
+                            $(document).mousemove(function(n) {
+                                if (c.oDragMap != null) {
+                                    var p = c.map_pos_x[1] + n.pageX - c.map_pos_x[0];
+                                    var o = c.map_pos_y[1] + n.pageY - c.map_pos_y[0];
+                                    $(c.oDragMap).css({
+                                        left: p + "px",
+                                        top: o + "px"
+                                    })
+                                }
+                            });
+                            $("#b_map_title, #b_shadow").mousedown(function(n) {
+                                c.map_pos_x = [n.pageX, $("#b_map_container").position().left];
+                                c.map_pos_y = [n.pageY, $("#b_map_container").position().top];
+                                c.oDragMap = $("#b_map_container")
+                            });
+                            $(document).mouseup(function(n) {
+                                c.oDragMap = null
+                            })
+                        }
+                        this.map_width = $("#b_gmap_inner").width();
+                        this.map_target = $("#b_gmap_inner").get(0)
+                    }
+                }
+                $("#b_gmap").bgiframe();
+                this.initMap(b, e, this);
+                $("#embedded_map_loading").hide()
+            } else {
+                $("#b_map_container").show();
+                $("#open_map").hide();
+                var h = ($(document).width() - $("#b_gmap").width()) / 2;
+                var f = $(document).scrollTop() + (($(window).height() - $("#b_gmap").height()) / 2);
+                $("#b_map_container").css({
+                    left: h + "px",
+                    top: f + "px",
+                    "z-index": 999
+                });
+                if (c.cur_selected_hotel != "open_map" && c.cur_selected_hotel != "b_google_map_thumbnail") {
+                    var l = new google.maps.LatLng(b, e);
+                    c.map.getMap().setCenter(l);
+                    c.map.getMap().setZoom(c.getZoom())
+                }
+                this.updateMap()
+            }
+        } else {
+            this.googleInit(b, e)
+        }
+    },
+    preLoadPromotions: function() {
+        if (typeof booking.promotions != "undefined" && typeof booking.promotions.load != "undefined") {
+            booking.promotions.load(booking.env);
+            if (booking.pageSubject) {
+                var a = {};
+                a.pageSubject = booking.pageSubject;
+                this.parseJsonData(a)
+            }
+            this.parseJsonData(booking.promotions)
+        }
+    },
+    preLoadMatchingHotels: function() {
+        if (typeof booking.hotelsMatchingCriteria != "undefined") {
+            booking.hotelsMatchingCriteria.load()
+        }
+    },
+    loadJSONHotels: function() {
+        var f = this;
+        var e = this.map.getMap().getBounds();
+        var d = e.getSouthWest().lng() + "," + e.getSouthWest().lat() + "," + e.getNorthEast().lng() + "," + e.getNorthEast().lat();
+        var b = "/hotelsonmap." + booking.env.b_lang_for_url + ".json" + booking.env.b_query_params_no_ext + ";BBOX=" + d;
+        if (booking.env.b_site_experiment_json_clustering_on_map) {
+            b += ";cluster=1;zoomlevel=" + this.map.getMap().getZoom();
+            if (f.b_force_no_clusters) {
+                b += ";cluster_view_type=hotel";
+                f.b_force_no_clusters = false
+            }
+        }
+        if (booking.env.b_site_experiment_ajax_hotel_details_on_map) {
+            b += ";limit=150"
+        }
+        if (booking.env.b_checkin_date && booking.env.b_checkout_date) {
+            b += ";checkin=" + booking.env.b_checkin_date + ";checkout=" + booking.env.b_checkout_date
+        }
+        for (var c = 0; c < this.json_params.length; c++) {
+            var a = this.json_params[c];
+            if (booking.env[a]) {
+                b += ";" + a.replace("b_param_", "") + "=" + booking.env[a]
+            }
+        }
+        $.get(b, 
+        function(h) {
+            var g = (typeof h.b_clusters_found != "undefined") ? h.b_clusters_found: 0;
+            f.parseJsonData(h.b_hotels, g)
+        })
+    },
+    parseJsonData: function(a, c) {
+        var e = false;
+        if (this.b_clusters_found == 0) {
+            var c = 0;
+            for (oItem in a) {
+                if ((a[oItem].b_latitude && a[oItem].b_longitude) || a[oItem].latLng) {
+                    this.placemarks[oItem] = a[oItem];
+                    c++
+                }
+            }
+            if (c == 0) {
+                c = 1
+            }
+            this.b_clusters_found = c
+        } else {
+            if (a && typeof a.b_clusters_found != "undefined") {
+                this.b_clusters_found = a.b_clusters_found
+            }
+            for (oItem in a) {
+                var f = a[oItem];
+                if (f.latLng) {
+                    f.b_latitude = f.latLng.b_latitude;
+                    f.b_longitude = f.latLng.b_longitude
+                }
+                if (f.b_avg_lat && f.b_avg_long) {
+                    f.b_latitude = f.b_avg_lat;
+                    f.b_longitude = f.b_avg_long;
+                    f.icon_type = "cluster";
+                    f.b_type = "cluster";
+                    if (f.b_nr_hotels) {
+                        if (f.b_nr_hotels > 1) {
+                            f.title = f.b_nr_hotels + " hotels"
+                        } else {
+                            f.title = f.b_nr_hotels + " hotel"
+                        }
+                    }
+                    if (!this.placemarks[oItem]) {
+                        this.placemarks[oItem] = f
+                    } else {
+                        for (oSubItem in f) {
+                            this.placemarks[oItem][oSubItem] = f[oSubItem]
+                        }
+                    }
+                } else {
+                    if ((f.b_latitude && f.b_longitude) || f.latLng) {
+                        var b = false;
+                        if (this.placemarks.pageSubject && (oItem == this.placemarks.pageSubject.b_hotel_id)) {
+                            b = true
+                        }
+                        var d = this.placemarks[oItem];
+                        if (!this.placemarks[oItem] && !b) {
+                            this.placemarks[oItem] = f
+                        } else {
+                            for (oSubItem in f) {
+                                if (!oSubItem == "icon_type" && this.placemarks[oItem].icon_type == "hotel_current") {
+                                    if (b) {
+                                        this.placemarks.pageSubject[oSubItem] = f[oSubItem]
+                                    } else {
+                                        this.placemarks[oItem][oSubItem] = f[oSubItem]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (typeof google != "undefined" && this.map != null) {
+            this.updateMap()
+        }
+    },
+    getIcon: function(b, c) {
+        c = c.replace("hotel_", "");
+        c = c.replace("hotel", "");
+        var a = "hotel";
+        if (b.b_type) {
+            a = b.b_type
+        }
+        if (b.icon_type) {
+            a = b.icon_type
+        }
+        if (a == "hotel") {
+            if (booking.env.b_action === "searchresults") {
+                if (booking.hotelsMatchingCriteria[c]) {
+                    if (b.icon_type && b.icon_type == "hotel_current") {
+                        b.icon_type = "hotel_current"
+                    } else {
+                        if (booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+                            a = "hotel_matching_criteria_mini"
+                        } else {
+                            a = "hotel_matching_criteria"
+                        }
+                    }
+                } else {
+                    if (booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+                        a = "hotel_not_matching_criteria_mini"
+                    } else {
+                        a = "hotel_not_matching_criteria"
+                    }
+                }
+            }
+            if (c == this.cur_selected_hotel) {
+                a = "hotel_current"
+            }
+        } else {
+            if (a == "hotel_current") {
+                b.b_type = "hotel_current"
+            }
+        }
+        if (a == "hotel" && booking.env.b_site_experiment_ajax_hotel_details_on_map == 2) {
+            a = "hotel_mini"
+        }
+        return a
+    },
+    getZoom: function() {
+        var a = 14;
+        if ($(".show_map[rel]").length) {
+            iZoomlevel = $(".show_map[rel]").attr("rel")
+        }
+        a = (booking.env.b_map_google_static_thumbnail_zoom_level) ? booking.env.b_map_google_static_thumbnail_zoom_level: (booking.env.b_action == "country") ? 5: 11;
+        if (this.final_zoom > 0) {
+            a = this.final_zoom
+        }
+        if (booking.env.b_action == "country" || booking.env.b_site_experiment_increase_region_map_zoom) {
+            a++
+        }
+        return a
+    },
+    getBoundingZoom: function() {
+        var b = null,
+        a = $(".show_map[data-bounding-box]");
+        if (a.length) {
+            b = a.attr("data-bounding-box")
+        }
+        if (booking.env.b_map_google_bounding_box) {
+            b = booking.env.b_map_google_bounding_box
+        }
+        return b
+    },
+    createMarker: function(d, g, p, n, e, o, j) {
+        if (booking.env.b_site_experiment_map_in_disambiguation) {
+            if (booking.env.disamb_map_item === p) {
+                e = "disambiguation_best"
+            } else {
+                e = "disambiguation"
+            }
+        }
+        var k = this.b_map_icons[e];
+        var b = (k.height) ? k.height: 20;
+        var h = (k.width) ? k.width: 17;
+        var f = k.iconAnchor[0];
+        var a = (k.zOrder) ? k.zOrder: 20;
+        var m = g - k.iconAnchor[1];
+        var q = (e == "cluster") ? '<div class="ml-text">' + o + "</div>": "";
+        var c = "width:" + h + "px;height:" + b + "px;left:" + (d - f) + "px;top:" + m + "px;z-index:" + (a + 1) + ";";
+        var i = "";
+        if (booking.env.b_site_experiment_map_in_disambiguation) {
+            c += "background: url('" + k.image + "') scroll no-repeat 0 0 transparent;";
+            var l = $('<div class=" marker marker_type_' + e + ' disamb_marker" id="' + p + '" style="' + c + '"><span class="disamb_marker_index">' + j + "</span></div>")
+        } else {
+            var l = $('<div class="marker marker_type_' + e + '" id="' + p + '" style="' + c + '">' + q + '<img alt="' + n + '" src="' + k.image + '" style="position:absolute;top:0px;left:0px;z-index:12000;" /></div>')
+        }
+        return l
+    },
+    updateMap: function() {
+        var a = this,
+        s = this.map.getProjection(),
+        b = (this.map.getMap) ? this.map.getMap().getZoom() : this.map.getZoom(),
+        v = document.createDocumentFragment(),
+        q = a.filter;
+        if (this.map.oMarkerLayer && this.map.oMarkerLayer.empty) {
+            this.map.oMarkerLayer.empty()
+        }
+        var j = (this.map.getMap) ? this.map.getMap().getBounds() : this.map.getBounds();
+        var w = j.getSouthWest().lat();
+        var n = j.getSouthWest().lng();
+        var u = [w, n, j.getNorthEast().lat(), j.getNorthEast().lng()];
+        var i = new google.maps.LatLng(w, n);
+        a.map_scroll = s.fromLatLngToDivPixel(i);
+        if (booking.env.b_site_experiment_map_hide_secondary_cities) {
+            q.city = false
+        }
+        for (oItem in a.placemarks) {
+            var g = a.placemarks[oItem],
+            r;
+            if (typeof(g.b_type) === "undefined") {
+                g.b_type = "hotel"
+            }
+            r = g.b_type;
+            if (g.latLng) {
+                g.b_latitude = g.latLng.b_latitude;
+                g.b_longitude = g.latLng.b_longitude
+            }
+            if (q[r]) {
+                if ((g.b_latitude > u[0] && g.b_longitude > u[1] && g.b_latitude < u[2] && g.b_longitude < u[3]) || booking.env.b_site_experiment_map_in_disambiguation) {
+                    var p = this.getIcon(g, oItem);
+                    var l = a.b_map_icons[p];
+                    var m = (l.min) ? l.min: 0;
+                    var o = (l.max) ? l.max: 1000;
+                    if (b >= m && b <= o) {
+                        var t = new google.maps.LatLng(g.b_latitude, g.b_longitude);
+                        var h = s.fromLatLngToDivPixel(t);
+                        var e = (g.title) ? g.title: p;
+                        var d = (g.b_nr_hotels) ? g.b_nr_hotels: 1;
+                        var c = a.createMarker(h.x, h.y, oItem, e, p, d, g.id);
+                        var k = c.get(0);
+                        v.appendChild(k)
+                    }
+                }
+            }
+        }
+        this.map.oMarkerLayer.append(v)
+    },
+    initMap: function(q, c, a) {
+        function e(s) {
+            this.setValues(s);
+            this.oMarkerLayer = $("<div />").addClass("markersOverlay")
+        }
+        e.prototype = new google.maps.OverlayView;
+        e.prototype.onAdd = function() {
+            var s = $(this.getPanes().overlayImage);
+            s.append(this.oMarkerLayer);
+            a.map = this
+        };
+        e.prototype.onRemove = function() {
+            this.oMarkerLayer.remove()
+        };
+        e.prototype.draw = function() {
+            if (!a.animating && !booking.env.b_site_experiment_map_in_disambiguation) {
+                setTimeout(function() {
+                    a.loadJSONHotels()
+                },
+                500)
+            }
+        };
+        if (typeof google != "undefined") {
+            if (booking.env.b_action == "searchresults" && !booking.env.b_is_disambiguation && document.getElementById("destination") && b_cookie && b_cookie.map && booking.env.b_site_experiment_cookies_for_map) {
+                var g = b_cookie.map.split(",");
+                if (g[0] === document.getElementById("destination").value + booking.env.b_ufi) {
+                    q = g[1];
+                    c = g[2];
+                    var r = g[3]
+                }
+            }
+            var o = new google.maps.LatLng(q, c);
+            var i = {
+                zoom: (r) ? parseInt(r) : a.getZoom(),
+                center: o,
+                mapTypeControlOptions: {
+                    mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID]
+                },
+                mapTypeControl: true,
+                navigationControl: true,
+                scaleControl: true,
+                streetViewControl: false,
+                scrollwheel: booking.env.b_site_experiment_map_scrollwheel
+            };
+            if (booking.env.country_has_limited_geodata && booking.env.b_site_experiment_map_hybrid_view_special_countries) {
+                i.mapTypeId = google.maps.MapTypeId.HYBRID
+            } else {
+                i.mapTypeId = google.maps.MapTypeId.ROADMAP
+            }
+            this.map = new google.maps.Map(this.map_target, i);
+            this.map_object = this.map;
+            if (!r) {
+                var k = this.map_object;
+                if (booking.env.b_site_experiment_map_in_disambiguation && booking.env.b_destinations_bounding_box) {
+                    var j = new google.maps.LatLng(booking.env.b_destinations_bounding_box.latitude_south, booking.env.b_destinations_bounding_box.longitude_west),
+                    d = new google.maps.LatLng(booking.env.b_destinations_bounding_box.latitude_north, booking.env.b_destinations_bounding_box.longitude_east);
+                    disambiguation_bbox = new google.maps.LatLngBounds(j, d);
+                    k.fitBounds(disambiguation_bbox)
+                } else {
+                    var p = this.getBoundingZoom();
+                    if (p != null) {
+                        var m = p.split(",");
+                        var j = new google.maps.LatLng(m[1], m[0]);
+                        var d = new google.maps.LatLng(m[3], m[2]);
+                        var l = new google.maps.LatLngBounds(j, d);
+                        k.fitBounds(l);
+                        this.fixZoom = true
+                    }
+                }
+            }
+            google.maps.event.addListener(this.map, "dragstart", 
+            function(s) {
+                if (typeof(a.clicked_marker) !== undefined && a.clicked_marker === true) {
+                    a.clicked_marker = false
+                }
+            });
+            google.maps.event.addListener(this.map, "dragend", 
+            function(v) {
+                if (!booking.env.b_site_experiment_map_in_disambiguation) {
+                    var w = a.map.getMap().getBounds();
+                    var u = new google.maps.LatLng(w.getSouthWest().lat(), w.getSouthWest().lng());
+                    var t = a.map.getProjection();
+                    a.map_scroll = t.fromLatLngToDivPixel(u);
+                    a.loadJSONHotels();
+                    if (booking.env.b_action == "searchresults" && !booking.env.b_is_disambiguation && a.search_destination_without_district && booking.env.b_site_experiment_cookies_for_map) {
+                        var s = a.map.getMap().getCenter();
+                        a.setMapCookie("map", a.search_destination_without_district + booking.env.b_ufi + "," + s.lat() + "," + s.lng() + "," + a.map.getMap().getZoom())
+                    }
+                } else {
+                    a.updateMap()
+                }
+                if (booking.env.b_site_experiment_map_tracking_drag) {
+                    if (typeof(booking.google.mapTracker) != "undefined") {
+                        booking.google.trackEvent(booking.google.mapTracker, "Drag", document.body.id)
+                    }
+                }
+            });
+            if (booking.env.b_site_experiment_map_tracking_zoom || booking.env.b_site_experiment_cookies_for_map || booking.env.b_site_experiment_map_toggle_icons_hp || booking.env.b_site_experiment_map_in_disambiguation) {
+                google.maps.event.addListener(this.map, "zoom_changed", 
+                function() {
+                    if (booking.env.b_site_experiment_map_tracking_zoom) {
+                        if (typeof(booking.google.mapTracker) != "undefined") {
+                            var u = ":",
+                            v = this.getZoom();
+                            if (typeof(a.current_zoom) == "undefined") {
+                                a.current_zoom = a.getZoom()
+                            }
+                            if (a.current_zoom != v) {
+                                if (a.current_zoom < v) {
+                                    u = "in:"
+                                } else {
+                                    u = "out:"
+                                }
+                                if (typeof(booking.google.mapTracker) != "undefined") {
+                                    booking.google.trackEvent(booking.google.mapTracker, "Zoom " + u + a.current_zoom + " > " + v, document.body.id)
+                                }
+                                a.current_zoom = v
+                            }
+                        }
+                    }
+                    if (booking.env.b_site_experiment_cookies_for_map && !booking.env.b_site_experiment_map_in_disambiguation) {
+                        var s,
+                        t;
+                        if (typeof(a.map.getCenter) == "function") {
+                            s = a.map.getCenter()
+                        } else {
+                            s = a.map.getMap().getCenter()
+                        }
+                        if (typeof(a.map.getMap) == "function") {
+                            t = a.map.getMap().getZoom()
+                        } else {
+                            t = a.map.getZoom()
+                        }
+                        a.setMapCookie("map", a.search_destination + booking.env.b_ufi + "," + s.lat() + "," + s.lng() + "," + t)
+                    }
+                    if (booking.env.b_site_experiment_map_toggle_icons_hp) {
+                        a.updateToggleOptions()
+                    }
+                    if (booking.env.b_site_experiment_map_in_disambiguation && this.getZoom() <= 2) {
+                        setTimeout(function() {
+                            a.updateMap()
+                        },
+                        200)
+                    }
+                })
+            }
+            google.maps.event.addListener(this.map, "tilesloaded", 
+            function(u) {
+                if (a.map_scroll_base.x == 0 && a.map_scroll_base.y == 0) {
+                    var v = a.map.getMap().getBounds();
+                    var t = new google.maps.LatLng(v.getSouthWest().lat(), v.getSouthWest().lng());
+                    var s = a.map.getProjection();
+                    a.map_scroll_base = s.fromLatLngToDivPixel(t);
+                    if (a.map_scroll.y == 0) {
+                        a.map_scroll.y = a.map_scroll_base.y
+                    }
+                }
+                if (!a.initPopup) {
+                    setTimeout(function() {
+                        $(".marker_type_hotel_current").mouseover();
+                        a.initPopup = true
+                    },
+                    500)
+                }
+                if (booking.env.b_site_experiment_map_in_disambiguation) {
+                    a.updateMap()
+                }
+            })
+        }
+        if (this.map == null) {
+            var o = new google.maps.LatLng(q, c);
+            this.map = new google.maps.Map(document.getElementById(a.map_target), {
+                zoom: a.getZoom(),
+                center: o,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            this.map_object = this.map;
+            var p = this.getBoundingZoom();
+            if (p != null) {
+                var m = p.split(",");
+                var b = new google.maps.LatLng(m[1], m[0]);
+                var n = new google.maps.LatLng(m[3], m[2]);
+                var l = new google.maps.LatLngBounds(b, n);
+                this.map.fitBounds(l)
+            }
+        }
+        if (!f) {
+            var f = new e({
+                map: this.map
+            })
+        }
+        $(".marker").live("mouseover", 
+        function(H) {
+            var x = $(this);
+            if (!x.attr("oldz")) {
+                x.attr("oldz", this.style.zIndex)
+            }
+            this.style.zIndex = "1000000";
+            if (!x.hasClass("disamb_marker")) {
+                if ($("#markerPopup").length) {
+                    var u = $("#markerPopup")
+                } else {
+                    if (booking.env.b_site_experiment_extended_map_legend) {
+                        var u = $('<div id="markerPopup" class="static_map_legend_marker"></div>')
+                    } else {
+                        var u = $('<div id="markerPopup"></div>')
+                    }
+                    $(u).appendTo(".markersOverlay")
+                }
+                var y = $(this).attr("id");
+                var z = a.placemarks[y];
+                var G = a.getIcon(z, y);
+                var E = a.b_map_icons[G];
+                var J = (E.infoWindowAnchor) ? E.infoWindowAnchor[1] : 20;
+                var I = a.map.getProjection();
+                var D = new google.maps.LatLng(z.b_latitude, z.b_longitude);
+                var w = I.fromLatLngToDivPixel(D);
+                if (typeof z.title == "undefined" && booking.env.b_site_experiment_ajax_hotel_details_on_map) {
+                    if (typeof booking[sNSStartupLoad].googleMaps.hotels_cache[y] == "undefined") {
+                        u.html('<div class="ahdom"><img src="//s.bstatic.com/static/img/loading.gif" alt="' + booking.env.loading + '" /></div>').show();
+                        var v = "/hotel_onmap_detail" + booking.env.b_query_params_no_ext + ";hotel_id=" + y + ";lang=" + booking.env.b_lang_for_url + ";currency=" + booking.env.b_selected_currency;
+                        if (booking.env.b_checkin_date && booking.env.b_checkout_date) {
+                            v += ";checkin=" + booking.env.b_checkin_date + ";checkout=" + booking.env.b_checkout_date
+                        }
+                        $.get(v, 
+                        function(K) {
+                            z.url = K.b_hotels[y].b_url;
+                            u.html(a.popupHTML(K.b_hotels[y], y))
+                        })
+                    } else {
+                        u.html(booking[sNSStartupLoad].googleMaps.hotels_cache[y]).show()
+                    }
+                } else {
+                    u.html(a.popupHTML(z, y)).show()
+                }
+                var t = a.map_scroll_base.x - a.map_scroll.x;
+                var s = a.map_scroll_base.y - a.map_scroll.y;
+                var B = $(this).position().left;
+                var A = $(this).position().top;
+                var F = (typeof z.title == "undefined" && booking.env.b_site_experiment_ajax_hotel_details_on_map) ? 125: $("#b_overlay").height();
+                var C = (typeof z.title == "undefined" && booking.env.b_site_experiment_ajax_hotel_details_on_map) ? 250: $("#b_overlay").width();
+                if (B - (C / 2) + t < 56 && !a.animating) {
+                    B = B - (B - (C / 2) + t) + 56
+                } else {
+                    if (B + (C / 2) + t > a.map_width && !a.animating) {
+                        B = B - (B + (C / 2) + t - a.map_width)
+                    }
+                }
+                if (A + F + s + J > a.map_height && s != a.map_height) {
+                    A = A - F - 2
+                } else {
+                    A = A + J
+                }
+                u.css({
+                    top: A + "px",
+                    left: B + "px",
+                    position: "absolute",
+                    "z-index": "99999"
+                });
+                if (booking.env.b_site_experiment_map_tracking_mouseover) {
+                    if (typeof(booking.google.mapTracker) != "undefined") {
+                        booking.google.trackEvent(booking.google.mapTracker, "Hotel icon mouseover", document.body.id)
+                    }
+                }
+            }
+        });
+        $(".marker").live("mouseout", 
+        function(s) {
+            if ($(this).attr("oldz")) {
+                this.style.zIndex = $(this).attr("oldz")
+            }
+            $("#markerPopup").html("<div />").hide()
+        });
+        $(".marker").live("mousedown", 
+        function(s) {
+            a.clicked_marker = true
+        });
+        $(".marker").live("mouseup", 
+        function(v) {
+            if (typeof(a.clicked_marker) !== undefined && a.clicked_marker === true) {
+                var t = $(this).attr("id");
+                var u = a.placemarks[t];
+                if (typeof booking.google != "undefined") {
+                    if (typeof booking.google.mapTracker != "undefined") {
+                        booking.google.trackEvent(booking.google.mapTracker, "Icon clicked: " + u.b_type, document.body.id)
+                    }
+                }
+                if (u.b_url) {
+                    u.url = u.b_url
+                }
+                if (u.url) {
+                    var s = booking.env.b_url_start + u.url;
+                    if (s.indexOf(".html") == -1) {
+                        s += booking.env.b_query_params_with_lang
+                    }
+                    if ($(this).hasClass("marker_type_cluster")) {
+                        a.map.getMap().setZoom(a.map.getMap().getZoom() + 1)
+                    } else {
+                        document.location = s
+                    }
+                }
+            }
+        });
+        if (booking.env.b_action == "searchresults" && !booking.env.b_is_disambiguation) {
+            $("#map_district_filter").change(function() {
+                if (this.value) {
+                    a.setMapCookie("map_open", a.search_destination + booking.env.b_ufi + "1");
+                    window.location.href = this.value
+                }
+            })
+        }
+        var h;
+        if (booking.env.b_site_experiment_map_in_disambiguation) {
+            $(".disambitem").mouseenter(function(s) {
+                $this = $(this);
+                a.highlightDisambiguationItem($this.attr("data-markerid"));
+                a.pan_item = true;
+                if (booking.env.b_site_experiment_map_in_disambiguation === 2) {
+                    if (h) {
+                        clearTimeout(h)
+                    }
+                    a.pan_item_coords = {
+                        lat: $this.attr("data-lat"),
+                        lon: $this.attr("data-lon")
+                    };
+                    h = setTimeout(function() {
+                        a.panMap()
+                    },
+                    500)
+                }
+            });
+            $(".disambitem").mouseleave(function(s) {
+                a.pan_item = false
+            })
+        }
+        $("#reload_currently_displayed_hotels").click(function() {
+            var s = a.map.getMap().getCenter();
+            var t = Math.ceil(15.0588 * Math.pow(2, 10 - a.map.getMap().getZoom()));
+            if (t > 150) {
+                t = 150
+            }
+            window.location.href = "/searchresults" + booking.env.b_query_params_with_lang + ";latitude=" + s.lat() + ";longitude=" + s.lng() + ";radius=" + t;
+            return false
+        });
+        if (booking.env.b_site_experiment_map_toggle_icons_hp) {
+            $(".map_toggle_opt").click(function(u) {
+                var v,
+                t,
+                s;
+                if (!$(this).hasClass("map_toggle_opt_disabled")) {
+                    if (this.nodeName.toLowerCase() !== "input") {
+                        v = $("#" + $(this).attr("data-rel"));
+                        t = !v.attr("checked");
+                        v.attr("checked", t)
+                    } else {
+                        v = $(this);
+                        t = v.attr("checked");
+                        u.stopPropagation()
+                    }
+                    s = v.attr("data-type");
+                    switch (s) {
+                    case "hotel_current":
+                        a.filter.hotel_current = (t) ? true: false;
+                        break;
+                    case "hotel":
+                        a.filter.hotel = (t) ? true: false;
+                        break;
+                    case "city":
+                        a.filter.city = (t) ? true: false;
+                        break;
+                    case "landmark":
+                        a.filter.landmark = (t) ? true: false;
+                        break;
+                    case "airport":
+                        a.filter.airport = (t) ? true: false;
+                        break
+                    }
+                    a.updateMap();
+                    if (typeof(booking.google.mapTracker) != "undefined") {
+                        booking.google.trackEvent(booking.google.mapTracker, "Toggle icons - " + s, document.body.id)
+                    }
+                }
+            })
+        }
+    },
+    popupHTML: function(d, l) {
+        var a = this.getIcon(d, l);
+        var b = '<div id="b_overlay" class="' + a + '"><h3>';
+        if (d.b_type != "cluster") {
+            if (d.b_class) {
+                b += '<img src="' + booking.env.icons + "/icons/stars/" + d.b_class;
+                if (d.b_class_half) {
+                    b += d.b_class_half
+                }
+                b += 'sterren-small.png" alt="' + d.b_class + " " + (d.b_class == 1 ? booking.env.star: booking.env.stars) + '" />'
+            }
+            b += d.title;
+            if (typeof d.subhead != "undefined") {
+                if (d.url) {
+                    b += "<span>" + d.subhead + "</span>"
+                }
+            }
+            b += "</h3>";
+            b += "<p>";
+            if (d.b_image_url) {
+                b += '<img src="' + d.b_image_url + '" alt="" />'
+            }
+        } else {
+            if (d.b_cluster_name.match(/^anon/)) {
+                b += d.b_nr_hotels + " " + (d.b_nr_hotels == 1 ? booking.env.map_hotel: booking.env.map_hotels)
+            } else {
+                b += d.b_cluster_name + ": " + d.b_nr_hotels + " " + (d.b_nr_hotels == 1 ? booking.env.map_hotel: booking.env.map_hotels)
+            }
+            b += "</h3>";
+            b += "<p>"
+        }
+        var k = ((d.b_type === "hotel") || (d.b_type === "hotel_current")) ? true: false;
+        if (k) {
+            if (d.b_description && d.b_description.length) {
+                b += (d.b_description.length <= this.max_length_of_hotel_description) ? d.b_description: this.truncateDescription(d.b_description)
+            }
+        } else {
+            if (d.b_nr_hotels > 1) {
+                b += booking.env.zoom_in
+            }
+        }
+        b += "</p>";
+        if (k) {
+            if (typeof(booking.env.map_vars) == "undefined") {
+                booking.env.map_vars = {}
+            }
+            if (typeof(booking.env.map_vars.translation_from) == "undefined") {
+                booking.env.map_vars.translation_from = "From"
+            }
+            if (typeof(booking.env.map_vars.translation_occupancies) == "undefined") {
+                booking.env.map_vars.translation_occupancies = []
+            }
+            b += '<table id="b_overlay_table_prices"><tbody>';
+            if (d.av) {
+                var f = d.av;
+                var j = booking.env.map_vars.translation_occupancies;
+                if (f.cheapest_double_selected_currency) {
+                    b += '<tr class="b_overlay_tr"> <td class="b_overlay_td_room_occupancy" >' + j[1] + '</td> <td class="b_overlay_td_room_price">' + f.cheapest_double_selected_currency + "</td></tr>"
+                }
+                if (f.cheapest_single_selected_currency) {
+                    b += '<tr class="b_overlay_tr"> <td class="b_overlay_td_room_occupancy" >' + j[0] + '</td> <td class="b_overlay_td_room_price">' + f.cheapest_single_selected_currency + "</td></tr>"
+                }
+            } else {
+                if (d.prices) {
+                    var f = d.prices;
+                    var j = booking.env.map_vars.translation_occupancies;
+                    for (var g in f) {
+                        if (f[g] && f[g].room_persons && f[g].room_price) {
+                            var e = f[g].room_persons - 1;
+                            if (e > 3) {
+                                e = 3
+                            }
+                            var c = (typeof(j[e]) != "undefined") ? j[e] : "";
+                            b += '<tr class="b_overlay_tr"> <td class="b_overlay_td_room_occupancy" >' + c + '</td> <td class="b_overlay_td_room_price">' + f[g].room_price + "</td></tr>"
+                        } else {
+                            if (f[g] && f[g].room_from) {
+                                b += '<tr class="b_overlay_tr"> <td class="b_overlay_td_room_occupancy" >' + booking.env.map_vars.translation_from + '</td> <td class="b_overlay_td_room_price">' + f[g].room_from + "</td></tr>"
+                            }
+                        }
+                    }
+                } else {
+                    if (d.b_min_rate) {
+                        if (booking.env.map_vars.selected_currency_symbol) {
+                            var h = booking.env.map_vars.selected_currency_symbol
+                        } else {
+                            var h = d.b_currencycode
+                        }
+                        b += '<tr class="b_overlay_tr"> <td class="b_overlay_td_room_occupancy" >' + booking.env.map_vars.translation_from + '</td> <td class="b_overlay_td_room_price">' + h + " " + parseFloat(d.b_min_rate).toFixed(2) + "</td></tr>"
+                    } else {
+                        if (d.b_price || d.b_price_selected_currency) {
+                            if (d.b_price_selected_currency) {
+                                var h = d.b_price_selected_currency
+                            } else {
+                                var h = d.b_price
+                            }
+                            b += '<tr class="b_overlay_tr"> <td class="b_overlay_td_room_occupancy" >' + booking.env.map_vars.translation_from + '</td> <td class="b_overlay_td_room_price">' + h + "</td></tr>"
+                        }
+                    }
+                }
+            }
+            b += "</tbody></table>"
+        }
+        b += "</p>";
+        this.hotels_cache[l] = b;
+        return b
+    },
+    truncateDescription: function(b) {
+        var a = 1;
+        while (b.charAt(this.max_length_of_hotel_description - a) != " ") {
+            a++
+        }
+        return b.substr(0, this.max_length_of_hotel_description - a) + "..."
+    },
+    updateToggleOptions: function() {
+        var h = this,
+        b,
+        g,
+        f,
+        d,
+        c,
+        a,
+        e = $("#b_map_legend");
+        if (h.map.getMap) {
+            b = h.map.getMap()
+        } else {
+            b = h.map
+        }
+        g = b.getZoom();
+        if (g > 3) {
+            f = false
+        } else {
+            f = true
+        }
+        if (g > 4) {
+            disable_airport = false
+        } else {
+            disable_airport = true
+        }
+        if (g > 6) {
+            d = false
+        } else {
+            d = true
+        }
+        if (g > 11) {
+            disable_landmark = false
+        } else {
+            disable_landmark = true
+        }
+        if (disable_airport) {
+            $(".map_opt_airport", e).addClass("map_toggle_opt_disabled");
+            $("#toggle_airport").attr("disabled", true)
+        } else {
+            $(".map_opt_airport", e).removeClass("map_toggle_opt_disabled");
+            $("#toggle_airport").attr("disabled", false)
+        }
+        if (f) {
+            $(".map_opt_current_hotel", e).addClass("map_toggle_opt_disabled");
+            $("#toggle_current_hotel").attr("disabled", true)
+        } else {
+            $(".map_opt_current_hotel", e).removeClass("map_toggle_opt_disabled");
+            $("#toggle_current_hotel").attr("disabled", false)
+        }
+        if (d) {
+            $(".map_opt_other_hotel", e).addClass("map_toggle_opt_disabled");
+            $("#toggle_other_hotel").attr("disabled", true)
+        } else {
+            $(".map_opt_other_hotel", e).removeClass("map_toggle_opt_disabled");
+            $("#toggle_other_hotel").attr("disabled", false)
+        }
+        if (disable_landmark) {
+            $(".map_opt_landmark", e).addClass("map_toggle_opt_disabled");
+            $("#toggle_landmark").attr("disabled", true)
+        } else {
+            $(".map_opt_landmark", e).removeClass("map_toggle_opt_disabled");
+            $("#toggle_landmark").attr("disabled", false)
+        }
+    },
+    panMap: function() {
+        if (this.pan_item) {
+            if (this.pan_item_coords && this.pan_item_coords.lat) {
+                this.map_object.panTo(new google.maps.LatLng(this.pan_item_coords.lat, this.pan_item_coords.lon))
+            } else {
+                if (disambiguation_bbox) {
+                    this.map_object.fitBounds(disambiguation_bbox)
+                }
+            }
+        }
+    },
+    mapScrollListener: function(f) {
+        var e = this,
+        d = $(window),
+        b = $("#" + f),
+        a = (b.offset() && b.offset().top) ? b.offset().top: undefined,
+        i = $("#disambiguation_map_wrapper"),
+        k = $("#disam_list_last"),
+        j = (k.offset() && k.offset().top) ? k.offset().top: undefined,
+        l = (i.offset() && i.offset().top) ? i.offset().top: undefined,
+        g,
+        h,
+        m,
+        c = function() {
+            i.css(m)
+        };
+        d.scroll(function() {
+            window_scrollTop = $(window).scrollTop();
+            if (a && l && (window_scrollTop >= a)) {
+                if (window_scrollTop + i.height() <= j) {
+                    m = {
+                        "margin-top": (window_scrollTop - l) + 20 + "px"
+                    }
+                }
+            } else {
+                m = {
+                    "margin-top": "0px"
+                }
+            }
+            if (m) {
+                if (h) {
+                    clearTimeout(h)
+                }
+                h = setTimeout(function() {
+                    c()
+                },
+                500)
+            }
+        })
+    },
+    mapResizeListener: function() {
+        var a = (this.map && this.map.getMap) ? this.map.getMap() : this.map,
+        b;
+        $(window).resize(function() {
+            if (b) {
+                clearTimeout(b)
+            }
+            b = setTimeout(function() {
+                google.maps.event.trigger(a, "resize")
+            },
+            500)
+        })
+    },
+    setMapCookie: function(b, a) {
+        if (typeof(b) === "string" && b !== "") {
+            if (typeof(b_cookie) == "undefined") {
+                b_cookie = {}
+            }
+            b_cookie[b] = a;
+            if (typeof(JSON) != "undefined") {
+                $.cookie("b", JSON.stringify(b_cookie), {
+                    path: "/",
+                    domain: booking.env.b_domain_end
+                })
+            }
+        }
+    },
+    highlightDisambiguationItem: function(b) {
+        var a = $("#" + b),
+        c;
+        if (booking.env.disamb_map_item) {
+            c = $("#" + booking.env.disamb_map_item);
+            c.css({
+                "z-index": c.attr("oldz")
+            })
+        }
+        booking.env.disamb_map_item = b;
+        a.attr("oldz", a.css("z-index"));
+        $(".disamb_marker").css({
+            background: 'url("//q.bstatic.com/static/img/map/disambiguation_marker.png") no-repeat scroll 0 0 transparent'
+        });
+        a.css({
+            background: 'url("//s.bstatic.com/static/img/map/disambiguation_marker_best.png") no-repeat scroll 0 0 transparent',
+            "z-index": 1000000
+        })
+    }
+};

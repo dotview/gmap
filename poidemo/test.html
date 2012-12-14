@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2011 Google Inc. All Rights Reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Fusion Tables Layer Example: Basic JSONP Request</title>
+    <style type="text/css">
+      #map-canvas {
+        height: 500px;
+        width: 600px;
+      }
+
+      .store-name {
+        font-weight: bold;
+        margin: 10px 0px 0px 0px;
+        padding: 0px;
+      }
+
+      .address, .delivers {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var query = "SELECT City, State, Address1 FROM " +
+            '1K1WZCqMmIN5EMW5s4CsHUhB90Nl0h4gY4EQcAV0 Where City =\'Birmingham\'';
+        var encodedQuery = encodeURIComponent(query);
+
+        // Construct the URL
+        var url = ['https://www.googleapis.com/fusiontables/v1/query'];
+        url.push('?typed=false&sql=' + encodedQuery);
+        url.push('&key=AIzaSyC9jGYb1zC5bYMnGsDqERzw6SQKKBEY4PY');
+        url.push('&callback=?');
+
+        // Send the JSONP request using jQuery
+        $.ajax({
+          url: url.join(''),
+          dataType: 'jsonp',
+		  cache: false,
+          success: function (data) {
+            var rows = data['rows'];
+            var ftData = $('#ft-data');
+            for (var i in rows) {
+              var city = rows[i][0];
+              var State = rows[i][1];
+              var Address1 = rows[i][2];
+ 
+              ftData.append(city+State+Address1+"<br>");
+            }
+          }
+        });
+      }
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div id="ft-data"></div>
+  </body>
+</html>
+ 

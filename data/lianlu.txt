@@ -1,0 +1,5 @@
+﻿{result:1,totalRecord:2,list:[
+{Title:'杭州区域--三墩门店链路',ID:1,SX:'aaa',CD:'2kM',beginLat:30.288601776629636,beginLng: 120.17107715625002,endLat:30.308582906876072,endLng: 120.05160083784},
+{Title:'杭州区域--武林门店链路',ID:2,SX:'bbb',CD:'20kM',beginLat:30.288601776629636,beginLng: 120.17107715625002,endLat:30.271526232891844,endLng: 120.14155139908},
+{Title:'杭州区域--滨江门店链路',ID:3,SX:'ccc',CD:'25kM',beginLat:30.288601776629636,beginLng: 120.17107715625002,endLat:30.203008680038966,endLng: 120.215022468702}
+]}

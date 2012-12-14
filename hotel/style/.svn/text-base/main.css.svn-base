@@ -1,0 +1,176 @@
+ html {
+	height: 100%;
+}
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+#map_canvas {
+	width: 100%;
+	height: 90%;
+}
+#map_canvas_min {
+	width: 380px;
+	height: 300px;
+}
+h3 {
+	margin: 0;
+}
+#b_overlay.hotel, #b_overlay.hotel_mini {
+	background: #003366 !important;
+}
+#b_overlay.curhotel {
+	background: #FF6633 !important;
+}
+#b_overlay {
+	border: 1px solid #FFFFFF;
+	box-shadow: 0.125cm 0.125cm 0.125cm #808080;
+	width: 250px;
+	z-index: 200;
+}
+#b_overlay h3 {
+	background: #FFFFFF;
+	font-size: 8pt !important;
+	font-weight: bold;
+	margin-bottom: 0;
+	padding: 0.5em !important;
+	text-shadow: none;
+}
+.box h3 {
+	font-size: 1.8em;
+	font-weight: normal;
+	margin-bottom: 0.4em;
+	text-shadow: 1px 1px 0 white;
+}
+#b_overlay h3 img {
+	float: right;
+	padding: 0.25em 0.5em 0 0;
+}
+#b_overlay p {
+	color: #FFFFFF !important;
+	clear: right;
+	font-size: 8pt !important;
+	line-height: 1.1;
+	margin: 0;
+	padding: 0.5em !important;
+}
+#b_overlay p img {
+	float: left;
+	height: 64px;
+	padding: 0 0.5em 0.5em 0;
+	width: 64px;
+}
+#b_overlay_table_prices {
+	clear: both;
+	margin: 0 0 5px 5px;
+	width: auto !important;
+}
+.box table {
+	width: 100%;
+}
+table, tr, td, th {
+	border: 0 none;
+	border-spacing: 0;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+}
+.b_overlay_tr {
+	font-size: 8pt !important;
+	line-height: 1.1;
+}
+.b_overlay_td_room_occupancy {
+	color: #FFFFFF;
+	font-size: inherit;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+
+#b_map_container {
+	position: absolute;
+	z-index: 97;
+}
+#b_gmap {
+	background-color: #E6EDF6 !important;
+	border: 1px solid #003580 !important;
+	border-radius: 1px 1px 1px 1px !important;
+	height: 427px;
+	padding: 10px 15px 15px;
+	position: absolute;
+	text-align: left;
+	width: 640px;
+	z-index: 99;
+}
+#b_gmap h2 {
+	background-color: #E6EDF6 !important;
+	color: #003580;
+	height: 20px;
+	margin-bottom: 5px;
+	padding-bottom: 0;
+	background: none repeat scroll 0 0 #0099CC;
+	cursor: move;
+	font-size: 16px;
+	margin: 0;
+	padding: 0 0 2px;
+}
+h2 {
+	font-size: 120%;
+	font-weight: bold;
+	margin: 0 0 0.5em 0.5em;
+	padding-top: 1.5em;
+}
+#b_shadow {
+	border-radius: 0.5em 0.5em 0.5em 0.5em !important;
+	height: 474px;
+	margin: -10px 0 0 -10px;
+	opacity: 0.4;
+	width: 692px;
+	background: none repeat scroll 0 0 #333333;
+	position: absolute;
+	z-index: 98;
+}
+#b_gmap_inner {
+	float: left;
+	height: 400px;
+	overflow: hidden;
+	width: 515px;
+}
+#b_map_legend {
+	background-color: white !important;
+	height: 390px;
+	width: 115px;
+	float: right;
+	padding: 5px;
+}
+a#close_map {
+	color: #003580;
+	margin: 10px 10px 0 0;
+}
+#close_map {
+	color: #FFFFFF;
+	font-size: 11px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+a: link {
+	color: #0896FF;
+	font-weight: bold;
+	text-decoration: underline;
+}
+#b_map_legend h3 {
+	margin-bottom: 0.5em;
+}
+h3 {
+	font-size: 118%;
+	font-weight: bold;
+	margin: 0;
+}
+.customBox {
+	background: #0866C3;
+	border: 1px solid white;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	position: absolute;
+} 

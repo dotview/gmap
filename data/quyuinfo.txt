@@ -1,0 +1,6 @@
+﻿{result:1,quyuinfo:{
+Title:'区域杭州',ID:1001,ImgUrl:'images/qu1.jpg',FlashUrl:'images/q1.swf',fzr:'58001',jlrq:'2011-03-12',gdrq:'2011-03-14',
+whfzr:'张三',ghfzr:'张三',llmc:'杭州供货链路111',whrq:'2011-03-14'},
+mendianlist:[{ID:'1',quyudm:'1001',Title:'武林店',address:'杭州武林门店568号'},
+{ID:'2',quyudm:'1001',Title:'滨江店',address:'杭州滨江店江南大道567号'},
+{ID:'3',quyudm:'1001',Title:'三墩店',address:'杭州西湖区三墩路888号'}]}

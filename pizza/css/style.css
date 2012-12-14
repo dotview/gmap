@@ -1,0 +1,45 @@
+.txt1
+{
+	font-size:11px;
+	font-family:Verdana;
+	text-decoration:none;
+	color:#FFFFFF;
+}
+
+.map_wrapper{
+	text-align:center;
+	position:relative;
+	width:446px;
+	height:373px;
+}
+
+.map_canvas{
+	position:absolute;
+	width: 446px; 
+	height: 373px;
+}
+
+.map_wait{
+	position:absolute;
+	width: 446px; 
+	height: 373px;
+	background-color:black;
+	opacity:0.4;
+	filter:alpha(opacity=40);
+	visibility:hidden;
+}
+
+.map_wait_dialog{
+	position:absolute;
+	display:inline-block;
+	top:50%;
+	height:15px;
+	width:128px;
+	background-image:url('../images/load.gif');
+	-moz-border-radius: 5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+	border-radius:5px;
+	visibility:hidden;
+}
+

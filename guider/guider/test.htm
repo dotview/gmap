@@ -1,0 +1,127 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Guiderer</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+<link href='http://fonts.googleapis.com/css?family=EB+Garamond|Open+Sans:700,400,300' rel='stylesheet' type='text/css'>
+  <link href="assets/all-a0d283c06c67e4b144314a4494490aff.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="assets/reveal-0bd01a4abece5a897351190e76de71fd.css" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script src="assets/modernizr-2.0.6.min.js"></script>
+  
+   <script src="assets/vendor-d10869393235022e7bf318b11d858c6a.js" type="text/javascript"></script>
+ 
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&types=establishment" type="text/javascript"></script>
+  
+   
+<script type="text/javascript" src="assets/lib/jquery.autocomplete_geomod_packed.js"></script>
+ 
+<link rel="stylesheet" type="text/css" href="assets/lib/jquery.autocomplete.css" />
+
+<style>.highlight{background-color:#eee;}
+.infowindowcontent{margin-top: 8px; 
+background-color:#fff;border:1px solid #666;padding:5px;}
+.infowindowcontent *{margin:0;padding:0;}
+.infowindowcontent .info-img{width:120px;height:120px;}
+.infowindowcontent .info-cd{width:120px;float:left;margin-left:10px;}
+.infowindowcontent .info-hd{font-weight:normal;font-size:13px;}
+.infowindowcontent .info-fn{font-weight:bold;font-size:16px;}
+
+#guidePOILargeMap{background-color:#fff;}
+.infowindowcontent0d{margin: 8px;float:left;background-color:#fff;border:1px solid #ccc;padding:8px;}
+.POImapControl{float:right;}
+#POImapButton{margin-right:20px;height:24px;line-height:24px;bottom:0;}
+.POImapControl .span-button{border:1px solid #ddd;margin-left:1px;padding:0 6px;cursor:pointer;}
+.POImapControl .span-selected{background-color:#B1DEED;}
+.POImapControl a{cursor:pointer;}
+.POImap{width:100%;height:400px;float: left;}
+.POIMap-Large{position:absolute;top:0;left:0;z-index:9999;}
+.labelIcon{float:left;background: url(assets/icons/red02.png) no-repeat 0px;width:40px;height:40px;
+font-size:16px;padding:3px 0 0 8px; font-weight:bold;color:#fff;cursor:pointer;z-index:9990;}
+.iconlabels{color:#fff;font-weight:bold;font-size:16px;}
+header.guideItemPOIHeader h3{float:left;}
+</style>
+</head>
+
+<body>
+<div id="directions_panel"></div>
+  <div class="container ">
+    <header id="guidererHead">
+	<div id="brandHead">
+	  <a href="/">
+  	  <h1 id="logo">Guiderer</h1>
+	  </a>
+  </div>
+  <div id="secondaryHead">
+	
+	<a href="/pages/how" class="button howWorks">how guiderer works?</a>
+      <p class="userControl">
+		<a href="/users/sign_in" class="signIn">Sign In</a>
+ /
+       <a href="/users/sign_in" class="signUp">Sign Up</a>
+
+
+      </p>
+  </div>
+</header>
+    <section id="main" role="main">
+        <div id="getStartedWrap">
+          <section id="getStarted">
+            <section id="getStartedCreateGuideCapture">
+  <form accept-charset="UTF-8" action="/guides/dfNttmYy8V7DzbMaFRnE" class="edit_guide" id="edit_guide_138" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="put" /><input name="authenticity_token" type="hidden" value="cJrpnicf2QtLPWBh0bMKfLxHLllQxPBF88mqsxHLi9U=" /></div>
+    <header>
+      <h2>
+    <strong>Create</strong> a Travel Guide - Creating a Guide for <span id="location_name">hangzhou</span>
+    <small>(<a href="#" id="change_location">change</a>)</small>
+  <input id="guide_location" name="guide[location]" type="hidden" value="hangzhou" />
+  <input id="guide_lat" name="guide[lat]" type="hidden" />
+  <input id="guide_lng" name="guide[lng]" type="hidden" />
+</h2>
+<div id="map_panel">
+  <input id="searchTextField" type="text" size="50">
+  <div id="map_location"></div>
+</div>
+
+      <h3>Quickly add Names of Points of Interest. (Be specific)</h3>
+    </header>
+    <section>
+      <p>List your favorite attractions, shops, restaurants, bars and clubs.  We'll help you find photos and contact info.</p>
+        <input type="text" class="findPOI" id="poi_name" placeholder="Please input POI name" />
+        <a href="#" class="button" id="add_button">Add (+)</a>
+        <input class="button submitForm inactive" id="next" name="commit" type="submit" value="Continue &rsaquo;" />
+    
+  			<div id="getStartedCreatePOIList">
+  				<p id="guide_countdown_msg">You need to add at least <span id="guide_countdown">3 Points</span> of Interest</p>
+          
+            <div class="guideItemPOI"><h3>shop</h3>
+            </div>
+<input id="guide_pois_attributes_0_id" name="guide[pois_attributes][0][id]" type="hidden" value="460" />
+		</div>
+    </section>
+    <footer>
+    </footer>
+</form></section>
+
+            <footer>
+            </footer>
+          </section>
+        </div>
+      </section>    
+    
+
+  </div> <!--! end of #container -->
+  
+  <script src="assets/application-create.js" type="text/javascript"></script>
+
+</body>
+</html>

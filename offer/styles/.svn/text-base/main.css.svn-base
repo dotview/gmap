@@ -1,0 +1,244 @@
+html
+{
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;  
+    height: 100%;
+    min-height: 640px;
+    min-width: 1100px;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #666; 
+    height: 100%;
+    min-height: 640px;
+    position: relative;
+}
+*{margin:0;padding:0;}
+ 
+#map_container{
+	position:relative;
+}
+#map_canvas
+{
+    min-height: 598px;
+}
+
+#header
+{
+    height: 105px;
+    display: block;
+    color: white;
+    font-size: 12px;
+    background: #fff;
+    position: relative;
+	border-bottom:4px solid #FFC631;
+}
+
+#header-shell
+{
+    border: 0px #FFC631 solid;
+    height: 103px;
+    
+    background: #fff;
+}
+
+#header p
+{
+    margin: 0;
+}
+
+#header #logo
+{
+    margin-left: 28px;
+}
+
+#logo a
+{
+    width: 249px;
+    height: 93px;
+    display: block;
+    
+    text-indent: -9999px;
+    overflow: hidden;
+    
+    background: url("../images/logo.gif") 0 0 no-repeat;
+    position: absolute;
+}
+#searchbox{
+	position: absolute;
+    top: 60px;
+    left: 350px;
+	background: #FFC631;
+	border-radius:5px;
+	color:#666;font-weight:bold;
+}
+#nav
+{
+    position: absolute;
+    top: 0;
+    right: 10px;  
+}
+
+#nav ul
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 2px;
+     
+    height: 24px;
+    float: left;
+}
+
+#nav ul li
+{
+    float: left;
+    padding-right: 2px;
+}
+
+#nav ul li a
+{
+    height: 24px;
+    line-height: 26px;
+    display: block;
+    padding: 0 10px;
+    
+    font-size: 14px;
+    color: #666;
+}
+#Search-form{
+ height: 24px;
+    line-height: 26px;	padding: 0 10px;
+    
+    font-size: 14px;
+    color: #000;
+}
+#nav ul li a:hover
+{
+    background: #FFC631;border-radius:5px;
+	}
+.searchbtn{
+	background: #000;
+	border-radius:5px;
+	color:#fff;font-weight:bold;padding: 0 4px;
+}
+ 
+#toolbox-location
+{
+    float: left;
+    margin: 7px 12px;
+}
+
+
+ p{ word-wrap: break-word;
+    word-break: normal; overflow:hidden;}
+#toolbox
+{
+    float: right;
+    width: 335px;
+    margin-right: 1px;
+	overflow:auto; 
+}
+
+#toolbox a
+{
+    color: #b3b3b3;
+}
+
+#toolbox div
+{
+    /*border-top: 1px #000 solid;*/
+}
+
+#toolbox div p
+{
+    line-height: 18px;
+}
+
+#toolbox div h2
+{
+    font-size: 18px;
+    font-weight: normal;
+    
+    height: 30px;
+    line-height: 30px;
+    
+    border: 1px #171717 solid;
+    
+    background: #070707;
+}
+
+#toolbox #toolbox-list h2
+{
+    font-size: 14px;
+}
+ 
+
+#toolbox div h2
+{
+    padding: 0 25px;
+    display: block;color: #fff;font-weight:bold;border-radius:5px 5px 0 0;
+}
+
+ 
+#toolbox-list div p
+{
+width:220px;
+}
+  
+#meta div{padding:5px 8px;float:left;}
+ 
+#dataList{width:302px;color:#666; padding: 5px 8px;}
+#dataList img{float:left;margin:0;}
+
+#dataList div{float:left;}
+#dataList .item{padding:5px 8px;border-bottom:1px solid #ccc;width:288px; min-height: 84px;}
+#dataList .divContent{float:left;width:230px;margin-left:6px;}
+a.bold{font-weight:bold;color:#666!important;text-decoration:none}
+a:hover{text-decoration:underline}
+.selectedDiv,.mouseoverDiv{border:1px solid #FFC631;color:#191a1b;background:#F7ECD0}
+.sharebox{position: absolute;right:130px;top:28px;background: #FFC631;
+	border-radius:5px;padding:4px;display:none;}
+#divmore{
+font-size: 13px;
+border: 1px solid #717B87;
+position:absolute; display: none ;left:0px; top:20px;padding:4px 0; width:64px; height:25px; 
+z-index:2; background-color: #FFFFFF; layer-background-color: #FFFFFF;
+}
+
+.infowindow{position:absolute;background-color: #FFFFFF; padding:4px;border:2px solid #FFC631;border-radius:5px}
+.infowindow .close{float:right;cursor:pointer;border:0px solid #ccc;padding:0 4px;}
+
+
+
+.infowindow .stem, .infowindow .stem_border {
+width: 0;
+height: 0;
+position: absolute;
+bottom: -12px;
+left: 29px;
+display: block;
+border-style: solid;
+border-width: 10px 10px 0;
+overflow: hidden;
+z-index: 960;
+border-color: #FFC631 transparent transparent;
+}
+.infowindow_frame .stem, .infowindow_frame .stem_border {
+top: -10px;
+bottom: auto;
+border-color: transparent transparent #FFC631 transparent;
+border-width: 10px 0  10px 10px;
+}
+.invert_x .infowindow_frame .stem, .invert_x .infowindow_frame .stem_border {
+right: 30px;
+left: auto;
+}
+.infowindow_frame .stem_border {
+bottom: -12px;
+border-color: #666 transparent transparent;
+z-index: 950;
+}

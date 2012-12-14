@@ -1,0 +1,146 @@
+#mapcanvas,#map_canvas
+{
+    min-height: 598px;
+	width:950px;
+}
+ 
+/* LOCATION TABS
+*************************************************************/
+#map_tabs {
+	float: left;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	margin: 15px 0 10px 0;
+}
+#map_tabs a{
+	float: left;
+	font-size: 13px;
+	line-height: 13px;
+	padding: 5px 10px;
+	margin: 0 5px 0 0;
+	background: #fff;
+	color: #000;
+	border: 1px solid #ccc;
+	text-decoration: none;
+	font-weight: bold;
+}
+#map_tabs a.active,
+#map_tabs a:hover{
+	background: #333;
+	color: #FFF;
+}
+
+#listing #property_map_link {
+	width: 207px;
+	float: right;
+	margin-top: 0;
+	text-align: right;
+}
+.property_intro {
+	float :left;
+	width: 711px;
+}
+/* LOCATION TEMPLATE
+*************************************************************/
+#location #map-canvas {
+	height: 450px;
+	margin-bottom: 30px;
+}
+#location .location-column {
+	width: 304px;
+	float: left;
+	margin-right: 15px;
+	font-size: 12px;
+	margin-bottom: 20px;
+}
+#location .location-column a{
+	color: #939598;
+	text-decoration:none;
+}
+#location .location-column a:hover{
+	text-decoration:underline;
+}
+#location .location-column h2 {
+	font-size: 13px;
+}
+#location .location-column.last {
+	margin-right: 0;
+}
+#location .distance {
+	color: #939598;
+}
+#map-container {
+	position: relative;
+}
+#filters {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	z-index: 2;
+	width: 230px;
+}
+#filters a {
+	background: url(../images/bg-ffffff-80.png) repeat;
+	display: block;
+	line-height: 30px;
+	height: 28px;
+	overflow: hidden;
+	font-size: 13px;
+	margin-bottom: 1px;
+	padding: 0 10px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+#filters a:hover,
+#filters a.active {
+	background: url(../images/bg-404042-90.png) repeat;
+	color: #fff;
+}
+#filters a span {
+	width: 34px;
+	height: 30px;
+	display: block;
+	float: left;
+}
+#filters a:hover span,
+#filters a.active span {
+	background: url(../images/bg-sprite-locations-legend-ffffff.png) no-repeat;
+}
+#filters a.schools span {
+	background-position: 0 -102px;
+}
+#filters a.shopping span {
+	background-position: 0 -206px;
+}
+#filters a.restaurants span {
+	background-position: 0 -51px;
+}
+#filters a.transportation span {
+	background-position: 0 -155px;
+}
+#filters a.amenities span {
+	background-position: 0 -257px;
+}
+#location h2 {
+	border-bottom: 1px solid #c9cacb;
+	padding-top: 30px;
+}
+#location h2.schools {
+	background-position: 0 -102px;
+}
+#location h2.shopping {
+	background-position: 0 -206px;
+}
+#location h2.restaurants {
+	background-position: 0 -51px;
+}
+#location h2.transportation {
+	background-position: 0 -155px;
+}
+#location h2.amenities {
+	background-position: 0 -257px;
+}
+.selectedDiv,.mouseoverDiv{border:1px solid #FFC631;color:#191a1b;background:#F7ECD0}
+
+#filters img,#dataList h2 img{width:25px;height:25px;}
