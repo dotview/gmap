@@ -193,8 +193,7 @@
         var createMarker = function (point, title, type, id) {
             var marker = new google.maps.Marker({
                 position: point,
-                title: title,
-                map: map
+                title: title
                 //animation: google.maps.Animation.DROP
             });
             if (!window.singleIcon) {
@@ -318,7 +317,7 @@
 
         }
 		var showMarkers = function (poi, k, arrCnt) {
-			var lat = poiObj.lat, lng = poiObj.lng, city = poiObj.City, fulladdress = poiObj.FullAddress, id= poiObj.id, v = poiObj.Institution_Name;
+			var lat = poi.lat, lng = poi.lng, city = poi.City, fulladdress = poi.FullAddress, id= poi.id, title = poi.Institution_Name;
 			if ((lat== null || lat =="") || (lng== null || lng =="")) {
 				return;
 			}
@@ -335,7 +334,7 @@
 				console.info("fitBounds...");
 				
 				if(circle.getRadius() == undefined){
-					map.fitBounds(mapBounds);
+					//map.fitBounds(mapBounds);
 				}else{
 					checkBounds();
 				}
@@ -489,7 +488,7 @@
                 //where = where + " ST_INTERSECTS(FullAddress,RECTANGLE(LATLNG(" + sw.lat() + "," + sw.lng() + "),LATLNG(" + ne.lat() + "," + ne.lng() + ")))";
 		    }
 		 
-            var query = "SELECT  'Institution - Link to Programs','Institution Name',State,City,Address1,rowid,FullAddress,'CEO Name','CEO Title','CEO Phone' FROM " +
+            var query = "SELECT  'Institution - Link to Programs','Institution Name',State,City,Address1,rowid,FullAddress,latitude,longitude,'CEO Name','CEO Title','CEO Phone' FROM " +
                 "1K1WZCqMmIN5EMW5s4CsHUhB90Nl0h4gY4EQcAV0" + where + orderby; //Where City='Birmingham'
             var encodedQuery = encodeURIComponent(query);
 
@@ -520,9 +519,11 @@
                         poiObj.id = pid;
                         poiObj.Institution_Name = Institution_Name;
                         poiObj.Programs = Programs;
-						poiObj.CEO_Name = rows[i][7];
-						poiObj.CEO_Title = rows[i][8];
-						poiObj.CEO_Phone = rows[i][9];
+						poiObj.lat = rows[i][7];
+						poiObj.lng = rows[i][8];
+						poiObj.CEO_Name = rows[i][9];
+						poiObj.CEO_Title = rows[i][10];
+						poiObj.CEO_Phone = rows[i][11];
                         poiArray.push(poiObj);
                     }
                     merge_poi_with_cache(poiArray);
